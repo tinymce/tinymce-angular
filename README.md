@@ -1,0 +1,1 @@
+# Official Angular TinyMCE Component
