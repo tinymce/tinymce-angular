@@ -1,5 +1,5 @@
 {
-  "name": "tinymce-angular",
+  "name": "@tinymce/tinymce-angular",
   "version": "0.0.0",
   "author": "Ephox Inc",
   "license": "Apache-2.0",
@@ -7,11 +7,13 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
+    "build:package": "ng-packagr -p ng-package.json",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prepare": "npm run build:package"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "^5.0.0",
     "@angular/common": "^5.0.0",
@@ -42,6 +44,7 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "ng-packagr": "^1.6.0",
     "protractor": "~5.1.2",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
