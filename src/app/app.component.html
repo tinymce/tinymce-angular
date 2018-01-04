@@ -2,7 +2,7 @@
 <h1>Testing tinymce-angular</h1>
 
 <h2>Iframe editor</h2>
-<editor apiKey="test" [init]="{branding: false}" (change)="console.log($e)" initialValue="<p>hello world</p>"></editor>
+<editor apiKey="test" [init]="{branding: false}" (onChange)="log($event)" initialValue="<p>hello world</p>"></editor>
 
 <h2>Inline editor</h2>
 <editor apiKey="test" [inline]="true" [init]="{branding: false}" initialValue="<p>hello world</p>"></editor>

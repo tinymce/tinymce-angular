@@ -24,7 +24,8 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
   @Input() inline: boolean;
   @Input() tagName: string;
 
-  @Output() change: EventEmitter<any> = new EventEmitter();
+  // tslint:disable-next-line:no-output-on-prefix
+  @Output() onChange: EventEmitter<any> = new EventEmitter();
 
   constructor(elementRef: ElementRef) {
     this.elementRef = elementRef;
@@ -72,7 +73,7 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
         editor.on('init', () => editor.setContent(initialValue));
         // bindHandlers(this.props, editor);
 
-        editor.on('change', this.change.emit(editor.getContent()));
+        editor.on('change', () => this.onChange.emit(editor.getContent()));
 
         if (this.init && typeof this.init.setup === 'function') {
           this.init.setup(editor);
