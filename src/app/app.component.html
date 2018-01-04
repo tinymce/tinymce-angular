@@ -1,8 +1,11 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <h1>Testing tinymce-angular</h1>
-<editor apiKey="test" [init]="{branding: false}" initialValue="<p>hello world</p>"></editor>
 
-<editor apiKey="test" [inline]="true" tagName="p" [init]="{branding: false}" initialValue="<p>hello world</p>"></editor>
+<h2>Iframe editor</h2>
+<editor apiKey="test" [init]="{branding: false}" (change)="console.log($e)" initialValue="<p>hello world</p>"></editor>
 
+<h2>Inline editor</h2>
 <editor apiKey="test" [inline]="true" [init]="{branding: false}" initialValue="<p>hello world</p>"></editor>
 
+<h2>Inline editor on a p tag</h2>
+<editor apiKey="test" [inline]="true" tagName="p" [init]="{branding: false}" initialValue="<p>hello world</p>"></editor>

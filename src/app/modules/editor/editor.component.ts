@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Input, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, Input, ViewChild, ElementRef, OnDestroy, Output, EventEmitter } from '@angular/core';
 
 import * as ScriptLoader from '../../../utils/ScriptLoader';
 import { uuid, isTextarea } from '../../../utils/Utils';
@@ -9,8 +9,6 @@ const scriptState = ScriptLoader.create();
 @Component({
   selector: 'editor',
   template: '<ng-template></ng-template>'
-  // '<textarea #editorElement [id]="id" style="visibility: hidden;"></textarea>' +
-  //           '<div #editorElement [id]="id" *ngIf="inline"></div>'
 })
 export class EditorComponent implements AfterViewInit, OnDestroy {
   private elementRef: ElementRef;
@@ -25,6 +23,8 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
   @Input() initialValue: string;
   @Input() inline: boolean;
   @Input() tagName: string;
+
+  @Output() change: EventEmitter<any> = new EventEmitter();
 
   constructor(elementRef: ElementRef) {
     this.elementRef = elementRef;
@@ -71,6 +71,8 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
         this.editor = editor;
         editor.on('init', () => editor.setContent(initialValue));
         // bindHandlers(this.props, editor);
+
+        editor.on('change', this.change.emit(editor.getContent()));
 
         if (this.init && typeof this.init.setup === 'function') {
           this.init.setup(editor);
