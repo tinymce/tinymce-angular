@@ -6,6 +6,8 @@
  *
  */
 
+ declare let global: any;
+
 const getGlobal = (): any => typeof window !== 'undefined' ? window : global;
 
 const getTinymce = () => {

@@ -1,4 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <h1>Testing tinymce-angular</h1>
-<editor></editor>
+<editor apiKey="test" [init]="{branding: false}" initialValue="<p>hello world</p>"></editor>
+
+<editor apiKey="test" [inline]="true" tagName="p" [init]="{branding: false}" initialValue="<p>hello world</p>"></editor>
+
+<editor apiKey="test" [inline]="true" [init]="{branding: false}" initialValue="<p>hello world</p>"></editor>
 
