@@ -1,5 +1,3 @@
-// import { IEditor } from './components/Editor';
-
 /**
  * Copyright (c) 2017-present, Ephox, Inc.
  *
@@ -8,7 +6,11 @@
  *
  */
 
-const validEvents = [
+import { EventEmitter } from '@angular/core';
+import { EditorComponent } from '../app/modules/editor/editor.component';
+import { Events } from '../app/modules/editor/Events';
+
+export const validEvents: (keyof Events)[] = [
   'onActivate',
   'onAddUndo',
   'onBeforeAddUndo',
@@ -74,24 +76,15 @@ const validEvents = [
   'onVisualAid'
  ];
 
-const isValidKey = (key: string) => validEvents.indexOf(key) !== -1;
-
-export const bindHandlers = (listeners: any, editor: any): void => {
-  Object.keys(listeners)
-    .filter(isValidKey)
-    .forEach((key: string) => {
-      const handler = listeners[key];
-      if (typeof handler === 'function') {
-        editor.on(key.substring(2), (e: any) => handler(e, editor));
-      }
-    });
+export const bindHandlers = (ctx: EditorComponent, editor: any): void => {
+  validEvents.forEach(eventName => {
+    const eventEmitter: EventEmitter<any> = ctx[eventName];
+    if (eventEmitter.observers.length > 0) {
+      console.log(eventName);
+      editor.on(eventName.substring(2), ctx.ngZone.run(() => (event: any) => eventEmitter.emit({event, editor})));
+    }
+  });
 };
-
-// export const bindModelHandlers = (ctx: IEditor, editor: any) => {
-//   const modelEvents = ctx.$props.modelEvents ? ctx.$props.modelEvents : null;
-//   const normalizedEvents = Array.isArray(modelEvents) ? modelEvents.join(' ') : modelEvents;
-//   editor.on(normalizedEvents ? normalizedEvents : 'change', () => ctx.$emit('input', editor.getContent()));
-// };
 
 let unique = 0;
 
@@ -108,3 +101,14 @@ export const uuid = (prefix: string): string => {
 export const isTextarea = (element: Element | null): element is HTMLTextAreaElement => {
   return element !== null && element.tagName.toLowerCase() === 'textarea';
 };
+
+const normalizePluginArray = (plugins: string | string[]): string[] => {
+  if (typeof plugins === 'undefined' || plugins === '') {
+    return [];
+  }
+
+  return Array.isArray(plugins) ? plugins : plugins.split(' ');
+};
+
+export const mergePlugins = (initPlugins: string | string[], inputPlugins?: string | string[]) =>
+  normalizePluginArray(initPlugins).concat(normalizePluginArray(inputPlugins));

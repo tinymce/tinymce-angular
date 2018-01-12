@@ -1,20 +1,34 @@
-import { Component, AfterViewInit, Input, ViewChild, ElementRef, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, AfterViewInit, Input, ElementRef, OnDestroy, forwardRef, NgZone } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import * as ScriptLoader from '../../../utils/ScriptLoader';
-import { uuid, isTextarea } from '../../../utils/Utils';
+import { uuid, isTextarea, bindHandlers, mergePlugins } from '../../../utils/Utils';
 import { getTinymce } from '../../../TinyMCE';
+import { Events } from './Events';
 
 const scriptState = ScriptLoader.create();
 
+const EDITOR_COMPONENT_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => EditorComponent),
+  multi: true,
+};
+
 @Component({
   selector: 'editor',
-  template: '<ng-template></ng-template>'
+  template: '<ng-template></ng-template>',
+  styles: [':host { display: block; }'],
+  providers: [EDITOR_COMPONENT_VALUE_ACCESSOR],
 })
-export class EditorComponent implements AfterViewInit, OnDestroy {
+export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
   private elementRef: ElementRef;
   private element: Element;
-  // private element: any;
   private editor: any;
+
+  ngZone: NgZone;
+
+  private onTouchedCallback: any;
+  private onChangeCallback: any;
 
   @Input() cloudChannel: string;
   @Input() apiKey: string;
@@ -22,14 +36,32 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
   @Input() id: string;
   @Input() initialValue: string;
   @Input() inline: boolean;
-  @Input() tagName: string;
+  @Input() tagName: string | undefined;
+  @Input() plugins: string | undefined;
+  @Input() toolbar: string | string[] | null = null;
 
-  // tslint:disable-next-line:no-output-on-prefix
-  @Output() onChange: EventEmitter<any> = new EventEmitter();
-
-  constructor(elementRef: ElementRef) {
+  constructor(elementRef: ElementRef, ngZone: NgZone) {
+    super();
     this.elementRef = elementRef;
+    this.ngZone = ngZone;
     this.initialise = this.initialise.bind(this);
+  }
+
+  writeValue(value: any): void {
+    if (this.editor && typeof value === 'string') {
+      this.editor.setContent(value);
+    } else if (value) {
+      this.initialValue = this.initialValue || value;
+    }
+  }
+  registerOnChange = (fn: any) => this.onChangeCallback = fn;
+  registerOnTouched = (fn: any) => this.onTouchedCallback = fn;
+  setDisabledState(isDisabled: boolean) {
+    if (this.editor) {
+      this.editor.setMode(isDisabled ? 'readonly' : 'design');
+    } else if (isDisabled) {
+      this.init = {...this.init, readonly: true};
+    }
   }
 
   ngAfterViewInit() {
@@ -68,12 +100,18 @@ export class EditorComponent implements AfterViewInit, OnDestroy {
       ...this.init,
       selector: `#${this.id}`,
       inline: this.inline,
+      plugins: mergePlugins(this.init && this.init.plugins, this.plugins),
+      toolbar: this.toolbar || (this.init && this.init.toolbar),
       setup: (editor: any) => {
         this.editor = editor;
-        editor.on('init', () => editor.setContent(initialValue));
-        // bindHandlers(this.props, editor);
+        editor.on('init', () => {
+          editor.setContent(initialValue);
+          this.ngZone.run(() => this.onChangeCallback(editor.getContent()));
+        });
+        editor.once('blur', () => this.ngZone.run(() => this.onTouchedCallback()));
+        editor.on('change keyup', () => this.ngZone.run(() => this.onChangeCallback(editor.getContent())));
 
-        editor.on('change', () => this.onChange.emit(editor.getContent()));
+        bindHandlers(this, editor);
 
         if (this.init && typeof this.init.setup === 'function') {
           this.init.setup(editor);

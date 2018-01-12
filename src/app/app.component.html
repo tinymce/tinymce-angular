@@ -1,11 +1,42 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<h1>Testing tinymce-angular</h1>
+<h2>FakeyBlog</h2>
 
-<h2>Iframe editor</h2>
-<editor apiKey="test" [init]="{branding: false}" (onChange)="log($event)" initialValue="<p>hello world</p>"></editor>
+<div [hidden]="submitted">
+  <form (ngSubmit)="onSubmit()" #blogForm="ngForm">
+    <div>
+      <label for="title">Title:</label>
+      <input type="text" id="title" [(ngModel)]="model.title" required name="title" #title="ngModel">
+      <div [hidden]="title.valid || title.untouched">
+        Title is required
+      </div>
+    </div>
+    <div>
+      <input type="date" [(ngModel)]="model.date" name="date">
+    </div>
+    <div>
+        <editor
+          apiKey="test"
+          [(ngModel)]="model.content"
+          name="content"
+          #content="ngModel"
+          plugins="link"
+          required
+        ></editor>
+        <div [hidden]="content.valid || content.untouched">
+          Content is required
+        </div>
+    </div>
+    <div>
+        <button type="submit" [disabled]="!blogForm.form.valid">Submit</button>
+    </div>
+  </form>
+</div>
 
-<h2>Inline editor</h2>
-<editor apiKey="test" [inline]="true" [init]="{branding: false}" initialValue="<p>hello world</p>"></editor>
+<div [hidden]="!submitted">
+  <h2>You submitted this:</h2>
+  <h3>Title: {{model.title}}</h3>
+  <p><strong>Content:</strong></p>
+  <div [innerHTML]="model.content"></div>
 
-<h2>Inline editor on a p tag</h2>
-<editor apiKey="test" [inline]="true" tagName="p" [init]="{branding: false}" initialValue="<p>hello world</p>"></editor>
+  <div>Raw: {{model | json}}</div>
+</div>
+

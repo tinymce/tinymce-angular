@@ -1,5 +1,16 @@
 import { Component } from '@angular/core';
 
+export class BlogPost {
+  title: string;
+  content: string;
+  date: Date;
+  constructor(
+    title: string,
+    content: string,
+    date: Date
+  ) {}
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,7 +18,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
-  log(c: string) {
-    console.log(c);
+  isDisabled = false;
+  submitted = false;
+  model = new BlogPost('', '', new Date());
+
+  log({event, editor}: any) {
+    console.log(event);
+    console.log(editor.getContent());
   }
+
+  onSubmit() { this.submitted = true; }
 }

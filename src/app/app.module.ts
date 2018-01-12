@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { EditorModule } from './modules/editor/editor.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { EditorModule } from './modules/editor/editor.module';
   ],
   imports: [
     BrowserModule,
-    EditorModule
+    EditorModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
