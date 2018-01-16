@@ -1,0 +1,20 @@
+{
+  "name": "@tinymce/tinymce-angular",
+  "version": "1.0.0",
+  "repository": "https://github.com/tinymce/tinymce-angular.git",
+  "author": "Ephox Inc",
+  "license": "Apache-2.0",
+  "private": false,
+  "peerDependencies": {
+    "@angular/core": "^5.2.0",
+    "@angular/common": "^5.2.0",
+    "@angular/forms": "^5.2.0"
+  },
+  "ngPackage": {
+    "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+    "lib": {
+      "entryFile": "src/public_api.ts"
+    },
+    "dest": "lib"
+  }
+}

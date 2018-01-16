@@ -7,8 +7,8 @@
  */
 
 import { EventEmitter } from '@angular/core';
-import { EditorComponent } from '../app/modules/editor/editor.component';
-import { Events } from '../app/modules/editor/Events';
+import { EditorComponent } from '../editor/editor.component';
+import { Events } from '../editor/Events';
 
 export const validEvents: (keyof Events)[] = [
   'onActivate',
@@ -98,11 +98,11 @@ export const uuid = (prefix: string): string => {
   return prefix + '_' + random + unique + String(time);
 };
 
-export const isTextarea = (element: Element | null): element is HTMLTextAreaElement => {
-  return element !== null && element.tagName.toLowerCase() === 'textarea';
+export const isTextarea = (element?: Element): element is HTMLTextAreaElement => {
+  return typeof element !== 'undefined' && element.tagName.toLowerCase() === 'textarea';
 };
 
-const normalizePluginArray = (plugins: string | string[]): string[] => {
+const normalizePluginArray = (plugins?: string | string[]): string[] => {
   if (typeof plugins === 'undefined' || plugins === '') {
     return [];
   }

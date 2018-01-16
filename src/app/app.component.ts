@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 
 export class BlogPost {
-  title: string;
-  content: string;
-  date: Date;
+  title = '';
+  content = '';
   constructor(
     title: string,
     content: string,

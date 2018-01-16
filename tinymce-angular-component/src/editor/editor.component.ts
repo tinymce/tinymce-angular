@@ -1,9 +1,9 @@
 import { Component, AfterViewInit, Input, ElementRef, OnDestroy, forwardRef, NgZone } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import * as ScriptLoader from '../../../utils/ScriptLoader';
-import { uuid, isTextarea, bindHandlers, mergePlugins } from '../../../utils/Utils';
-import { getTinymce } from '../../../TinyMCE';
+import * as ScriptLoader from '../utils/ScriptLoader';
+import { uuid, isTextarea, bindHandlers, mergePlugins } from '../utils/Utils';
+import { getTinymce } from '../TinyMCE';
 import { Events } from './Events';
 
 const scriptState = ScriptLoader.create();
@@ -22,7 +22,7 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR: any = {
 })
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
   private elementRef: ElementRef;
-  private element: Element;
+  private element: Element | undefined = undefined;
   private editor: any;
 
   ngZone: NgZone;
@@ -30,12 +30,12 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   private onTouchedCallback: any;
   private onChangeCallback: any;
 
-  @Input() cloudChannel: string;
-  @Input() apiKey: string;
+  @Input() cloudChannel: string | undefined;
+  @Input() apiKey: string | undefined;
   @Input() init: any;
-  @Input() id: string;
-  @Input() initialValue: string;
-  @Input() inline: boolean;
+  @Input() id = '';
+  @Input() initialValue: string | undefined;
+  @Input() inline: boolean | undefined;
   @Input() tagName: string | undefined;
   @Input() plugins: string | undefined;
   @Input() toolbar: string | string[] | null = null;
@@ -69,7 +69,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     this.createElement();
     if (getTinymce() !== null) {
       this.initialise();
-    } else {
+    } else if (this.element) {
       const doc = this.element.ownerDocument;
       const channel = this.cloudChannel || 'stable';
       const apiKey = this.apiKey || '';
@@ -87,11 +87,13 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   createElement() {
     const tagName = typeof this.tagName === 'string' ? this.tagName : 'div';
     this.element = document.createElement(this.inline ? tagName : 'textarea');
-    this.element.id = this.id;
-    if (isTextarea(this.element)) {
-      this.element.style.visibility = 'hidden';
+    if (this.element) {
+      this.element.id = this.id;
+      if (isTextarea(this.element)) {
+        this.element.style.visibility = 'hidden';
+      }
+      this.elementRef.nativeElement.appendChild(this.element);
     }
-    this.elementRef.nativeElement.appendChild(this.element);
   }
 
   initialise() {

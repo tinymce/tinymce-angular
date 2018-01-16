@@ -1,19 +1,19 @@
 {
   "name": "@tinymce/tinymce-angular",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "Ephox Inc",
   "license": "Apache-2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
-    "build:package": "ng-packagr -p ng-package.json",
+    "build:package": "ng-packagr",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "prepare": "npm run build:package"
   },
-  "private": false,
+  "private": true,
   "dependencies": {
     "@angular/animations": "^5.0.0",
     "@angular/common": "^5.0.0",

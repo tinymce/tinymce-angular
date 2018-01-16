@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
-import { EditorModule } from './modules/editor/editor.module';
-import { FormsModule } from '@angular/forms';
+import { EditorModule } from '../../tinymce-angular-component/src/editor/editor.module';
 
 @NgModule({
   declarations: [
