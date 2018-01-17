@@ -80,7 +80,6 @@ export const bindHandlers = (ctx: EditorComponent, editor: any): void => {
   validEvents.forEach(eventName => {
     const eventEmitter: EventEmitter<any> = ctx[eventName];
     if (eventEmitter.observers.length > 0) {
-      console.log(eventName);
       editor.on(eventName.substring(2), ctx.ngZone.run(() => (event: any) => eventEmitter.emit({event, editor})));
     }
   });

@@ -1,27 +1,169 @@
 # Official Angular TinyMCE Component
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.3.
+## About
 
-## Development server
+This package is a thin wrapper around `tinymce` to make it easier to use in a Angular application. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Installation
+```sh
+$ npm install @tinymce/tinymce-angular
+```
 
-## Code scaffolding
+## Usage
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Loading the component
 
-## Build
+Import the `EditorModule` from the npm package like this:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+```js
+import { EditorModule } from '@tinymce/tinymce-angular';
+```
+And add it to you application module:
 
-## Running unit tests
+```js
+// This might look different depending on how you have set up your app
+// but the important part is the imports array
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    EditorModule // <- Important part
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Using the component in your templates
 
-## Running end-to-end tests
+Use the editor in your templates like this:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```js
+<editor apiKey="test" [init]="{plugins: 'link'}"></editor>
+```
 
-## Further help
+### Configuring the editor
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+The editor accepts the following inputs:
+* `id`: An id for the editor so you can later grab the instance by using the `tinymce.get('ID')` method on tinymce, defaults to an automatically generated uuid. 
+* `init`: Object sent to the `tinymce.init` method used to initialize the editor.
+* `initialValue`: Initial value that the editor will be initialized with.
+* `inline`: Shorthand for setting that the editor should be inline, `<editor [inline]="true"></editor>` is the same as setting `{inline: true}` in the init.
+* `tagName`: Only used if the editor is inline, decides what element to initialize the editor on, defaults to `div`.
+* `plugins`: Shorthand for setting what plugins you want to use, `<editor plugins="foo bar"></editor>` is the same as setting `{plugins: 'foo bar'}` in the init.
+* `toolbar`: Shorthand for setting what toolbar items you want to show, `<editor toolbar="foo bar"></editor>` is the same as setting `{toolbar: 'foo bar'}` in the init. 
+* `apiKey`: Api key for TinyMCE cloud, more info below.
+* `cloudChannel`: Cloud channel for TinyMCE Cloud, more info below.
+
+### `ngModel`
+
+You can also use the `ngModel` directive (more info in the [Angular documentation](https://angular.io/api/forms/NgModel)) on the editor to simplify using it in a form:
+
+```js
+<editor [(ngModel)]="dataModel"></editor>
+```
+
+### Event binding
+
+You can also bind editor events via a shorthand prop on the editor, for example:
+```js
+<editor (onSelectionChange)="handleEvent($eventObj)"></editor>
+```
+Where the handler gets called with an object containing the properties `event`, which is the event object, and `editor`, which is a reference to the editor.
+
+Here is a full list of the events available:
+<details>
+<summary>All available events</summary>
+
+* `onActivate`
+* `onAddUndo`
+* `onBeforeAddUndo`
+* `onBeforeExecCommand`
+* `onBeforeGetContent`
+* `onBeforeRenderUI`
+* `onBeforeSetContent`
+* `onBeforePaste`
+* `onBlur`
+* `onChange`
+* `onClearUndos`
+* `onClick`
+* `onContextMenu`
+* `onCopy`
+* `onCut`
+* `onDblclick`
+* `onDeactivate`
+* `onDirty`
+* `onDrag`
+* `onDragDrop`
+* `onDragEnd`
+* `onDragGesture`
+* `onDragOver`
+* `onDrop`
+* `onExecCommand`
+* `onFocus`
+* `onFocusIn`
+* `onFocusOut`
+* `onGetContent`
+* `onHide`
+* `onInit`
+* `onKeyDown`
+* `onKeyPress`
+* `onKeyUp`
+* `onLoadContent`
+* `onMouseDown`
+* `onMouseEnter`
+* `onMouseLeave`
+* `onMouseMove`
+* `onMouseOut`
+* `onMouseOver`
+* `onMouseUp`
+* `onNodeChange`
+* `onObjectResizeStart`
+* `onObjectResized`
+* `onObjectSelected`
+* `onPaste`
+* `onPostProcess`
+* `onPostRender`
+* `onPreInit`
+* `onPreProcess`
+* `onProgressState`
+* `onRedo`
+* `onRemove`
+* `onReset`
+* `onSaveContent`
+* `onSelectionChange`
+* `onSetAttrib`
+* `onSetContent`
+* `onShow`
+* `onSubmit`
+* `onUndo`
+* `onVisualAid`
+</details>
+
+## Loading TinyMCE
+### Auto-loading from TinyMCE Cloud
+The `Editor` component needs TinyMCE to be globally available to work, but to make it as easy as possible it will automatically load [TinyMCE Cloud](https://www.tinymce.com/docs/get-started-cloud/) if it can't find TinyMCE available when the component has mounted. To get rid of the `This domain is not registered...` warning, sign up for the cloud and enter the api key like this:
+
+```js
+<editor  apiKey="test" [init]="{/* your settings */}"></editor>
+```
+
+You can also define what cloud channel you want to use out these three
+* `stable` **Default**. The most stable and well tested version that has passed the Ephox quality assurance process.
+* `testing` This channel will deploy the current candidate for release to the `stable` channel.
+* `dev` The cutting edge version of TinyMCE updated daily for the daring users.
+
+So using the `dev` channel would look like this:
+
+```js
+<editor apiKey="YOUR_API_KEY" cloudChannel="dev" [init]="{/* your settings */}"></editor>
+```
+
+For more info on the different versions see the [documentation](https://www.tinymce.com/docs/get-started-cloud/editor-plugin-version/#devtestingandstablereleases).
+
+### Loading TinyMCE by yourself
+
+To opt out of using TinyMCE cloud you have to make TinyMCE globally available yourself. This can be done either by hosting the `tinymce.min.js` file by youself and adding a script tag to you HTML or, if you are using a module loader, installing TinyMCE with npm. For info on how to get TinyMCE working with module loaders check out [this page in the documentation](https://www.tinymce.com/docs/advanced/usage-with-module-loaders/).
+
