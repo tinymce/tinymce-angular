@@ -26,5 +26,5 @@ export class AppComponent {
     console.log(editor.getContent());
   }
 
-  onSubmit() { this.submitted = true; }
+  onSubmit() { this.submitted = !this.submitted; }
 }

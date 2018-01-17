@@ -22,9 +22,16 @@
           Content is required
         </div>
     </div>
+    <div [hidden]="!blogForm.valid">
+      Form is valid
+    </div>
+    <div [hidden]="blogForm.valid">
+      Form is invalid
+    </div>
     <div>
         <button type="submit" [disabled]="!blogForm.form.valid">Submit</button>
     </div>
+
   </form>
 </div>
 
@@ -35,5 +42,9 @@
   <div [innerHTML]="model.content"></div>
 
   <div>Raw: {{model | json}}</div>
+
+  <div>
+    <button (click)="onSubmit()">Edit</button>
+  </div>
 </div>
 
