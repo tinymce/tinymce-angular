@@ -152,7 +152,7 @@ Here is a full list of the events available:
 The `Editor` component needs TinyMCE to be globally available to work, but to make it as easy as possible it will automatically load [TinyMCE Cloud](https://www.tinymce.com/docs/get-started-cloud/) if it can't find TinyMCE available when the component has mounted. To get rid of the `This domain is not registered...` warning, sign up for the cloud and enter the api key like this:
 
 ```js
-<editor  apiKey="test" [init]="{/* your settings */}"></editor>
+<editor apiKey="test" [init]="{/* your settings */}"></editor>
 ```
 
 You can also define what cloud channel you want to use out these three
