@@ -20,12 +20,12 @@ $ npm install @tinymce/tinymce-angular
 
 Import the `EditorModule` from the npm package like this:
 
-```js
+```tsx
 import { EditorModule } from '@tinymce/tinymce-angular';
 ```
 And add it to you application module:
 
-```js
+```tsx
 // This might look different depending on how you have set up your app
 // but the important part is the imports array
 @NgModule({
@@ -45,7 +45,7 @@ And add it to you application module:
 
 Use the editor in your templates like this:
 
-```js
+```tsx
 <editor apiKey="test" [init]="{plugins: 'link'}"></editor>
 ```
 
@@ -66,14 +66,14 @@ The editor accepts the following inputs:
 
 You can also use the `ngModel` directive (more info in the [Angular documentation](https://angular.io/api/forms/NgModel)) on the editor to simplify using it in a form:
 
-```js
+```tsx
 <editor [(ngModel)]="dataModel"></editor>
 ```
 
 ### Event binding
 
 You can also bind editor events via a shorthand prop on the editor, for example:
-```js
+```tsx
 <editor (onSelectionChange)="handleEvent($eventObj)"></editor>
 ```
 Where the handler gets called with an object containing the properties `event`, which is the event object, and `editor`, which is a reference to the editor.
@@ -151,7 +151,7 @@ Here is a full list of the events available:
 ### Auto-loading from TinyMCE Cloud
 The `Editor` component needs TinyMCE to be globally available to work, but to make it as easy as possible it will automatically load [TinyMCE Cloud](https://www.tinymce.com/docs/get-started-cloud/) if it can't find TinyMCE available when the component has mounted. To get rid of the `This domain is not registered...` warning, sign up for the cloud and enter the api key like this:
 
-```js
+```tsx
 <editor apiKey="test" [init]="{/* your settings */}"></editor>
 ```
 
@@ -162,7 +162,7 @@ You can also define what cloud channel you want to use out these three
 
 So using the `dev` channel would look like this:
 
-```js
+```tsx
 <editor apiKey="YOUR_API_KEY" cloudChannel="dev" [init]="{/* your settings */}"></editor>
 ```
 
