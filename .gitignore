@@ -17,7 +17,6 @@
 *.launch
 .settings/
 *.sublime-workspace
-package-lock.json
 
 # IDE - VSCode
 .vscode/*
