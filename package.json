@@ -1,13 +1,14 @@
 {
   "name": "@tinymce/tinymce-angular",
   "version": "1.0.0",
+  "description": "Official TinyMCE Angular Component",
   "author": "Ephox Inc",
   "license": "Apache-2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
-    "build:package": "ng-packagr",
+    "build:package": "ng-packagr && cp README.md lib/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
