@@ -1,5 +1,6 @@
 {
   "name": "@tinymce/tinymce-angular",
+  "description": "Official TinyMCE Angular Component",
   "version": "1.0.1",
   "repository": "https://github.com/tinymce/tinymce-angular.git",
   "author": "Ephox Inc",

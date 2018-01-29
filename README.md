@@ -1,4 +1,4 @@
-# Official Angular TinyMCE Component
+# Official TinyMCE Angular Component
 
 ## About
 
