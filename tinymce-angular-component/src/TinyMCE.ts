@@ -8,12 +8,12 @@
 
 declare let global: any;
 
-const getGlobal = (): any => typeof window !== 'undefined' ? window : global;
+const getGlobal = (): any => (typeof window !== 'undefined' ? window : global);
 
 const getTinymce = () => {
-   global = getGlobal();
+  global = getGlobal();
 
-   return global && global.tinymce ? global.tinymce : null;
+  return global && global.tinymce ? global.tinymce : null;
 };
 
 export { getTinymce };

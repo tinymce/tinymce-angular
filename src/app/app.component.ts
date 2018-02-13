@@ -3,11 +3,7 @@ import { Component } from '@angular/core';
 export class BlogPost {
   title = '';
   content = '';
-  constructor(
-    title: string,
-    content: string,
-    date: Date
-  ) {}
+  constructor(title: string, content: string, date: Date) {}
 }
 
 @Component({
@@ -21,10 +17,12 @@ export class AppComponent {
   submitted = false;
   model = new BlogPost('', '', new Date());
 
-  log({event, editor}: any) {
+  log({ event, editor }: any) {
     console.log(event);
     console.log(editor.getContent());
   }
 
-  onSubmit() { this.submitted = !this.submitted; }
+  onSubmit() {
+    this.submitted = !this.submitted;
+  }
 }

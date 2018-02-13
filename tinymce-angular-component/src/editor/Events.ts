@@ -135,4 +135,4 @@ export const validEvents: (keyof Events)[] = [
   'onSubmit',
   'onUndo',
   'onVisualAid'
- ];
+];

@@ -11,10 +11,10 @@ import { EditorComponent } from '../editor/editor.component';
 import { validEvents } from '../editor/Events';
 
 export const bindHandlers = (ctx: EditorComponent, editor: any): void => {
-  validEvents.forEach(eventName => {
+  validEvents.forEach((eventName) => {
     const eventEmitter: EventEmitter<any> = ctx[eventName];
     if (eventEmitter.observers.length > 0) {
-      editor.on(eventName.substring(2), ctx.ngZone.run(() => (event: any) => eventEmitter.emit({event, editor})));
+      editor.on(eventName.substring(2), ctx.ngZone.run(() => (event: any) => eventEmitter.emit({ event, editor })));
     }
   });
 };
@@ -22,8 +22,8 @@ export const bindHandlers = (ctx: EditorComponent, editor: any): void => {
 let unique = 0;
 
 export const uuid = (prefix: string): string => {
-  const date   = new Date();
-  const time   = date.getTime();
+  const date = new Date();
+  const time = date.getTime();
   const random = Math.floor(Math.random() * 1000000000);
 
   unique++;

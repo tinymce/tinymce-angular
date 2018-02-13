@@ -5,15 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { EditorComponent } from './editor.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
-  declarations: [
-    EditorComponent
-  ],
-  exports: [
-    EditorComponent
-  ]
+  imports: [CommonModule, FormsModule],
+  declarations: [EditorComponent],
+  exports: [EditorComponent]
 })
-export class EditorModule { }
+export class EditorModule {}

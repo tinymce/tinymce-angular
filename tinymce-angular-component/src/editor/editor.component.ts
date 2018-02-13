@@ -11,14 +11,14 @@ const scriptState = ScriptLoader.create();
 const EDITOR_COMPONENT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => EditorComponent),
-  multi: true,
+  multi: true
 };
 
 @Component({
   selector: 'editor',
   template: '<ng-template></ng-template>',
   styles: [':host { display: block; }'],
-  providers: [EDITOR_COMPONENT_VALUE_ACCESSOR],
+  providers: [EDITOR_COMPONENT_VALUE_ACCESSOR]
 })
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
   private elementRef: ElementRef;
@@ -54,13 +54,13 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       this.initialValue = this.initialValue || value;
     }
   }
-  registerOnChange = (fn: any) => this.onChangeCallback = fn;
-  registerOnTouched = (fn: any) => this.onTouchedCallback = fn;
+  registerOnChange = (fn: any) => (this.onChangeCallback = fn);
+  registerOnTouched = (fn: any) => (this.onTouchedCallback = fn);
   setDisabledState(isDisabled: boolean) {
     if (this.editor) {
       this.editor.setMode(isDisabled ? 'readonly' : 'design');
     } else if (isDisabled) {
-      this.init = {...this.init, readonly: true};
+      this.init = { ...this.init, readonly: true };
     }
   }
 
@@ -74,9 +74,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       const channel = this.cloudChannel || 'stable';
       const apiKey = this.apiKey || '';
 
-      ScriptLoader.load(
-        scriptState, doc, `https://cloud.tinymce.com/${channel}/tinymce.min.js?apiKey=${apiKey}`, this.initialise
-      );
+      ScriptLoader.load(scriptState, doc, `https://cloud.tinymce.com/${channel}/tinymce.min.js?apiKey=${apiKey}`, this.initialise);
     }
   }
 
@@ -127,5 +125,4 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
     getTinymce().init(finalInit);
   }
-
 }
