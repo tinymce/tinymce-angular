@@ -6,12 +6,12 @@
  *
  */
 
- declare let global: any;
+declare let global: any;
 
 const getGlobal = (): any => typeof window !== 'undefined' ? window : global;
 
 const getTinymce = () => {
-   const global = getGlobal();
+   global = getGlobal();
 
    return global && global.tinymce ? global.tinymce : null;
 };

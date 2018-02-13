@@ -27,9 +27,6 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   ngZone: NgZone;
 
-  private onTouchedCallback: any;
-  private onChangeCallback: any;
-
   @Input() cloudChannel: string | undefined;
   @Input() apiKey: string | undefined;
   @Input() init: any;
@@ -39,6 +36,9 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input() tagName: string | undefined;
   @Input() plugins: string | undefined;
   @Input() toolbar: string | string[] | null = null;
+
+  private onTouchedCallback = () => {};
+  private onChangeCallback = (x: any) => {};
 
   constructor(elementRef: ElementRef, ngZone: NgZone) {
     super();
