@@ -17,6 +17,13 @@ export class AppComponent {
   submitted = false;
   model = new BlogPost('', '', new Date());
 
+  content2 = '<p>some content</p>';
+  isEditingContent = false;
+
+  editContent() {
+    this.isEditingContent = !this.isEditingContent;
+  }
+
   log({ event, editor }: any) {
     console.log(event);
     console.log(editor.getContent());

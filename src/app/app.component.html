@@ -1,5 +1,14 @@
 <h2>FakeyBlog</h2>
 
+<div *ngIf="!isEditingContent" [innerHTML]="content2"></div>
+<editor *ngIf="isEditingContent" plugins="link table" [(ngModel)]="content2"></editor>
+
+<p>
+  <button (click)="editContent()" [innerText]="isEditingContent ? 'save' : 'edit'"></button>
+</p>
+
+<textarea [(ngModel)]="content2" id="" cols="30" rows="10"></textarea>
+
 <div [hidden]="submitted">
   <form (ngSubmit)="onSubmit()" #blogForm="ngForm">
     <div>

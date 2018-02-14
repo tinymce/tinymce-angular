@@ -8,7 +8,7 @@ import { Events } from './Events';
 
 const scriptState = ScriptLoader.create();
 
-const EDITOR_COMPONENT_VALUE_ACCESSOR: any = {
+const EDITOR_COMPONENT_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => EditorComponent),
   multi: true
@@ -47,15 +47,22 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     this.initialise = this.initialise.bind(this);
   }
 
-  writeValue(value: any): void {
-    if (this.editor && typeof value === 'string') {
+  writeValue(value: string | null): void {
+    this.initialValue = value || this.initialValue;
+
+    if (this.editor && this.editor.initialized && typeof value === 'string') {
       this.editor.setContent(value);
-    } else if (value) {
-      this.initialValue = this.initialValue || value;
     }
   }
-  registerOnChange = (fn: any) => (this.onChangeCallback = fn);
-  registerOnTouched = (fn: any) => (this.onTouchedCallback = fn);
+
+  registerOnChange(fn: (_: any) => void): void {
+    this.onChangeCallback = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouchedCallback = fn;
+  }
+
   setDisabledState(isDisabled: boolean) {
     if (this.editor) {
       this.editor.setMode(isDisabled ? 'readonly' : 'design');
@@ -95,7 +102,6 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   }
 
   initialise() {
-    const initialValue = typeof this.initialValue === 'string' ? this.initialValue : '';
     const finalInit = {
       ...this.init,
       selector: `#${this.id}`,
@@ -105,13 +111,8 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       setup: (editor: any) => {
         this.editor = editor;
         editor.on('init', () => {
-          editor.setContent(initialValue);
-          this.ngZone.run(() => this.onChangeCallback(editor.getContent()));
+          this.initEditor(editor);
         });
-        editor.once('blur', () => this.ngZone.run(() => this.onTouchedCallback()));
-        editor.on('change keyup', () => this.ngZone.run(() => this.onChangeCallback(editor.getContent())));
-
-        bindHandlers(this, editor);
 
         if (this.init && typeof this.init.setup === 'function') {
           this.init.setup(editor);
@@ -124,5 +125,18 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     }
 
     getTinymce().init(finalInit);
+  }
+
+  private initEditor(editor: any) {
+    if (typeof this.initialValue === 'string') {
+      this.ngZone.run(() => editor.setContent(this.initialValue));
+    }
+    editor.once('blur', () => this.ngZone.run(() => this.onTouchedCallback()));
+    editor.on(
+      'setcontent',
+      ({ content, format }: any) => format === 'html' && content && this.ngZone.run(() => this.onChangeCallback(content))
+    );
+    editor.on('change keyup', () => this.ngZone.run(() => this.onChangeCallback(editor.getContent())));
+    bindHandlers(this, editor);
   }
 }
