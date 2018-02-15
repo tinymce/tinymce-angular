@@ -29,7 +29,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   @Input() cloudChannel: string | undefined;
   @Input() apiKey: string | undefined;
-  @Input() init: any;
+  @Input() init: { [key: string]: any } | undefined;
   @Input() id = '';
   @Input() initialValue: string | undefined;
   @Input() inline: boolean | undefined;
@@ -73,6 +73,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   ngAfterViewInit() {
     this.id = this.id || uuid('tiny-react');
+    this.inline = typeof this.inline !== 'undefined' ? this.inline : this.init && this.init.inline;
     this.createElement();
     if (getTinymce() !== null) {
       this.initialise();
