@@ -1,3 +1,6 @@
+# 1.0.6 (2018-04-06)
+* Changed so tinymce.init is run outside of angular with ngzone.
+
 # 1.0.5 (2018-02-15)
 * Fixed bug where is wasn't possible to set inline in the init object, only on the shorthand.
 
