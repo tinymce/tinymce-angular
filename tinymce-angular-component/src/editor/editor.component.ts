@@ -125,7 +125,9 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       this.element.style.visibility = '';
     }
 
-    getTinymce().init(finalInit);
+    this.ngZone.runOutsideAngular(() => {
+      getTinymce().init(finalInit);
+    });
   }
 
   private initEditor(editor: any) {
