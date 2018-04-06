@@ -1,4 +1,4 @@
-# 1.0.6 (2018-04-06)
+# 1.0.7 (2018-04-06)
 * Fixed bug with onInit not firing and removed onPreInit shorthand.
 
 # 1.0.6 (2018-04-06)
