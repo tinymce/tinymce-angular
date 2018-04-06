@@ -24,6 +24,8 @@
           [(ngModel)]="model.content"
           name="content"
           #content="ngModel"
+          (onInit)="log($event)"
+          (onKeyDown)="log($event)"
           plugins="link"
           required
         ></editor>

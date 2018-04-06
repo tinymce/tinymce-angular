@@ -121,7 +121,6 @@ export const validEvents: (keyof Events)[] = [
   'onPaste',
   'onPostProcess',
   'onPostRender',
-  'onPreInit',
   'onPreProcess',
   'onProgressState',
   'onRedo',

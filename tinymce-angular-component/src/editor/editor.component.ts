@@ -111,8 +111,8 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       toolbar: this.toolbar || (this.init && this.init.toolbar),
       setup: (editor: any) => {
         this.editor = editor;
-        editor.on('init', () => {
-          this.initEditor(editor);
+        editor.on('init', (e: Event) => {
+          this.initEditor(e, editor);
         });
 
         if (this.init && typeof this.init.setup === 'function') {
@@ -130,7 +130,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     });
   }
 
-  private initEditor(editor: any) {
+  private initEditor(initEvent: Event, editor: any) {
     if (typeof this.initialValue === 'string') {
       this.ngZone.run(() => editor.setContent(this.initialValue));
     }
@@ -140,6 +140,6 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       ({ content, format }: any) => format === 'html' && content && this.ngZone.run(() => this.onChangeCallback(content))
     );
     editor.on('change keyup', () => this.ngZone.run(() => this.onChangeCallback(editor.getContent())));
-    bindHandlers(this, editor);
+    bindHandlers(this, editor, initEvent);
   }
 }
