@@ -1,3 +1,6 @@
+# 1.0.8 (2018-04-26)
+* Added null check before removing editor to check that tinymce is actually available.
+
 # 1.0.7 (2018-04-06)
 * Fixed bug with onInit not firing and removed onPreInit shorthand.
 
