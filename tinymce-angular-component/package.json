@@ -6,7 +6,7 @@
   "author": "Ephox Inc",
   "license": "Apache-2.0",
   "private": false,
-  "dependencies": {
+  "peerDependencies": {
     "@angular/core": "^5.2.0",
     "@angular/common": "^5.2.0",
     "@angular/forms": "^5.2.0"
