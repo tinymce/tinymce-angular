@@ -1,6 +1,10 @@
-# 2.0.0 (2018-04-05)
+# 2.0.0 (2018-05-05)
 
 * Migrate to Angular and rxjs version 6
+
+# 1.0.9 (2018-05-04)
+
+* Added `undo` and `redo` events to ngModel onChangeCallback.
 
 # 1.0.8 (2018-04-26)
 
