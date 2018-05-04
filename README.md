@@ -62,7 +62,7 @@ The editor accepts the following inputs:
 * `apiKey`: Api key for TinyMCE cloud, more info below.
 * `cloudChannel`: Cloud channel for TinyMCE Cloud, more info below.
 
-None of the configuration inputs are **required** for the editor to work - other than if your are using TinyMCE Cloud you will have to specify the `apiKey` to get rid of the `This domain is not registered...` warning message.
+None of the configuration inputs are **required** for the editor to work - other than if you are using TinyMCE Cloud you will have to specify the `apiKey` to get rid of the `This domain is not registered...` warning message.
 
 ### `ngModel`
 
