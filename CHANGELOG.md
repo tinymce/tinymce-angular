@@ -1,3 +1,6 @@
+# 1.0.9 (2018-05-04)
+* Added `undo` and `redo` events to ngModel onChangeCallback.
+
 # 1.0.8 (2018-04-26)
 * Added null check before removing editor to check that tinymce is actually available.
 
