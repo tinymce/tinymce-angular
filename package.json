@@ -8,8 +8,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
-    "build:package":
-      "ng-packagr -p tinymce-angular-component/ng-package.json && cp README.md lib/",
+    "build:package": "ng-packagr -p tinymce-angular-component/ng-package.json && cp README.md lib/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
