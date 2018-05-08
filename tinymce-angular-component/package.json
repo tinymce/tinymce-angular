@@ -1,14 +1,14 @@
 {
   "name": "@tinymce/tinymce-angular",
   "description": "Official TinyMCE Angular Component",
-  "version": "1.0.9",
+  "version": "2.0.0",
   "repository": "https://github.com/tinymce/tinymce-angular.git",
   "author": "Ephox Inc",
   "license": "Apache-2.0",
   "private": false,
-  "dependencies": {
-    "@angular/core": "^5.2.0",
-    "@angular/common": "^5.2.0",
-    "@angular/forms": "^5.2.0"
+  "peerDependencies": {
+    "@angular/core": "^6.0.0",
+    "@angular/common": "^6.0.0",
+    "@angular/forms": "^6.0.0"
   }
 }

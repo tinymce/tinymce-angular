@@ -6,14 +6,9 @@
  *
  */
 
-declare let global: any;
-
-const getGlobal = (): any => (typeof window !== 'undefined' ? window : global);
-
 const getTinymce = () => {
-  global = getGlobal();
-
-  return global && global.tinymce ? global.tinymce : null;
+  const w = <any> window;
+  return w && w.tinymce ? w.tinymce : null;
 };
 
 export { getTinymce };
