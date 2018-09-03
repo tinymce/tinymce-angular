@@ -1,3 +1,7 @@
+# 2.0.1
+
+* Fixed broken links in readme.
+
 # 2.0.0 (2018-05-08)
 
 * Migrate to Angular and rxjs version 6
