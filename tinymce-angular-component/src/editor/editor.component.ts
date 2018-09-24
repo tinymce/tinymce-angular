@@ -72,8 +72,9 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   }
 
   ngAfterViewInit() {
-    this.id = this.id || uuid('tiny-react');
-    this.inline = typeof this.inline !== 'undefined' ? this.inline : this.init && this.init.inline;
+    this.id = this.id || uuid('tiny-angular');
+    this.inline =
+      typeof this.inline !== 'undefined' ? (typeof this.inline === 'boolean' ? this.inline : true) : this.init && this.init.inline;
     this.createElement();
     if (getTinymce() !== null) {
       this.initialise();
@@ -107,7 +108,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   initialise() {
     const finalInit = {
       ...this.init,
-      selector: `#${this.id}`,
+      target: this.element,
       inline: this.inline,
       plugins: mergePlugins(this.init && this.init.plugins, this.plugins),
       toolbar: this.toolbar || (this.init && this.init.toolbar),

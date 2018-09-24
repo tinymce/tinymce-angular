@@ -1,3 +1,8 @@
+# 2.2.0
+
+* Fixed bug where textarea was being added to editor content if id was set.
+* Changed `inline` attribute to accept truthy values, so you can now do this: `<editor inline></editor>` instead of the earlier `<editor [inline]="true"></editor>`.
+
 # 2.0.1
 
 * Fixed broken links in readme.
