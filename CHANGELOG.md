@@ -1,3 +1,7 @@
+# 2.2.0
+
+* Added support for disabling the editor via the `disabled` attribute.
+
 # 2.1.0
 
 * Fixed bug where textarea was being added to editor content if id was set.

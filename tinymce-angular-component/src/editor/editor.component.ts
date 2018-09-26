@@ -37,6 +37,18 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input() plugins: string | undefined;
   @Input() toolbar: string | string[] | null = null;
 
+  private _disabled: boolean | undefined;
+  @Input()
+  set disabled(val) {
+    this._disabled = val;
+    if (this.editor && this.editor.initialized) {
+      this.editor.setMode(val ? 'readonly' : 'design');
+    }
+  }
+  get disabled() {
+    return this._disabled;
+  }
+
   private onTouchedCallback = () => {};
   private onChangeCallback = (x: any) => {};
 
@@ -110,6 +122,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       ...this.init,
       target: this.element,
       inline: this.inline,
+      readonly: this.disabled,
       plugins: mergePlugins(this.init && this.init.plugins, this.plugins),
       toolbar: this.toolbar || (this.init && this.init.toolbar),
       setup: (editor: any) => {
