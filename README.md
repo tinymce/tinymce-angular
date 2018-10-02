@@ -2,7 +2,9 @@
 
 ## About
 
-This package is a thin wrapper around `tinymce` to make it easier to use in a Angular application. 
+This package is a thin wrapper around `tinymce` to make it easier to use in an Angular application. 
+
+For some quick demos, check out the [storybook](https://tinymce.github.io/tinymce-angular/).
 
 ## Development instructions
 
