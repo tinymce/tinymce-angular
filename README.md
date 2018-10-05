@@ -54,6 +54,7 @@ Use the editor in your templates like this:
 ### Configuring the editor
 
 The editor accepts the following inputs:
+* `disabled`: Using this input that takes a boolean value you can dynamically set the editor into a "disabled" readonly mode or into the normal editable mode.
 * `id`: An id for the editor so you can later grab the instance by using the `tinymce.get('ID')` method on tinymce, defaults to an automatically generated uuid. 
 * `init`: Object sent to the `tinymce.init` method used to initialize the editor.
 * `initialValue`: Initial value that the editor will be initialized with.
