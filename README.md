@@ -2,7 +2,7 @@
 
 ## About
 
-This package is a thin wrapper around `tinymce` to make it easier to use in an Angular application. 
+This package is a thin wrapper around `tinymce` to make it easier to use in an Angular application.
 
 For some quick demos, check out the [storybook](https://tinymce.github.io/tinymce-angular/).
 
@@ -55,13 +55,13 @@ Use the editor in your templates like this:
 
 The editor accepts the following inputs:
 * `disabled`: Using this input that takes a boolean value you can dynamically set the editor into a "disabled" readonly mode or into the normal editable mode.
-* `id`: An id for the editor so you can later grab the instance by using the `tinymce.get('ID')` method on tinymce, defaults to an automatically generated uuid. 
+* `id`: An id for the editor so you can later grab the instance by using the `tinymce.get('ID')` method on tinymce, defaults to an automatically generated uuid.
 * `init`: Object sent to the `tinymce.init` method used to initialize the editor.
 * `initialValue`: Initial value that the editor will be initialized with.
 * `inline`: Shorthand for setting that the editor should be inline, `<editor [inline]="true"></editor>` is the same as setting `{inline: true}` in the init.
 * `tagName`: Only used if the editor is inline, decides what element to initialize the editor on, defaults to `div`.
 * `plugins`: Shorthand for setting what plugins you want to use, `<editor plugins="foo bar"></editor>` is the same as setting `{plugins: 'foo bar'}` in the init.
-* `toolbar`: Shorthand for setting what toolbar items you want to show, `<editor toolbar="foo bar"></editor>` is the same as setting `{toolbar: 'foo bar'}` in the init. 
+* `toolbar`: Shorthand for setting what toolbar items you want to show, `<editor toolbar="foo bar"></editor>` is the same as setting `{toolbar: 'foo bar'}` in the init.
 * `apiKey`: Api key for TinyMCE cloud, more info below.
 * `cloudChannel`: Cloud channel for TinyMCE Cloud, more info below.
 
@@ -73,6 +73,16 @@ You can also use the `ngModel` directive (more info in the [Angular documentatio
 
 ```tsx
 <editor [(ngModel)]="dataModel"></editor>
+```
+
+### Using with reactive forms
+
+The component also works with reactive forms (see [Angular documentation](https://angular.io/guide/reactive-forms))).
+
+For example it can be used with the `formControlName` directive like this, placed inside a `formGroup`:
+
+```tsx
+<editor [formControlName]="schema.key" [init]="{plugins: 'link'}></editor>
 ```
 
 ### Event binding
@@ -175,4 +185,3 @@ For more info on the different versions see the [documentation](https://www.tiny
 ### Loading TinyMCE by yourself
 
 To opt out of using TinyMCE cloud you have to make TinyMCE globally available yourself. This can be done either by hosting the `tinymce.min.js` file by youself and adding a script tag to you HTML or, if you are using a module loader, installing TinyMCE with npm. For info on how to get TinyMCE working with module loaders check out [this page in the documentation](https://www.tinymce.com/docs/advanced/usage-with-module-loaders/).
-
