@@ -7,7 +7,7 @@
  */
 
 const getTinymce = () => {
-  const w = <any> window;
+  const w = typeof window !== 'undefined' ? (window as any) : undefined;
   return w && w.tinymce ? w.tinymce : null;
 };
 

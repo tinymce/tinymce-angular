@@ -1,10 +1,11 @@
-import { Component, AfterViewInit, Input, ElementRef, OnDestroy, forwardRef, NgZone } from '@angular/core';
+import { Component, AfterViewInit, Input, ElementRef, OnDestroy, forwardRef, NgZone, Inject, PLATFORM_ID } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import * as ScriptLoader from '../utils/ScriptLoader';
 import { uuid, isTextarea, bindHandlers, mergePlugins } from '../utils/Utils';
 import { getTinymce } from '../TinyMCE';
 import { Events } from './Events';
+import { isPlatformBrowser } from '@angular/common';
 
 const scriptState = ScriptLoader.create();
 
@@ -52,7 +53,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   private onTouchedCallback = () => {};
   private onChangeCallback = (x: any) => {};
 
-  constructor(elementRef: ElementRef, ngZone: NgZone) {
+  constructor(elementRef: ElementRef, ngZone: NgZone, @Inject(PLATFORM_ID) private platformId: Object) {
     super();
     this.elementRef = elementRef;
     this.ngZone = ngZone;
@@ -84,18 +85,20 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   }
 
   ngAfterViewInit() {
-    this.id = this.id || uuid('tiny-angular');
-    this.inline =
-      typeof this.inline !== 'undefined' ? (typeof this.inline === 'boolean' ? this.inline : true) : this.init && this.init.inline;
-    this.createElement();
-    if (getTinymce() !== null) {
-      this.initialise();
-    } else if (this.element) {
-      const doc = this.element.ownerDocument;
-      const channel = this.cloudChannel || 'stable';
-      const apiKey = this.apiKey || '';
+    if (isPlatformBrowser(this.platformId)) {
+      this.id = this.id || uuid('tiny-angular');
+      this.inline =
+        typeof this.inline !== 'undefined' ? (typeof this.inline === 'boolean' ? this.inline : true) : this.init && this.init.inline;
+      this.createElement();
+      if (getTinymce() !== null) {
+        this.initialise();
+      } else if (this.element && this.element.ownerDocument) {
+        const doc = this.element.ownerDocument;
+        const channel = this.cloudChannel || 'stable';
+        const apiKey = this.apiKey || '';
 
-      ScriptLoader.load(scriptState, doc, `https://cloud.tinymce.com/${channel}/tinymce.min.js?apiKey=${apiKey}`, this.initialise);
+        ScriptLoader.load(scriptState, doc, `https://cloud.tinymce.com/${channel}/tinymce.min.js?apiKey=${apiKey}`, this.initialise);
+      }
     }
   }
 

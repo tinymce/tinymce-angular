@@ -1,3 +1,7 @@
+# 2.3.0
+
+* Added platform detection to make the package work better with SSR.
+
 # 2.2.0
 
 * Added support for disabling the editor via the `disabled` attribute.
