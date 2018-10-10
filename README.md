@@ -89,7 +89,7 @@ For example it can be used with the `formControlName` directive like this, place
 
 You can also bind editor events via a shorthand prop on the editor, for example:
 ```tsx
-<editor (onSelectionChange)="handleEvent($eventObj)"></editor>
+<editor (onSelectionChange)="handleEvent($event)"></editor>
 ```
 Where the handler gets called with an object containing the properties `event`, which is the event object, and `editor`, which is a reference to the editor.
 

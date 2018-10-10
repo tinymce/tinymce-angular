@@ -1,3 +1,7 @@
+# 2.3.1
+
+* Fixed incorrect documentation in readme.md file.
+
 # 2.3.0
 
 * Added platform detection to make the package work better with SSR.
