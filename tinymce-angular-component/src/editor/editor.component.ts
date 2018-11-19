@@ -91,7 +91,9 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
         typeof this.inline !== 'undefined' ? (typeof this.inline === 'boolean' ? this.inline : true) : this.init && this.init.inline;
       this.createElement();
       if (getTinymce() !== null) {
-        this.initialise();
+        setTimeout(() => {
+          this.initialise();
+        });
       } else if (this.element && this.element.ownerDocument) {
         const doc = this.element.ownerDocument;
         const channel = this.cloudChannel || 'stable';
