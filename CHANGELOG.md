@@ -1,3 +1,7 @@
+# 2.3.2
+
+* Change deps to support Angular 7.
+
 # 2.3.1
 
 * Fixed incorrect documentation in readme.md file.
