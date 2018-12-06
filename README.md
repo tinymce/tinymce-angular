@@ -185,3 +185,33 @@ For more info on the different versions see the [documentation](https://www.tiny
 ### Loading TinyMCE by yourself
 
 To opt out of using TinyMCE cloud you have to make TinyMCE globally available yourself. This can be done either by hosting the `tinymce.min.js` file by youself and adding a script tag to you HTML or, if you are using a module loader, installing TinyMCE with npm. For info on how to get TinyMCE working with module loaders check out [this page in the documentation](https://www.tinymce.com/docs/advanced/usage-with-module-loaders/).
+Following step by step guide outlines the process of loading TinyMCE and TinyMCE-Angular in your local Angular project.
+
+* Install TinyMCE using NPM
+  * `npm install --save tinymce`
+* In your `angular.json`, add `tinymce.min.js`, your desired theme (`.js`) and all required plugins in the "scripts" list of your Angular build declaration
+  * To get karma tests working, provide `tinymce.min.js` in the "scripts" lists of "test". Depending on your text fixture, you might want to add plugins as well.
+  * Your script list might look like the following:
+  ```tsx
+  "scripts": [
+    "node_modules/tinymce/tinymce.min.js",
+    "node_modules/tinymce/themes/modern/theme.js",
+    "node_modules/tinymce/plugins/fullscreen/plugin.js",
+  ]
+  ```
+* To get TinyMCE themes and styles, you need to provide them manually, i.e. by copying them into your assets folder.
+  * `cp -r node_modules/tinymce/skins src/assets/tinymce/skins`
+* Finally, configure the `<editor>` to use the local skin files by using the `skin_url` setting:
+  ```tsx
+  public tinyMceSettings = {
+    skin_url: '/assets/tinymce/skins/lightgray',
+    inline: false,
+    statusbar: false,
+    browser_spellcheck: true,
+    height: 320,
+    plugins: 'fullscreen',
+  };
+  ```
+  ```tsx
+  <editor [init]="tinyMceSettings"></editor>
+  ```
