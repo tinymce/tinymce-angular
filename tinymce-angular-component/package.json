@@ -1,7 +1,7 @@
 {
   "name": "@tinymce/tinymce-angular",
   "description": "Official TinyMCE Angular Component",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "repository": "https://github.com/tinymce/tinymce-angular.git",
   "author": "Ephox Inc",
   "license": "Apache-2.0",

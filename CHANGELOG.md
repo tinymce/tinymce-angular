@@ -1,3 +1,7 @@
+# 2.3.3
+
+* Improved documentation.
+
 # 2.3.2
 
 * Change deps to support Angular 7.
