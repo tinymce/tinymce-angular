@@ -62,6 +62,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   writeValue(value: string | null): void {
     this.initialValue = value || this.initialValue;
+    value = value || '';
 
     if (this.editor && this.editor.initialized && typeof value === 'string') {
       this.editor.setContent(value);
