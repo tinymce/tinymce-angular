@@ -1,3 +1,7 @@
+# 2.4.0
+
+* Make editor always invoke touched callback on blur. Patch contributed by joensindholt 
+
 # 2.3.3
 
 * Improved documentation.
