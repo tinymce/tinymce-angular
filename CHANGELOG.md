@@ -1,3 +1,7 @@
+# 2.4.1
+
+* Fixed a bug where `FormGroup.reset()` didn't clear the editor content when used in a formgroup. Patch contributed by nishanthkarthik.
+
 # 2.4.0
 
 * Make editor always invoke touched callback on blur. Patch contributed by joensindholt 
