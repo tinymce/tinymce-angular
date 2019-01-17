@@ -1,3 +1,7 @@
+# 2.5.0
+
+* Add EditorComponent to public api.
+
 # 2.4.1
 
 * Fixed a bug where `FormGroup.reset()` didn't clear the editor content when used in a formgroup. Patch contributed by nishanthkarthik.
