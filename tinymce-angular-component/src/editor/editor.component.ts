@@ -24,7 +24,7 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR = {
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
   private elementRef: ElementRef;
   private element: Element | undefined = undefined;
-  private editor: any;
+  public editor: any;
 
   ngZone: NgZone;
 
