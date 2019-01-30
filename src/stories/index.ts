@@ -6,7 +6,8 @@ import { Component } from '@angular/core';
   selector: 'testing-disabling',
   template: `
     <editor [disabled]="isDisabled" initialValue="<p>hello world</p>"></editor>
-    <button (click)="toggleDisabled()">{{isDisabled ? 'enable' : 'disable'}}</button>`
+    <button (click)="toggleDisabled()">{{ isDisabled ? 'enable' : 'disable' }}</button>
+  `
 })
 class DisablingTestComponent {
   isDisabled = false;
@@ -25,6 +26,18 @@ storiesOf('Editor', module)
       initialValue: '😀 😎 👍 💯'
     }
   }))
+  .add(
+    'with cloudChannel set to 5-dev',
+    () => ({
+      component: EditorComponent,
+      props: {
+        cloudChannel: '5-dev'
+      }
+    }),
+    {
+      notes: 'Make sure to do a full refresh of this page to load Tinymce 5.'
+    }
+  )
   .add('disabling', () => ({
     component: DisablingTestComponent
   }));
