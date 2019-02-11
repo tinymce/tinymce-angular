@@ -1,3 +1,6 @@
+## 3.0.0
+* Changed default cloudChannel to `'5'`.
+
 # 2.5.0
 
 * Add EditorComponent to public api.
