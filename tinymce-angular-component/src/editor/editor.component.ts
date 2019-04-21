@@ -155,10 +155,6 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       this.ngZone.run(() => editor.setContent(this.initialValue));
     }
     editor.on('blur', () => this.ngZone.run(() => this.onTouchedCallback()));
-    editor.on(
-      'setcontent',
-      ({ content, format }: any) => format === 'html' && content && this.ngZone.run(() => this.onChangeCallback(content))
-    );
     editor.on('change keyup undo redo', () => this.ngZone.run(() => this.onChangeCallback(editor.getContent())));
     bindHandlers(this, editor, initEvent);
   }
