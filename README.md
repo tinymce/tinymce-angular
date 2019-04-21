@@ -8,7 +8,7 @@ For some quick demos, check out the [storybook](https://tinymce.github.io/tinymc
 
 ## Development instructions
 
-The editor component itselt is located in the `tinymce-angular-component` and packaged into a redistributable package with the [ng-packagr](https://github.com/dherges/ng-packagr) tool. A test app has been created with the [`@angular/cli`](https://github.com/angular/angular-cli). It is located in the `src` directory and a dev server can be started by using the `ng serve` command.
+The editor component itselt is located in the `tinymce-angular-component` and packaged into a redistributable package with the [ng-packagr](https://github.com/dherges/ng-packagr) tool.
 
 ## Installation
 

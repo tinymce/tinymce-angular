@@ -1,0 +1,41 @@
+<div [hidden]="submitted">
+  <form (ngSubmit)="onSubmit()" #blogForm="ngForm">
+    <div>
+      <input
+        required
+        name="title"
+        type="text"
+        placeholder="Title"
+        [(ngModel)]="post.title"
+        [ngClass]="{ 'valid': title.touched && title.valid, 'invalid': title.touched && !title.valid }"
+        #title="ngModel">
+    </div>
+
+    <div>
+      <editor
+        required
+        name="content"
+        [(ngModel)]="post.content"
+        #content="ngModel"
+        [ngClass]="{ 'valid': content.touched && content.valid, 'invalid': content.touched && !content.valid }"
+        ></editor>
+    </div>
+
+    <div>
+      <label [hidden]="blogForm.valid">Form is invalid </label>
+      <label [hidden]="!blogForm.valid">Form is valid </label>
+      <button type="submit" [disabled]="!blogForm.form.valid">Submit</button>
+    </div>
+  </form>
+</div>
+
+<div [hidden]="!submitted">
+  <h3>Title: {{post.title}}</h3>
+  <div class="preview" [innerHTML]="post.content | safe: 'html'"></div>
+
+  <div>Raw: {{post | json}}</div>
+
+  <div>
+    <button (click)="onSubmit()">Edit</button>
+  </div>
+</div>

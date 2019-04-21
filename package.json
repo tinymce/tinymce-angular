@@ -5,17 +5,13 @@
   "author": "Ephox Inc",
   "license": "Apache-2.0",
   "scripts": {
-    "clean": "rimraf lib",
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build --prod",
-    "build:package": "npm run clean && ng-packagr -p tinymce-angular-component/ng-package.json && copyfiles README.md lib/",
+    "start": "npm run storybook",
+    "storybook": "start-storybook -p 9001 -c .storybook",
     "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "prepare": "npm run build:package",
-    "publish": "npm run build:package && (cd lib && npm publish)",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "clean": "rimraf dist",
+    "build": "npm run clean && ng build && copyfiles README.md dist/tinymce-angular/",
+    "prepare": "npm run build",
+    "publish": "npm run build && (cd dist/tinymce-angular && npm publish)"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +32,7 @@
     "zone.js": "^0.8.28"
   },
   "devDependencies": {
+    "@angular-devkit/build-ng-packagr": "^0.13.8",
     "@angular/cli": "^7.2.2",
     "@angular/compiler-cli": "^7.2.1",
     "@angular/language-service": "^7.2.1",
@@ -59,9 +56,11 @@
     "karma-jasmine-html-reporter": "^1.4.0",
     "ng-packagr": "^4.6.0",
     "prettier": "^1.16.0",
-    "protractor": "~5.4.2",
     "rimraf": "^2.6.3",
+    "tinymce": "^5.0.3",
+    "to-string-loader": "^1.1.5",
     "ts-node": "~8.0.1",
+    "tslib": "^1.9.0",
     "tslint": "~5.12.1",
     "tslint-config-prettier": "^1.17.0",
     "tslint-plugin-prettier": "^2.0.1",

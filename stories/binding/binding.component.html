@@ -1,0 +1,14 @@
+<div>
+  <button (click)="editContent()" [innerText]="isEditingContent ? 'Save' : 'Edit'"></button>
+</div>
+
+<div *ngIf="!isEditingContent" [innerHTML]="content | safe: 'html'" ></div>
+
+<editor
+  *ngIf="isEditingContent"
+  [(ngModel)]="content"
+  (onInit)="log($event)"
+  (onKeyDown)="log($event)"
+  ></editor>
+
+<textarea [(ngModel)]="content" cols="30" rows="10"></textarea>
