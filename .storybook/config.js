@@ -3,7 +3,7 @@ import { withNotes } from '@storybook/addon-notes';
 
 addDecorator(withNotes);
 function loadStories() {
-  require('../src/stories/index.ts');
+  require('../stories/index.ts');
 }
 
 configure(loadStories, module);

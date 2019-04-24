@@ -1,3 +1,6 @@
+## 3.0.1
+* Fixed a bug where `ControlValueAccessor.writeValue()` or setting content programmatically would set `FormControl` pristine/dirty flags
+
 ## 3.0.0
 * Changed default cloudChannel to `'5'`.
 
