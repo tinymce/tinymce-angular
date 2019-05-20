@@ -2,8 +2,7 @@
 
 ## About
 
-This package is a thin wrapper around `tinymce` to make it easier to use in an Angular application.
-
+This package is a thin wrapper around [tinymce](https://github.com/tinymce/tinymce) to make it easier to use in an Angular application. If you need detailed documentation on TinyMCE itself head to the [Documentation Pages](https://www.tiny.cloud/docs/).
 For some quick demos, check out the [storybook](https://tinymce.github.io/tinymce-angular/).
 
 ## Development instructions
@@ -25,7 +24,7 @@ Import the `EditorModule` from the npm package like this:
 ```tsx
 import { EditorModule } from '@tinymce/tinymce-angular';
 ```
-And add it to you application module:
+And add it to your application module:
 
 ```tsx
 // This might look different depending on how you have set up your app
@@ -47,7 +46,7 @@ And add it to you application module:
 
 Use the editor in your templates like this:
 
-```tsx
+```html
 <editor apiKey="test" [init]="{plugins: 'link'}"></editor>
 ```
 
@@ -71,7 +70,7 @@ None of the configuration inputs are **required** for the editor to work - other
 
 You can also use the `ngModel` directive (more info in the [Angular documentation](https://angular.io/api/forms/NgModel)) on the editor to simplify using it in a form:
 
-```tsx
+```html
 <editor [(ngModel)]="dataModel"></editor>
 ```
 
@@ -81,14 +80,14 @@ The component also works with reactive forms (see [Angular documentation](https:
 
 For example it can be used with the `formControlName` directive like this, placed inside a `formGroup`:
 
-```tsx
+```html
 <editor [formControlName]="schema.key" [init]="{plugins: 'link'}></editor>
 ```
 
 ### Event binding
 
 You can also bind editor events via a shorthand prop on the editor, for example:
-```tsx
+```html
 <editor (onSelectionChange)="handleEvent($event)"></editor>
 ```
 Where the handler gets called with an object containing the properties `event`, which is the event object, and `editor`, which is a reference to the editor.
@@ -165,7 +164,7 @@ Here is a full list of the events available:
 ### Auto-loading from TinyMCE Cloud
 The `Editor` component needs TinyMCE to be globally available to work, but to make it as easy as possible it will automatically load [TinyMCE Cloud](https://www.tiny.cloud/docs/cloud-deployment-guide/) if it can't find TinyMCE available when the component has mounted. To get rid of the `This domain is not registered...` warning, sign up for the cloud and enter the api key like this:
 
-```tsx
+```html
 <editor apiKey="test" [init]="{/* your settings */}"></editor>
 ```
 
@@ -178,29 +177,36 @@ Following step by step guide outlines the process of loading TinyMCE and TinyMCE
 
 * Install TinyMCE using NPM
   * `npm install --save tinymce`
-* In your `angular.json`, add `tinymce.min.js`, your desired theme (`.js`) and all required plugins in the "scripts" list of your Angular build declaration
-  * To get karma tests working, provide `tinymce.min.js` in the "scripts" lists of "test". Depending on your text fixture, you might want to add plugins as well.
+* In your `angular.json` add tinymce to the *global scripts* tag.
   * Your script list might look like the following:
-  ```tsx
+  ```json
   "scripts": [
-    "node_modules/tinymce/tinymce.min.js",
-    "node_modules/tinymce/themes/modern/theme.js",
-    "node_modules/tinymce/plugins/fullscreen/plugin.js",
+    {
+      "input": "node_modules/tinymce/tinymce.min.js",
+      "bundleName": "tinymce.min"
+    }
   ]
   ```
-* To get TinyMCE themes and styles, you need to provide them manually, i.e. by copying them into your assets folder.
-  * `cp -r node_modules/tinymce/skins src/assets/tinymce/skins`
-* Finally, configure the `<editor>` to use the local skin files by using the `skin_url` setting:
-  ```tsx
+* Add tinymce skins, themes and plugins to the assets property of your `angular.json`. This will allow Tiny to lazy-load everything it requires on initialization.
+  ```json
+  "assets": [
+    { "glob": "**/*", "input": "node_modules/tinymce/skins", "output": "/skins/" },
+    { "glob": "**/*", "input": "node_modules/tinymce/themes", "output": "/themes/" },
+    { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/plugins/" }
+  ]
+  ```
+* Finally, configure the editor.
+  ```js
   public tinyMceSettings = {
-    skin_url: '/assets/tinymce/skins/lightgray',
-    inline: false,
-    statusbar: false,
     browser_spellcheck: true,
-    height: 320,
-    plugins: 'fullscreen',
+    plugins: 'lists advlist',
+    toolbar: 'undo redo | bold italic | bullist numlist outdent indent'
   };
   ```
-  ```tsx
+  ```html
   <editor [init]="tinyMceSettings"></editor>
   ```
+
+### Issues
+
+Have you have found an issue with `tinymce-angular` or do you have a feature request? Open up an [issue](https://github.com/tinymce/tinymce-angular/issues) and let us know or submit a [pull request](https://github.com/tinymce/tinymce-angular/pulls). *Note: for issues related to TinyMCE please visit the [TinyMCE repository](https://github.com/tinymce/tinymce).*
