@@ -181,30 +181,30 @@ Following step by step guide outlines the process of loading TinyMCE and TinyMCE
   * Your script list might look like the following:
   ```json
   "scripts": [
-    {
-      "input": "node_modules/tinymce/tinymce.min.js",
-      "bundleName": "tinymce.min"
-    }
+    "node_modules/tinymce/tinymce.min.js"
   ]
   ```
 * Add tinymce skins, themes and plugins to the assets property of your `angular.json`. This will allow Tiny to lazy-load everything it requires on initialization.
   ```json
   "assets": [
-    { "glob": "**/*", "input": "node_modules/tinymce/skins", "output": "/skins/" },
-    { "glob": "**/*", "input": "node_modules/tinymce/themes", "output": "/themes/" },
-    { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/plugins/" }
+    { "glob": "**/*", "input": "node_modules/tinymce/skins", "output": "/tinymce/skins/" },
+    { "glob": "**/*", "input": "node_modules/tinymce/themes", "output": "/tinymce/themes/" },
+    { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/tinymce/plugins/" }
   ]
   ```
+* If necessary, set the `base_url` and `suffix` of the global `tinyMCE` object. This must be done before any editor is initialized.
+  ```
+  window.tinyMCE.overrideDefaults({
+    base_url: '/tinymce/',  // Base for assets such as skins, themes and plugins
+    suffix: '.min'          // This will make Tiny load minified versions of all its assets
+  });
+  ```
 * Finally, configure the editor.
-  ```js
-  public tinyMceSettings = {
-    browser_spellcheck: true,
+  ```html
+  <editor [init]="{
     plugins: 'lists advlist',
     toolbar: 'undo redo | bold italic | bullist numlist outdent indent'
-  };
-  ```
-  ```html
-  <editor [init]="tinyMceSettings"></editor>
+  }"></editor>
   ```
 
 ### Issues
