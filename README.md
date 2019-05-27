@@ -2,12 +2,8 @@
 
 ## About
 
-This package is a thin wrapper around [tinymce](https://github.com/tinymce/tinymce) to make it easier to use in an Angular application. If you need detailed documentation on TinyMCE itself head to the [Documentation Pages](https://www.tiny.cloud/docs/).
+This package is a thin wrapper around [TinyMCE](https://github.com/tinymce/tinymce) to make it easier to use in an Angular application. If you need detailed documentation on TinyMCE itself head to the [TinyMCE Documentation](https://www.tiny.cloud/docs/).
 For some quick demos, check out the [storybook](https://tinymce.github.io/tinymce-angular/).
-
-## Development instructions
-
-The editor component itselt is located in the `tinymce-angular-component` and packaged into a redistributable package with the [ng-packagr](https://github.com/dherges/ng-packagr) tool.
 
 ## Installation
 
@@ -210,4 +206,4 @@ Following step by step guide outlines the process of loading TinyMCE and TinyMCE
 
 ### Issues
 
-Have you have found an issue with `tinymce-angular` or do you have a feature request? Open up an [issue](https://github.com/tinymce/tinymce-angular/issues) and let us know or submit a [pull request](https://github.com/tinymce/tinymce-angular/pulls). *Note: for issues related to TinyMCE please visit the [TinyMCE repository](https://github.com/tinymce/tinymce).*
+Have you found an issue with tinymce-angular or do you have a feature request? Open up an [issue](https://github.com/tinymce/tinymce-angular/issues) and let us know or submit a [pull request](https://github.com/tinymce/tinymce-angular/pulls). *Note: for issues concerning TinyMCE please visit the [TinyMCE repository](https://github.com/tinymce/tinymce).*
