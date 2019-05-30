@@ -15,24 +15,20 @@
     "publish": "npm run build && (cd dist/tinymce-angular && npm publish)"
   },
   "private": true,
-  "dependencies": {
+  "dependencies": { },
+  "devDependencies": {
     "@angular-devkit/build-angular": "^0.800.0",
+    "@angular-devkit/build-ng-packagr": "^0.800.0",
     "@angular-devkit/core": "^8.0.0",
+    "@angular/cli": "^8.0.0",
     "@angular/common": "^8.0.0",
     "@angular/compiler": "^8.0.0",
+    "@angular/compiler-cli": "^8.0.0",
     "@angular/core": "^8.0.0",
     "@angular/forms": "^8.0.0",
+    "@angular/language-service": "^8.0.0",
     "@angular/platform-browser": "^8.0.0",
     "@angular/platform-browser-dynamic": "^8.0.0",
-    "core-js": "~2.6.9",
-    "rxjs": "^6.3.3",
-    "zone.js": "~0.9.1"
-  },
-  "devDependencies": {
-    "@angular-devkit/build-ng-packagr": "^0.800.0",
-    "@angular/cli": "^8.0.0",
-    "@angular/compiler-cli": "^8.0.0",
-    "@angular/language-service": "^8.0.0",
     "@babel/core": "^7.2.2",
     "@storybook/addon-notes": "^5.0.11",
     "@storybook/angular": "^5.0.11",
@@ -41,6 +37,7 @@
     "babel-loader": "^8.0.5",
     "codelyzer": "^5.0.1",
     "copyfiles": "^2.1.0",
+    "core-js": "~2.6.9",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
@@ -51,6 +48,7 @@
     "ng-packagr": "^5.2.0",
     "prettier": "^1.16.0",
     "rimraf": "^2.6.3",
+    "rxjs": "^6.3.3",
     "tinymce": "^5.0.3",
     "to-string-loader": "^1.1.5",
     "tslib": "^1.9.0",
@@ -58,6 +56,7 @@
     "tslint-config-prettier": "^1.17.0",
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "~3.4.5",
-    "webpack": "^4.29.0"
+    "webpack": "^4.29.0",
+    "zone.js": "~0.9.1"
   }
 }
