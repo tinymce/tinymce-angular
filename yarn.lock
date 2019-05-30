@@ -131,13 +131,6 @@
     "@angular-devkit/core" "7.2.2"
     rxjs "6.3.3"
 
-"@angular/animations@^7.2.1":
-  version "7.2.13"
-  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-7.2.13.tgz#9a49482ea2e0386a691d5b9d7be422251b66d767"
-  integrity sha512-Z0g0DthJnxTZ0dUc5BlojMq/0XIikhWzTqq0ym8w3G6jqBJD0OJ0jRCIfV0Leqlgzq6Jzvdrx0/JngBiKi5+uA==
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular/cli@^7.2.2":
   version "7.2.2"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-7.2.2.tgz#408dc7cd69931301c108ee2637836f0e9e7e3f02"
@@ -198,13 +191,6 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/http@^7.2.1":
-  version "7.2.13"
-  resolved "https://registry.yarnpkg.com/@angular/http/-/http-7.2.13.tgz#d1de539be60e82865745ffd8fb7625bde90c21c5"
-  integrity sha512-MlaN7ugCLVH4B7hVasucbcdoSm3UzhP5JgGtcd9d9fQW0hzrn3FXQEZ75NJ/F0YYoGkr5ysAjpeknCjq/elTsg==
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular/language-service@^7.2.1":
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-7.2.1.tgz#894b909684c48f0e5e01278a42ddb8b700529b93"
@@ -221,13 +207,6 @@
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-7.2.1.tgz#57171b1e6d8995951e1b9563384344d58a657472"
   integrity sha512-/6uHdFLmRkrkeOo+TzScrLG2YydG8kBNyT6ZpSOBf+bmB5DHyIGd55gh/tQJteKrnyadxRhqWCLBTYAbVX9Pnw==
-  dependencies:
-    tslib "^1.9.0"
-
-"@angular/router@^7.2.1":
-  version "7.2.13"
-  resolved "https://registry.yarnpkg.com/@angular/router/-/router-7.2.13.tgz#9b470e37f57ddf2741e21d1f299974cf48b7e938"
-  integrity sha512-pTdJT9TXk1A9YMa6C2zRRqLB4GPGMSik838P7n+yGrzhdybiudZU9T3egcxDRCWQMjsobVBRKLEUn405n3Hjgg==
   dependencies:
     tslib "^1.9.0"
 
