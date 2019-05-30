@@ -26,7 +26,6 @@
     "@angular/platform-browser-dynamic": "^8.0.0",
     "core-js": "~2.6.9",
     "rxjs": "^6.3.3",
-    "tsickle": "^0.35.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
@@ -39,8 +38,6 @@
     "@storybook/angular": "^5.0.11",
     "@storybook/storybook-deployer": "^2.8.1",
     "@types/jasmine": "~3.3.7",
-    "@types/jasminewd2": "~2.0.6",
-    "@types/node": "~12.0.3",
     "babel-loader": "^8.0.5",
     "codelyzer": "^5.0.1",
     "copyfiles": "^2.1.0",
@@ -49,7 +46,6 @@
     "karma": "~4.1.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-cli": "~2.0.0",
-    "karma-coverage-istanbul-reporter": "^2.0.4",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "ng-packagr": "^5.2.0",
@@ -57,7 +53,6 @@
     "rimraf": "^2.6.3",
     "tinymce": "^5.0.3",
     "to-string-loader": "^1.1.5",
-    "ts-node": "~8.2.0",
     "tslib": "^1.9.0",
     "tslint": "~5.16.0",
     "tslint-config-prettier": "^1.17.0",
