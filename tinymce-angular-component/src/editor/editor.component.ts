@@ -29,7 +29,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   ngZone: NgZone;
 
   @Input() cloudChannel = '5';
-  @Input() apiKey = '';
+  @Input() apiKey = 'no-api-key';
   @Input() init: Record<string, any> | undefined;
   @Input() id = '';
   @Input() initialValue: string | undefined;
@@ -98,7 +98,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
         const channel = this.cloudChannel;
         const apiKey = this.apiKey;
 
-        ScriptLoader.load(scriptState, doc, `https://cloud.tinymce.com/${channel}/tinymce.min.js?apiKey=${apiKey}`, this.initialise);
+        ScriptLoader.load(scriptState, doc, `https://cdn.tiny.cloud/1/${apiKey}/tinymce/${channel}/tinymce.min.js`, this.initialise);
       }
     }
   }
