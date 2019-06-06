@@ -1,3 +1,6 @@
+## (TBA)
+* Changed the CDN URL to use `cdn.tiny.cloud`
+
 ## 3.0.1
 * Fixed a bug where `ControlValueAccessor.writeValue()` or setting content programmatically would set `FormControl` pristine/dirty flags
 
