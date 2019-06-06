@@ -1,4 +1,4 @@
-## (TBA)
+## 3.1.0
 * Changed the CDN URL to use `cdn.tiny.cloud`
 * Changed peer dependencies to support Angular 8.
 
