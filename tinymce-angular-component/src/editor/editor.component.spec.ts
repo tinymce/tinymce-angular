@@ -22,7 +22,7 @@ describe('EditorComponent', () => {
   describe('with ngModel', () => {
     let fixture: ComponentFixture<any>;
     let editorDebugElement: DebugElement;
-    let editorComponent: any;
+    let editorComponent: EditorComponent;
     let ngModel: NgModel;
 
     beforeEach((done) => {

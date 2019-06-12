@@ -4,6 +4,7 @@ import { BindingComponent } from './binding/binding.component';
 import { BlogComponent } from './blog/blog.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { DisablingComponent } from './disable/disable.component';
+import { ViewQueryComponent } from './viewquery/viewquery.component';
 
 storiesOf('Editor', module)
   .addDecorator(
@@ -25,6 +26,9 @@ storiesOf('Editor', module)
   }))
   .add('Disabling', () => ({
     component: DisablingComponent
+  }))
+  .add('ViewQuery', () => ({
+    component: ViewQueryComponent
   }))
   .add(
     'cloudChannel: 5-dev',
