@@ -18,18 +18,42 @@ storiesOf('Editor', module)
       initialValue: '<p>Initial Content</p>'
     }
   }))
-  .add('Data binding', () => ({
-    component: BindingComponent
-  }))
-  .add('Form validation', () => ({
-    component: BlogComponent
-  }))
-  .add('Disabling', () => ({
-    component: DisablingComponent
-  }))
-  .add('ViewQuery', () => ({
-    component: ViewQueryComponent
-  }))
+  .add(
+    'Data binding',
+    () => ({
+      component: BindingComponent
+    }),
+    {
+      notes: 'Simple example of data binding with ngModel'
+    }
+  )
+  .add(
+    'Form validation',
+    () => ({
+      component: BlogComponent
+    }),
+    {
+      notes: 'Example of form validation and data binding with ngModel'
+    }
+  )
+  .add(
+    'Disabling',
+    () => ({
+      component: DisablingComponent
+    }),
+    {
+      notes: 'Example of disabling the editor component'
+    }
+  )
+  .add(
+    'ViewQuery',
+    () => ({
+      component: ViewQueryComponent
+    }),
+    {
+      notes: 'Example of obtaining a reference to the editor with a view query'
+    }
+  )
   .add(
     'cloudChannel: 5-dev',
     () => ({
