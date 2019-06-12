@@ -1,51 +1,51 @@
-## 3.1.0
+## 3.1.0 (2019-06-06)
 * Changed the CDN URL to use `cdn.tiny.cloud`
 * Changed peer dependencies to support Angular 8.
 
-## 3.0.1
+## 3.0.1 (2019-04-21)
 * Fixed a bug where `ControlValueAccessor.writeValue()` or setting content programmatically would set `FormControl` pristine/dirty flags
 
-## 3.0.0
+## 3.0.0 (2019-02-11)
 * Changed default cloudChannel to `'5'`.
 
-# 2.5.0
+# 2.5.0 (2019-01-17)
 
 * Add EditorComponent to public api.
 
-# 2.4.1
+# 2.4.1 (2019-01-09)
 
 * Fixed a bug where `FormGroup.reset()` didn't clear the editor content when used in a formgroup. Patch contributed by nishanthkarthik.
 
-# 2.4.0
+# 2.4.0 (2019-01-07)
 
 * Make editor always invoke touched callback on blur. Patch contributed by joensindholt 
 
-# 2.3.3
+# 2.3.3 (2018-12-14)
 
 * Improved documentation.
 
-# 2.3.2
+# 2.3.2 (2018-12-03)
 
 * Change deps to support Angular 7.
 
-# 2.3.1
+# 2.3.1 (2018-10-10)
 
 * Fixed incorrect documentation in readme.md file.
 
-# 2.3.0
+# 2.3.0 (2018-10-08)
 
 * Added platform detection to make the package work better with SSR.
 
-# 2.2.0
+# 2.2.0 (2018-09-26)
 
 * Added support for disabling the editor via the `disabled` attribute.
 
-# 2.1.0
+# 2.1.0 (2018-09-24)
 
 * Fixed bug where textarea was being added to editor content if id was set.
 * Changed `inline` attribute to accept truthy values, so you can now do this: `<editor inline></editor>` instead of the earlier `<editor [inline]="true"></editor>`.
 
-# 2.0.1
+# 2.0.1 (2018-09-03)
 
 * Fixed broken links in readme.
 
