@@ -46,8 +46,13 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       this._editor.setMode(val ? 'readonly' : 'design');
     }
   }
+
   get disabled() {
     return this._disabled;
+  }
+
+  get editor() {
+    return this._editor;
   }
 
   private onTouchedCallback = () => {};
