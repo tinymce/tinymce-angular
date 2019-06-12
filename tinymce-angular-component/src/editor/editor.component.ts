@@ -22,9 +22,10 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR = {
   providers: [EDITOR_COMPONENT_VALUE_ACCESSOR]
 })
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
-  private elementRef: ElementRef;
-  private element: Element | undefined = undefined;
-  private editor: any;
+  private _elementRef: ElementRef;
+  private _element: Element | undefined = undefined;
+  private _disabled: boolean | undefined;
+  private _editor: any;
 
   ngZone: NgZone;
 
@@ -38,12 +39,11 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input() plugins: string | undefined;
   @Input() toolbar: string | string[] | null = null;
 
-  private _disabled: boolean | undefined;
   @Input()
   set disabled(val) {
     this._disabled = val;
-    if (this.editor && this.editor.initialized) {
-      this.editor.setMode(val ? 'readonly' : 'design');
+    if (this._editor && this._editor.initialized) {
+      this._editor.setMode(val ? 'readonly' : 'design');
     }
   }
   get disabled() {
@@ -55,7 +55,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   constructor(elementRef: ElementRef, ngZone: NgZone, @Inject(PLATFORM_ID) private platformId: Object) {
     super();
-    this.elementRef = elementRef;
+    this._elementRef = elementRef;
     this.ngZone = ngZone;
     this.initialise = this.initialise.bind(this);
   }
@@ -64,8 +64,8 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     this.initialValue = value || this.initialValue;
     value = value || '';
 
-    if (this.editor && this.editor.initialized && typeof value === 'string') {
-      this.editor.setContent(value);
+    if (this._editor && this._editor.initialized && typeof value === 'string') {
+      this._editor.setContent(value);
     }
   }
 
@@ -78,8 +78,8 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   }
 
   setDisabledState(isDisabled: boolean) {
-    if (this.editor) {
-      this.editor.setMode(isDisabled ? 'readonly' : 'design');
+    if (this._editor) {
+      this._editor.setMode(isDisabled ? 'readonly' : 'design');
     } else if (isDisabled) {
       this.init = { ...this.init, readonly: true };
     }
@@ -93,8 +93,8 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       this.createElement();
       if (getTinymce() !== null) {
         this.initialise();
-      } else if (this.element && this.element.ownerDocument) {
-        const doc = this.element.ownerDocument;
+      } else if (this._element && this._element.ownerDocument) {
+        const doc = this._element.ownerDocument;
         const channel = this.cloudChannel;
         const apiKey = this.apiKey;
 
@@ -105,32 +105,32 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   ngOnDestroy() {
     if (getTinymce() !== null) {
-      getTinymce().remove(this.editor);
+      getTinymce().remove(this._editor);
     }
   }
 
   createElement() {
     const tagName = typeof this.tagName === 'string' ? this.tagName : 'div';
-    this.element = document.createElement(this.inline ? tagName : 'textarea');
-    if (this.element) {
-      this.element.id = this.id;
-      if (isTextarea(this.element)) {
-        this.element.style.visibility = 'hidden';
+    this._element = document.createElement(this.inline ? tagName : 'textarea');
+    if (this._element) {
+      this._element.id = this.id;
+      if (isTextarea(this._element)) {
+        this._element.style.visibility = 'hidden';
       }
-      this.elementRef.nativeElement.appendChild(this.element);
+      this._elementRef.nativeElement.appendChild(this._element);
     }
   }
 
   initialise() {
     const finalInit = {
       ...this.init,
-      target: this.element,
+      target: this._element,
       inline: this.inline,
       readonly: this.disabled,
       plugins: mergePlugins(this.init && this.init.plugins, this.plugins),
       toolbar: this.toolbar || (this.init && this.init.toolbar),
       setup: (editor: any) => {
-        this.editor = editor;
+        this._editor = editor;
         editor.on('init', (e: Event) => {
           this.initEditor(e, editor);
         });
@@ -141,8 +141,8 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       }
     };
 
-    if (isTextarea(this.element)) {
-      this.element.style.visibility = '';
+    if (isTextarea(this._element)) {
+      this._element.style.visibility = '';
     }
 
     this.ngZone.runOutsideAngular(() => {
