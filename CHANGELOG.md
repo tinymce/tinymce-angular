@@ -1,3 +1,6 @@
+## 3.2.0 (TBA)
+* Added a getter for obtaining a reference to the editor
+
 ## 3.1.0 (2019-06-06)
 * Changed the CDN URL to use `cdn.tiny.cloud`
 * Changed peer dependencies to support Angular 8.
