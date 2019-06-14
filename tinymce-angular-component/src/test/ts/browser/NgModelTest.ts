@@ -37,7 +37,7 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
     editor.fire('keyup');
   };
 
-  const cSetup = Chain.async<void, NgModelTestContext>((_, next) => {
+  const cSetupEditorWithNgModel = Chain.async<void, NgModelTestContext>((_, next) => {
     const fixture = createComponent(EditorWithNgModelComponent);
     fixture.detectChanges();
     const editorDebugElement = fixture.debugElement.query(By.directive(EditorComponent));
@@ -59,28 +59,28 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
 
   Pipeline.async({}, [
     Log.chainsAsStep('', 'should be pristine, untouched, and valid initially', [
-      cSetup,
-      Chain.op((v) => {
-        Assertions.assertEq('ngModel should be valid', true, v.ngModel.valid);
-        Assertions.assertEq('ngModel should be pristine', true, v.ngModel.pristine);
-        Assertions.assertEq('ngModel should not be touched', false, v.ngModel.touched);
+      cSetupEditorWithNgModel,
+      Chain.op((context: NgModelTestContext) => {
+        Assertions.assertEq('ngModel should be valid', true, context.ngModel.valid);
+        Assertions.assertEq('ngModel should be pristine', true, context.ngModel.pristine);
+        Assertions.assertEq('ngModel should not be touched', false, context.ngModel.touched);
       }),
       cTeardown
     ]),
 
     Log.chainsAsStep('', 'should be pristine, untouched, and valid after writeValue', [
-      cSetup,
-      Chain.op((v) => {
-        v.editorComponent.writeValue('New Value');
-        v.fixture.detectChanges();
+      cSetupEditorWithNgModel,
+      Chain.op((context: NgModelTestContext) => {
+        context.editorComponent.writeValue('New Value');
+        context.fixture.detectChanges();
 
-        Assertions.assertEq('ngModel should be valid', true, v.ngModel.valid);
-        Assertions.assertEq('ngModel should be pristine', true, v.ngModel.pristine);
-        Assertions.assertEq('ngModel should not be touched', false, v.ngModel.touched);
+        Assertions.assertEq('ngModel should be valid', true, context.ngModel.valid);
+        Assertions.assertEq('ngModel should be pristine', true, context.ngModel.pristine);
+        Assertions.assertEq('ngModel should not be touched', false, context.ngModel.touched);
 
         Assertions.assertEq(
           'Value should have been written to the editor',
-          v.editorComponent.editor.getContent({ format: 'text' }),
+          context.editorComponent.editor.getContent({ format: 'text' }),
           'New Value'
         );
       }),
@@ -88,21 +88,21 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
     ]),
 
     Log.chainsAsStep('', 'should be pristine, untouched, and valid initially', [
-      cSetup,
-      Chain.op((v) => {
+      cSetupEditorWithNgModel,
+      Chain.op((context: NgModelTestContext) => {
         // Should be dirty after user input but remain untouched
-        fakeKeyUp(v.editorComponent.editor, 'X');
-        v.fixture.detectChanges();
+        fakeKeyUp(context.editorComponent.editor, 'X');
+        context.fixture.detectChanges();
 
-        Assertions.assertEq('ngModel should not be pristine', false, v.ngModel.pristine);
-        Assertions.assertEq('ngModel should not be touched', false, v.ngModel.touched);
+        Assertions.assertEq('ngModel should not be pristine', false, context.ngModel.pristine);
+        Assertions.assertEq('ngModel should not be touched', false, context.ngModel.touched);
 
         // If the editor loses focus, it should should remain dirty but should also turn touched
-        v.editorComponent.editor.fire('blur');
-        v.fixture.detectChanges();
+        context.editorComponent.editor.fire('blur');
+        context.fixture.detectChanges();
 
-        Assertions.assertEq('ngModel should not be pristine', false, v.ngModel.pristine);
-        Assertions.assertEq('ngModel should be touched', true, v.ngModel.touched);
+        Assertions.assertEq('ngModel should not be pristine', false, context.ngModel.pristine);
+        Assertions.assertEq('ngModel should be touched', true, context.ngModel.touched);
       }),
       cTeardown
     ]),

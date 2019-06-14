@@ -1,8 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
+    "baseUrl": ".",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -19,5 +18,8 @@
       "es2017",
       "dom"
     ]
-  }
+  },
+  "include": [
+    "tinymce-angular-component/src/**/*"
+  ]
 }

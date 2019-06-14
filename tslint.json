@@ -1,10 +1,9 @@
 {
   "defaultSeverity": "error",
   "extends": ["@ephox/tslint-rules/tslint.json"],
-  "jsRules": {
-    "semicolon": true
-  },
   "rules": {
     "variable-name": false
-  }
+  },
+  "component-class-suffix": true,
+  "import-blacklist": [true, "rxjs/Rx"]
 }

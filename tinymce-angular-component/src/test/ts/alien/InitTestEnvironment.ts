@@ -15,4 +15,5 @@ const setTinymceBaseUrl = (baseUrl: string) => {
   tinymce.baseURI = new tinymce.util.URI(tinymce.baseURL);
 };
 
+// TODO: use editor base_url init config
 setTinymceBaseUrl(`/project/node_modules/tinymce`);
