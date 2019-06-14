@@ -1,4 +1,4 @@
-import './InitTestEnvironment';
+import '../alien/InitTestEnvironment';
 
 import { Component, DebugElement, Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -6,8 +6,8 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Assertions, Chain, Log, Pipeline } from '@ephox/agar';
 import { UnitTest } from '@ephox/bedrock';
-import { EditorComponent } from './editor.component';
-import { EditorModule } from './editor.module';
+import { EditorComponent } from '../../../main/ts/editor/editor.component';
+import { EditorModule } from '../../../main/ts/editor/editor.module';
 
 @Component({
   template: '<editor [(ngModel)]="content"></editor>'

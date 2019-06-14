@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { EditorComponent } from '../../tinymce-angular-component/src/editor/editor.component';
+import { EditorComponent } from '../../tinymce-angular-component/src/main/ts/editor/editor.component';
 
 @Component({
   selector: 'viewquery',
