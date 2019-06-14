@@ -1,11 +1,29 @@
+import './InitTestEnvironment';
+
 import { Component, DebugElement, Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgModel } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { Assertions, Chain, Log, Pipeline } from '@ephox/agar';
+import { UnitTest } from '@ephox/bedrock';
 import { EditorComponent } from './editor.component';
 import { EditorModule } from './editor.module';
 
-describe('EditorComponent', () => {
+@Component({
+  template: '<editor [(ngModel)]="content"></editor>'
+})
+class EditorWithNgModelComponent {
+  public content = '';
+}
+
+interface NgModelTestContext {
+  editorComponent: EditorComponent;
+  editorDebugElement: DebugElement;
+  fixture: ComponentFixture<EditorWithNgModelComponent>;
+  ngModel: NgModel;
+}
+
+UnitTest.asynctest('NgModelTest', (success, failure) => {
   const createComponent = <T>(componentType: Type<T>) => {
     TestBed.configureTestingModule({
       imports: [EditorModule, FormsModule],
@@ -19,66 +37,74 @@ describe('EditorComponent', () => {
     editor.fire('keyup');
   };
 
-  describe('with ngModel', () => {
-    let fixture: ComponentFixture<any>;
-    let editorDebugElement: DebugElement;
-    let editorComponent: EditorComponent;
-    let ngModel: NgModel;
+  const cSetup = Chain.async<void, NgModelTestContext>((_, next) => {
+    const fixture = createComponent(EditorWithNgModelComponent);
+    fixture.detectChanges();
+    const editorDebugElement = fixture.debugElement.query(By.directive(EditorComponent));
+    const ngModel = editorDebugElement.injector.get<NgModel>(NgModel);
+    const editorComponent = editorDebugElement.componentInstance;
 
-    beforeEach((done) => {
-      fixture = createComponent(EditorWithNgModelComponent);
-      fixture.detectChanges();
-
-      editorDebugElement = fixture.debugElement.query(By.directive(EditorComponent));
-      editorComponent = editorDebugElement.componentInstance;
-      ngModel = editorDebugElement.injector.get<NgModel>(NgModel);
-
-      editorComponent.onInit.subscribe(() => {
-        editorComponent.editor.on('SkinLoaded', () => {
-          setTimeout(() => {
-            done();
-          }, 0);
-        });
+    editorComponent.onInit.subscribe(() => {
+      editorComponent.editor.on('SkinLoaded', () => {
+        setTimeout(() => {
+          next({ fixture, editorDebugElement, editorComponent, ngModel });
+        }, 0);
       });
     });
-
-    it('should be pristine, untouched, and valid initially', () => {
-      expect(ngModel.valid).toBe(true);
-      expect(ngModel.pristine).toBe(true);
-      expect(ngModel.touched).toBe(false);
-    });
-
-    it('should be pristine, untouched, and valid after writeValue', () => {
-      editorComponent.writeValue('New Value');
-      fixture.detectChanges();
-
-      expect(ngModel.valid).toBe(true);
-      expect(ngModel.pristine).toBe(true);
-      expect(ngModel.touched).toBe(false);
-      expect(editorComponent.editor.getContent({ format: 'text' })).toEqual('New Value');
-    });
-
-    it('should have correct control flags after interaction', () => {
-      // Should be dirty after user input but remain untouched
-      fakeKeyUp(editorComponent.editor, 'X');
-      fixture.detectChanges();
-
-      expect(ngModel.pristine).toBe(false);
-      expect(ngModel.touched).toBe(false);
-
-      // If the editor loses focus, it should should remain dirty but should also turn touched
-      editorComponent.editor.fire('blur');
-      fixture.detectChanges();
-
-      expect(ngModel.pristine).toBe(false);
-      expect(ngModel.touched).toBe(true);
-    });
   });
-});
 
-@Component({
-  template: '<editor [(ngModel)]="content"></editor>'
-})
-class EditorWithNgModelComponent {
-  public content = '';
-}
+  const cTeardown = Chain.op(() => {
+    TestBed.resetTestingModule();
+  });
+
+  Pipeline.async({}, [
+    Log.chainsAsStep('', 'should be pristine, untouched, and valid initially', [
+      cSetup,
+      Chain.op((v) => {
+        Assertions.assertEq('ngModel should be valid', true, v.ngModel.valid);
+        Assertions.assertEq('ngModel should be pristine', true, v.ngModel.pristine);
+        Assertions.assertEq('ngModel should not be touched', false, v.ngModel.touched);
+      }),
+      cTeardown
+    ]),
+
+    Log.chainsAsStep('', 'should be pristine, untouched, and valid after writeValue', [
+      cSetup,
+      Chain.op((v) => {
+        v.editorComponent.writeValue('New Value');
+        v.fixture.detectChanges();
+
+        Assertions.assertEq('ngModel should be valid', true, v.ngModel.valid);
+        Assertions.assertEq('ngModel should be pristine', true, v.ngModel.pristine);
+        Assertions.assertEq('ngModel should not be touched', false, v.ngModel.touched);
+
+        Assertions.assertEq(
+          'Value should have been written to the editor',
+          v.editorComponent.editor.getContent({ format: 'text' }),
+          'New Value'
+        );
+      }),
+      cTeardown
+    ]),
+
+    Log.chainsAsStep('', 'should be pristine, untouched, and valid initially', [
+      cSetup,
+      Chain.op((v) => {
+        // Should be dirty after user input but remain untouched
+        fakeKeyUp(v.editorComponent.editor, 'X');
+        v.fixture.detectChanges();
+
+        Assertions.assertEq('ngModel should not be pristine', false, v.ngModel.pristine);
+        Assertions.assertEq('ngModel should not be touched', false, v.ngModel.touched);
+
+        // If the editor loses focus, it should should remain dirty but should also turn touched
+        v.editorComponent.editor.fire('blur');
+        v.fixture.detectChanges();
+
+        Assertions.assertEq('ngModel should not be pristine', false, v.ngModel.pristine);
+        Assertions.assertEq('ngModel should be touched', true, v.ngModel.touched);
+      }),
+      cTeardown
+    ]),
+  ], success, failure);
+});
