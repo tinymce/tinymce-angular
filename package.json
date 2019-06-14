@@ -6,10 +6,9 @@
   "license": "Apache-2.0",
   "scripts": {
     "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
-    "start": "npm run storybook",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "test": "bedrock-auto -b chrome-headless -f src/test/ts/**/*Test.ts",
-    "test-manual": "bedrock -f tinymce-angular-component/src/editor/editor.component.spec.ts",
+    "test": "bedrock-auto -b chrome-headless -f tinymce-angular-component/src/test/ts/**/*Test.ts",
+    "test-manual": "bedrock -f tinymce-angular-component/src/test/ts/**/*Test.ts",
     "clean": "rimraf dist",
     "build": "npm run clean && ng build && copyfiles README.md dist/tinymce-angular/",
     "prepare": "npm run build",
