@@ -1,11 +1,10 @@
-import { Component, AfterViewInit, Input, ElementRef, OnDestroy, forwardRef, NgZone, Inject, PLATFORM_ID } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-import * as ScriptLoader from '../utils/ScriptLoader';
-import { uuid, isTextarea, bindHandlers, mergePlugins } from '../utils/Utils';
-import { getTinymce } from '../TinyMCE';
-import { Events } from './Events';
 import { isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, forwardRef, Inject, Input, NgZone, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { getTinymce } from '../TinyMCE';
+import * as ScriptLoader from '../utils/ScriptLoader';
+import { bindHandlers, isTextarea, mergePlugins, uuid, noop } from '../utils/Utils';
+import { Events } from './Events';
 
 const scriptState = ScriptLoader.create();
 
@@ -22,22 +21,6 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR = {
   providers: [EDITOR_COMPONENT_VALUE_ACCESSOR]
 })
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
-  private _elementRef: ElementRef;
-  private _element: Element | undefined = undefined;
-  private _disabled: boolean | undefined;
-  private _editor: any;
-
-  ngZone: NgZone;
-
-  @Input() cloudChannel = '5';
-  @Input() apiKey = 'no-api-key';
-  @Input() init: Record<string, any> | undefined;
-  @Input() id = '';
-  @Input() initialValue: string | undefined;
-  @Input() inline: boolean | undefined;
-  @Input() tagName: string | undefined;
-  @Input() plugins: string | undefined;
-  @Input() toolbar: string | string[] | null = null;
 
   @Input()
   set disabled(val) {
@@ -55,8 +38,25 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     return this._editor;
   }
 
-  private onTouchedCallback = () => {};
-  private onChangeCallback = (x: any) => {};
+  public ngZone: NgZone;
+
+  @Input() public cloudChannel = '5';
+  @Input() public apiKey = 'no-api-key';
+  @Input() public init: Record<string, any> | undefined;
+  @Input() public id = '';
+  @Input() public initialValue: string | undefined;
+  @Input() public inline: boolean | undefined;
+  @Input() public tagName: string | undefined;
+  @Input() public plugins: string | undefined;
+  @Input() public toolbar: string | string[] | null = null;
+
+  private _elementRef: ElementRef;
+  private _element: Element | undefined = undefined;
+  private _disabled: boolean | undefined;
+  private _editor: any;
+
+  private onTouchedCallback = noop;
+  private onChangeCallback = noop;
 
   constructor(elementRef: ElementRef, ngZone: NgZone, @Inject(PLATFORM_ID) private platformId: Object) {
     super();
@@ -65,7 +65,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     this.initialise = this.initialise.bind(this);
   }
 
-  writeValue(value: string | null): void {
+  public writeValue(value: string | null): void {
     this.initialValue = value || this.initialValue;
     value = value || '';
 
@@ -74,15 +74,15 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     }
   }
 
-  registerOnChange(fn: (_: any) => void): void {
+  public registerOnChange(fn: (_: any) => void): void {
     this.onChangeCallback = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: any): void {
     this.onTouchedCallback = fn;
   }
 
-  setDisabledState(isDisabled: boolean) {
+  public setDisabledState(isDisabled: boolean) {
     if (this._editor) {
       this._editor.setMode(isDisabled ? 'readonly' : 'design');
     } else if (isDisabled) {
@@ -90,7 +90,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     }
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.id = this.id || uuid('tiny-angular');
       this.inline =
@@ -108,13 +108,13 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     }
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     if (getTinymce() !== null) {
       getTinymce().remove(this._editor);
     }
   }
 
-  createElement() {
+  public createElement() {
     const tagName = typeof this.tagName === 'string' ? this.tagName : 'div';
     this._element = document.createElement(this.inline ? tagName : 'textarea');
     if (this._element) {
@@ -126,7 +126,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     }
   }
 
-  initialise() {
+  public initialise() {
     const finalInit = {
       ...this.init,
       target: this._element,

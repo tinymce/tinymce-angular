@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 
+// tslint:disable:no-console
 @Component({
   selector: 'binding',
   templateUrl: './binding.component.html'
 })
 export class BindingComponent {
-  isEditingContent = false;
-  content = '<p>Initial Content</p>';
+  public isEditingContent = false;
+  public content = '<p>Initial Content</p>';
 
-  editContent() {
+  public editContent() {
     this.isEditingContent = !this.isEditingContent;
   }
 
-  log({ event, editor }: any) {
+  public log({ event, editor }: any) {
     console.log(event);
     console.log(editor.getContent());
   }

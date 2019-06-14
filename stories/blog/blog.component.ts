@@ -6,10 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./blog.component.css']
 })
 export class BlogComponent {
-  submitted = false;
-  post = { title: '', content: '' };
+  public submitted = false;
+  public post = { title: '', content: '' };
 
-  onSubmit() {
+  public onSubmit() {
     this.submitted = !this.submitted;
   }
 }

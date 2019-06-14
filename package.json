@@ -15,7 +15,7 @@
     "publish": "npm run build && (cd dist/tinymce-angular && npm publish)"
   },
   "private": true,
-  "dependencies": { },
+  "dependencies": {},
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.800.0",
     "@angular-devkit/build-ng-packagr": "^0.800.0",
@@ -30,6 +30,7 @@
     "@angular/platform-browser": "^8.0.0",
     "@angular/platform-browser-dynamic": "^8.0.0",
     "@babel/core": "^7.2.2",
+    "@ephox/tslint-rules": "^1.0.11",
     "@storybook/addon-notes": "^5.0.11",
     "@storybook/angular": "^5.0.11",
     "@storybook/storybook-deployer": "^2.8.1",
@@ -46,15 +47,12 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "ng-packagr": "^5.2.0",
-    "prettier": "^1.16.0",
     "rimraf": "^2.6.3",
     "rxjs": "^6.3.3",
     "tinymce": "^5.0.3",
     "to-string-loader": "^1.1.5",
     "tslib": "^1.9.0",
     "tslint": "~5.16.0",
-    "tslint-config-prettier": "^1.17.0",
-    "tslint-plugin-prettier": "^2.0.1",
     "typescript": "~3.4.5",
     "webpack": "^4.29.0",
     "zone.js": "~0.9.1"

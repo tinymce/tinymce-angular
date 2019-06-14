@@ -80,5 +80,5 @@ describe('EditorComponent', () => {
   template: '<editor [(ngModel)]="content"></editor>'
 })
 class EditorWithNgModelComponent {
-  content = '';
+  public content = '';
 }
