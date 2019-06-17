@@ -57,14 +57,18 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
     TestBed.resetTestingModule();
   });
 
+  const cAssertNgModelState = (prop: 'valid' | 'pristine' | 'touched', expected: boolean) => {
+    return Chain.op((context: NgModelTestContext) => {
+      Assertions.assertEq('assert ngModel ' + prop + ' state', context.ngModel[prop], expected);
+    });
+  };
+
   Pipeline.async({}, [
     Log.chainsAsStep('', 'should be pristine, untouched, and valid initially', [
       cSetupEditorWithNgModel,
-      Chain.op((context: NgModelTestContext) => {
-        Assertions.assertEq('ngModel should be valid', true, context.ngModel.valid);
-        Assertions.assertEq('ngModel should be pristine', true, context.ngModel.pristine);
-        Assertions.assertEq('ngModel should not be touched', false, context.ngModel.touched);
-      }),
+      cAssertNgModelState('valid', true),
+      cAssertNgModelState('pristine', true),
+      cAssertNgModelState('touched', false),
       cTeardown
     ]),
 
@@ -74,36 +78,34 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
         context.editorComponent.writeValue('New Value');
         context.fixture.detectChanges();
 
-        Assertions.assertEq('ngModel should be valid', true, context.ngModel.valid);
-        Assertions.assertEq('ngModel should be pristine', true, context.ngModel.pristine);
-        Assertions.assertEq('ngModel should not be touched', false, context.ngModel.touched);
-
         Assertions.assertEq(
           'Value should have been written to the editor',
           context.editorComponent.editor.getContent({ format: 'text' }),
           'New Value'
         );
       }),
+      cAssertNgModelState('valid', true),
+      cAssertNgModelState('pristine', true),
+      cAssertNgModelState('touched', false),
       cTeardown
     ]),
 
-    Log.chainsAsStep('', 'should be pristine, untouched, and valid initially', [
+    Log.chainsAsStep('', 'should have correct control flags after interaction', [
       cSetupEditorWithNgModel,
       Chain.op((context: NgModelTestContext) => {
-        // Should be dirty after user input but remain untouched
         fakeKeyUp(context.editorComponent.editor, 'X');
         context.fixture.detectChanges();
-
-        Assertions.assertEq('ngModel should not be pristine', false, context.ngModel.pristine);
-        Assertions.assertEq('ngModel should not be touched', false, context.ngModel.touched);
-
-        // If the editor loses focus, it should should remain dirty but should also turn touched
+      }),
+      // Should be dirty after user input but remain untouched
+      cAssertNgModelState('pristine', false),
+      cAssertNgModelState('touched', false),
+      Chain.op((context: NgModelTestContext) => {
         context.editorComponent.editor.fire('blur');
         context.fixture.detectChanges();
-
-        Assertions.assertEq('ngModel should not be pristine', false, context.ngModel.pristine);
-        Assertions.assertEq('ngModel should be touched', true, context.ngModel.touched);
       }),
+      // If the editor loses focus, it should should remain dirty but should also turn touched
+      cAssertNgModelState('pristine', false),
+      cAssertNgModelState('touched', true),
       cTeardown
     ]),
   ], success, failure);
