@@ -10,9 +10,9 @@
     "test": "bedrock-auto -b chrome-headless -f tinymce-angular-component/src/test/ts/**/*Test.ts",
     "test-manual": "bedrock -f tinymce-angular-component/src/test/ts/**/*Test.ts",
     "clean": "rimraf dist",
-    "build": "npm run clean && ng build && copyfiles README.md dist/tinymce-angular/",
-    "prepare": "npm run build",
-    "publish": "npm run build && (cd dist/tinymce-angular && npm publish)"
+    "build": "yarn run clean && ng build && copyfiles README.md dist/tinymce-angular/",
+    "prepare": "yarn run build",
+    "publish": "yarn run build && (cd dist/tinymce-angular && yarn publish)"
   },
   "private": true,
   "dependencies": {},
