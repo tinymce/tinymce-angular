@@ -26,7 +26,7 @@ const injectScriptTag = (scriptId: string, doc: Document, url: string, callback:
   }
 };
 
-export const create = (): IStateObj => {
+const create = (): IStateObj => {
   return {
     listeners: [],
     scriptId: uuid('tiny-script'),
@@ -34,7 +34,7 @@ export const create = (): IStateObj => {
   };
 };
 
-export const load = (state: IStateObj, doc: Document, url: string, callback: callbackFn) => {
+const load = (state: IStateObj, doc: Document, url: string, callback: callbackFn) => {
   if (state.scriptLoaded) {
     callback();
   } else {
@@ -46,4 +46,9 @@ export const load = (state: IStateObj, doc: Document, url: string, callback: cal
       });
     }
   }
+};
+
+export {
+  create,
+  load
 };

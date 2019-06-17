@@ -16,14 +16,6 @@
             "tsConfig": "tsconfig.json"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "tinymce-angular-component/src/test.ts",
-            "karmaConfig": "tinymce-angular-component/karma.conf.js",
-            "tsConfig": "tsconfig.json"
-          }
-        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {

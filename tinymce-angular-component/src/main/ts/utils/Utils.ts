@@ -10,7 +10,7 @@ import { EventEmitter } from '@angular/core';
 import { EditorComponent } from '../editor/editor.component';
 import { validEvents } from '../editor/Events';
 
-export const bindHandlers = (ctx: EditorComponent, editor: any, initEvent: Event): void => {
+const bindHandlers = (ctx: EditorComponent, editor: any, initEvent: Event): void => {
   validEvents.forEach((eventName) => {
     const eventEmitter: EventEmitter<any> = ctx[eventName];
     if (eventEmitter.observers.length > 0) {
@@ -25,7 +25,7 @@ export const bindHandlers = (ctx: EditorComponent, editor: any, initEvent: Event
 
 let unique = 0;
 
-export const uuid = (prefix: string): string => {
+const uuid = (prefix: string): string => {
   const date = new Date();
   const time = date.getTime();
   const random = Math.floor(Math.random() * 1000000000);
@@ -35,7 +35,7 @@ export const uuid = (prefix: string): string => {
   return prefix + '_' + random + unique + String(time);
 };
 
-export const isTextarea = (element?: Element): element is HTMLTextAreaElement => {
+const isTextarea = (element?: Element): element is HTMLTextAreaElement => {
   return typeof element !== 'undefined' && element.tagName.toLowerCase() === 'textarea';
 };
 
@@ -47,5 +47,17 @@ const normalizePluginArray = (plugins?: string | string[]): string[] => {
   return Array.isArray(plugins) ? plugins : plugins.split(' ');
 };
 
-export const mergePlugins = (initPlugins: string | string[], inputPlugins?: string | string[]) =>
+const mergePlugins = (initPlugins: string | string[], inputPlugins?: string | string[]) =>
   normalizePluginArray(initPlugins).concat(normalizePluginArray(inputPlugins));
+
+// tslint:disable-next-line:no-empty
+const noop: (...args: any[]) => void = () => { };
+
+export {
+  bindHandlers,
+  uuid,
+  isTextarea,
+  normalizePluginArray,
+  mergePlugins,
+  noop
+};

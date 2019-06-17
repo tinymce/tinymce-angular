@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
   `
 })
 export class DisablingComponent {
-  isDisabled = false;
-  toggleDisabled = () => (this.isDisabled = !this.isDisabled);
+  public isDisabled = false;
+  public toggleDisabled = () => (this.isDisabled = !this.isDisabled);
 }
