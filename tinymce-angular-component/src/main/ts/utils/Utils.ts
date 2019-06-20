@@ -17,7 +17,7 @@ const bindHandlers = (ctx: EditorComponent, editor: any, initEvent: Event): void
       if (eventName === 'onInit') {
         ctx.ngZone.run(() => eventEmitter.emit({ event: initEvent, editor }));
       } else {
-        editor.on(eventName.substring(2), ctx.ngZone.run(() => (event: any) => eventEmitter.emit({ event, editor })));
+        editor.on(eventName.substring(2), (event) => ctx.ngZone.run(() => eventEmitter.emit({ event, editor })));
       }
     }
   });
