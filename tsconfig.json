@@ -20,6 +20,7 @@
     ]
   },
   "include": [
-    "tinymce-angular-component/src/**/*"
+    "tinymce-angular-component/src/**/*",
+    "stories/**/*"
   ]
 }
