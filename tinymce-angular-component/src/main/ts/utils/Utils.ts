@@ -13,12 +13,10 @@ import { validEvents } from '../editor/Events';
 const bindHandlers = (ctx: EditorComponent, editor: any, initEvent: Event): void => {
   validEvents.forEach((eventName) => {
     const eventEmitter: EventEmitter<any> = ctx[eventName];
-    if (eventEmitter.observers.length > 0) {
-      if (eventName === 'onInit') {
-        ctx.ngZone.run(() => eventEmitter.emit({ event: initEvent, editor }));
-      } else {
-        editor.on(eventName.substring(2), ctx.ngZone.run(() => (event: any) => eventEmitter.emit({ event, editor })));
-      }
+    if (eventName === 'onInit') {
+      ctx.ngZone.run(() => eventEmitter.emit({ event: initEvent, editor }));
+    } else {
+      editor.on(eventName.substring(2), (event: any) => ctx.ngZone.run(() => eventEmitter.emit({ event, editor })));
     }
   });
 };

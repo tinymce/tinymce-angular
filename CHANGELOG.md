@@ -1,5 +1,6 @@
 ## 3.2.0 (TBA)
 * Added a getter for obtaining a reference to the editor
+* Fixed a bug that made EventEmitters run outside of NgZone. Patch contributed by garrettld #GH-95
 
 ## 3.1.0 (2019-06-06)
 * Changed the CDN URL to use `cdn.tiny.cloud`
