@@ -170,7 +170,7 @@ You can also define what cloud channel you want to use, for more info on the dif
 
 To opt out of using TinyMCE cloud you have to make TinyMCE globally available yourself. This can be done either by hosting the `tinymce.min.js` file by youself and adding a script tag to you HTML or, if you are using a module loader, installing TinyMCE with npm. For info on how to get TinyMCE working with module loaders check out [this page in the documentation](https://www.tinymce.com/docs/advanced/usage-with-module-loaders/).
 
-Following step by step guide outlines the process of loading TinyMCE and TinyMCE-Angular in your local project managed by the Angular CLI.
+Following step by step guide outlines the process of loading TinyMCE and TinyMCE-Angular in your project managed by the Angular CLI.
 
 * Install TinyMCE using NPM
   * `npm install --save tinymce`
@@ -189,16 +189,11 @@ Following step by step guide outlines the process of loading TinyMCE and TinyMCE
     { "glob": "**/*", "input": "node_modules/tinymce/plugins", "output": "/tinymce/plugins/" }
   ]
   ```
-* If necessary, set the `base_url` and `suffix` of the global `tinyMCE` object. This must be done before any editor is initialized.
-  ```
-  window.tinyMCE.overrideDefaults({
-    base_url: '/tinymce/',  // Base for assets such as skins, themes and plugins
-    suffix: '.min'          // This will make Tiny load minified versions of all its assets
-  });
-  ```
-* Finally, configure the editor.
+* Finally, configure the editor. If necessary, set the `base_url` and `suffix` options.
   ```html
   <editor [init]="{
+    base_url: '/tinymce', // Root for resources
+    suffix: '.min',       // Suffix to use when loading resources
     plugins: 'lists advlist',
     toolbar: 'undo redo | bold italic | bullist numlist outdent indent'
   }"></editor>
