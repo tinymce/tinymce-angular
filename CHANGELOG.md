@@ -1,4 +1,4 @@
-## 3.2.0 (TBA)
+## 3.2.0 (2019-07-01)
 * Added a getter for obtaining a reference to the editor
 * Fixed a bug that made EventEmitters run outside of NgZone. Patch contributed by garrettld #GH-95
 
