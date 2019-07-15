@@ -5,6 +5,7 @@ import { getTinymce } from '../TinyMCE';
 import * as ScriptLoader from '../utils/ScriptLoader';
 import { bindHandlers, isTextarea, mergePlugins, uuid, noop } from '../utils/Utils';
 import { Events } from './Events';
+import { Observable } from 'rxjs';
 
 const scriptState = ScriptLoader.create();
 
@@ -49,6 +50,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input() public tagName: string | undefined;
   @Input() public plugins: string | undefined;
   @Input() public toolbar: string | string[] | null = null;
+  @Input() public forceInit$: Observable<any> | undefined;
 
   private _elementRef: ElementRef;
   private _element: Element | undefined = undefined;
@@ -106,12 +108,15 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
         ScriptLoader.load(scriptState, doc, `https://cdn.tiny.cloud/1/${apiKey}/tinymce/${channel}/tinymce.min.js`, this.initialise);
       }
     }
+    if (this.forceInit$) {
+      this.forceInit$.subscribe(() => {
+        this.forceInit();
+      });
+    }
   }
 
   public ngOnDestroy() {
-    if (getTinymce() !== null) {
-      getTinymce().remove(this._editor);
-    }
+    this.removeEditor();
   }
 
   public createElement() {
@@ -162,5 +167,16 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     editor.on('blur', () => this.ngZone.run(() => this.onTouchedCallback()));
     editor.on('change keyup undo redo', () => this.ngZone.run(() => this.onChangeCallback(editor.getContent())));
     bindHandlers(this, editor, initEvent);
+  }
+
+  private forceInit() {
+    this.removeEditor();
+    this.initialise();
+  }
+
+  private removeEditor() {
+    if (getTinymce() !== null) {
+      getTinymce().remove(this._editor);
+    }
   }
 }

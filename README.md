@@ -59,6 +59,14 @@ The editor accepts the following inputs:
 * `toolbar`: Shorthand for setting what toolbar items you want to show, `<editor toolbar="foo bar"></editor>` is the same as setting `{toolbar: 'foo bar'}` in the init.
 * `apiKey`: Api key for TinyMCE cloud, more info below.
 * `cloudChannel`: Cloud channel for TinyMCE Cloud, more info below.
+* `forceInit$`: Observable that remove and init editor.
+```html
+<editor [forceInit$]="forceInit$"></editor>
+```
+```tsx
+this.forceInit$ = new Subject();
+this.forceInit$.next();
+```
 
 None of the configuration inputs are **required** for the editor to work - other than if you are using TinyMCE Cloud you will have to specify the `apiKey` to get rid of the `This domain is not registered...` warning message.
 
