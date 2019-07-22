@@ -160,6 +160,11 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     });
   }
 
+  public forceInit() {
+    this.removeEditor();
+    this.initialise();
+  }
+
   private initEditor(initEvent: Event, editor: any) {
     if (typeof this.initialValue === 'string') {
       this.ngZone.run(() => editor.setContent(this.initialValue));
@@ -167,11 +172,6 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     editor.on('blur', () => this.ngZone.run(() => this.onTouchedCallback()));
     editor.on('change keyup undo redo', () => this.ngZone.run(() => this.onChangeCallback(editor.getContent())));
     bindHandlers(this, editor, initEvent);
-  }
-
-  private forceInit() {
-    this.removeEditor();
-    this.initialise();
   }
 
   private removeEditor() {
