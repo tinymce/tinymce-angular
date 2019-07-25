@@ -1,15 +1,26 @@
 import { moduleMetadata, storiesOf } from '@storybook/angular';
 import { EditorComponent } from '../tinymce-angular-component/src/main/ts/editor/editor.component';
-import { BindingComponent } from './binding/binding.component';
-import { BlogComponent } from './blog/blog.component';
+import { BindingComponent } from './data-binding/DataBinding.component';
+import { BlogComponent } from './formvalidation/FormValidation.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { DisablingComponent } from './disable/disable.component';
 import { ViewQueryComponent } from './viewquery/viewquery.component';
+import { MaterialTabs } from './materialtabs/MaterialTabs.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TransclusionComponent, MenuComponent } from './transclusion/Transclusion.component';
+import { EditorCountComponent } from './helpers/EditorCount.component';
+
+import '!style-loader!css-loader!@angular/material/prebuilt-themes/indigo-pink.css';
 
 storiesOf('Editor', module)
   .addDecorator(
     moduleMetadata({
-      declarations: [EditorComponent, SafePipe]
+      declarations: [
+        EditorComponent,
+        SafePipe,
+        EditorCountComponent
+      ]
     })
   )
   .add('Stand-alone', () => ({
@@ -19,7 +30,7 @@ storiesOf('Editor', module)
     }
   }))
   .add(
-    'Data binding',
+    'Data Binding',
     () => ({
       component: BindingComponent
     }),
@@ -28,7 +39,7 @@ storiesOf('Editor', module)
     }
   )
   .add(
-    'Form validation',
+    'Form Validation',
     () => ({
       component: BlogComponent
     }),
@@ -42,7 +53,7 @@ storiesOf('Editor', module)
       component: DisablingComponent
     }),
     {
-      notes: 'Example of disabling the editor component'
+      notes: 'Example of disabling/enabling the editor component'
     }
   )
   .add(
@@ -55,7 +66,7 @@ storiesOf('Editor', module)
     }
   )
   .add(
-    'cloudChannel: 5-dev',
+    'CloudChannel: 5-dev',
     () => ({
       component: EditorComponent,
       props: {
@@ -64,5 +75,27 @@ storiesOf('Editor', module)
     }),
     {
       notes: 'Make sure to do a full refresh of this page to load Tinymce 5.'
+    }
+  )
+  .add(
+    'Material Tabs',
+    () => ({
+      component: MaterialTabs,
+      moduleMetadata: {
+        declarations: [MaterialTabs],
+        imports: [BrowserAnimationsModule, MatTabsModule]
+      }
+    })
+  )
+  .add(
+    'Transclusion',
+    () => ({
+      component: TransclusionComponent,
+      moduleMetadata: {
+        declarations: [MenuComponent]
+      }
+    }),
+    {
+      notes: 'Alternative to using ng-content for transclusion.'
     }
   );
