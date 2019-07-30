@@ -1,0 +1,5 @@
+.container {
+  border: 1px solid blue;
+  display: block;
+  padding: 15px;
+}

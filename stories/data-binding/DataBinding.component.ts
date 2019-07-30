@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 // tslint:disable:no-console
 @Component({
   selector: 'binding',
-  templateUrl: './binding.component.html'
+  templateUrl: './DataBinding.component.html'
 })
 export class BindingComponent {
   public isEditingContent = false;

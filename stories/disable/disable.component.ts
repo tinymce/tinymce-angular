@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'testing-disabling',
   template: `
-    <editor [disabled]="isDisabled" initialValue="<p>hello world</p>"></editor>
     <button (click)="toggleDisabled()">{{ isDisabled ? 'enable' : 'disable' }}</button>
+    <editor [disabled]="isDisabled" initialValue="<p>hello world</p>"></editor>
   `
 })
 export class DisablingComponent {

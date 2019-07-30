@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'blog',
-  templateUrl: './blog.component.html',
-  styleUrls: ['./blog.component.css']
+  templateUrl: './FormValidation.component.html',
+  styleUrls: ['./FormValidation.component.css']
 })
 export class BlogComponent {
   public submitted = false;

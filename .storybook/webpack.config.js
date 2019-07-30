@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = async ({ config }) => {
   // Remove Storybook's default loaders for css
   config.module.rules = config.module.rules.filter((rule) => rule.test.toString() !== '/\\.css$/');
