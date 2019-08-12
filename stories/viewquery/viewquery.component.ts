@@ -6,7 +6,7 @@ import { EditorComponent } from '../../tinymce-angular-component/src/main/ts/edi
   templateUrl: './viewquery.component.html'
 })
 export class ViewQueryComponent {
-  @ViewChild(EditorComponent, { static: true }) public editorComponent!: EditorComponent;
+  @ViewChild(EditorComponent) public editorComponent: EditorComponent;
 
   public undo() {
     this.editorComponent.editor.undoManager.undo();
