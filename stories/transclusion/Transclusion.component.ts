@@ -9,7 +9,7 @@ import { Component, Input, TemplateRef, ContentChild } from '@angular/core';
 })
 export class MenuComponent {
   @Input() public show: boolean = true;
-  @ContentChild(TemplateRef) public templateRef: TemplateRef<any>;
+  @ContentChild(TemplateRef) public templateRef!: TemplateRef<any>;
 }
 
 @Component({
