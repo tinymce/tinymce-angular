@@ -1,7 +1,7 @@
 {
   "name": "@tinymce/tinymce-angular",
   "description": "Official TinyMCE Angular Component",
-  "version": "3.2.1",
+  "version": "3.3.0",
   "repository": "https://github.com/tinymce/tinymce-angular.git",
   "author": "Tiny Technologies",
   "license": "Apache-2.0",

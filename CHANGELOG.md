@@ -1,4 +1,4 @@
-## 3.3.0 (TBA)
+## 3.3.0 (2019-08-20)
 * Changed peer dependencies to support Angular 5
 
 ## 3.2.1 (2019-08-16)
