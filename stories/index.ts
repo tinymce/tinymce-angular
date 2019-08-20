@@ -29,42 +29,35 @@ storiesOf('Editor', module)
       initialValue: '<p>Initial Content</p>'
     }
   }))
+  // Simple example of data binding with ngModel
   .add(
     'Data Binding',
     () => ({
       component: BindingComponent
     }),
-    {
-      notes: 'Simple example of data binding with ngModel'
-    }
   )
+  // Example of form validation and data binding with ngModel
   .add(
     'Form Validation',
     () => ({
       component: BlogComponent
     }),
-    {
-      notes: 'Example of form validation and data binding with ngModel'
-    }
   )
+  // Example of disabling/enabling the editor component
   .add(
     'Disabling',
     () => ({
       component: DisablingComponent
     }),
-    {
-      notes: 'Example of disabling/enabling the editor component'
-    }
   )
+  // Example of obtaining a reference to the editor with a view query'
   .add(
     'ViewQuery',
     () => ({
       component: ViewQueryComponent
     }),
-    {
-      notes: 'Example of obtaining a reference to the editor with a view query'
-    }
   )
+  // Make sure to do a full refresh of this page to load Tinymce 5.
   .add(
     'CloudChannel: 5-dev',
     () => ({
@@ -73,9 +66,6 @@ storiesOf('Editor', module)
         cloudChannel: '5-dev'
       }
     }),
-    {
-      notes: 'Make sure to do a full refresh of this page to load Tinymce 5.'
-    }
   )
   .add(
     'Material Tabs',
@@ -87,6 +77,7 @@ storiesOf('Editor', module)
       }
     })
   )
+  // Alternative to using ng-content for transclusion.
   .add(
     'Transclusion',
     () => ({
@@ -94,8 +85,5 @@ storiesOf('Editor', module)
       moduleMetadata: {
         declarations: [MenuComponent]
       }
-    }),
-    {
-      notes: 'Alternative to using ng-content for transclusion.'
-    }
+    })
   );

@@ -1,7 +1,5 @@
-import { configure, addDecorator } from '@storybook/angular';
-import { withNotes } from '@storybook/addon-notes';
+import { configure } from '@storybook/angular';
 
-addDecorator(withNotes);
 function loadStories() {
   require('../stories/index.ts');
 }

@@ -1,14 +1,14 @@
 {
-  "name": "@tinymce/tinymce-angular",
+  "name": "@tinymce/tinymce-angular-legacy",
   "description": "Official TinyMCE Angular Component",
-  "version": "3.2.1",
+  "version": "1.0.0",
   "repository": "https://github.com/tinymce/tinymce-angular.git",
   "author": "Tiny Technologies",
   "license": "Apache-2.0",
   "private": false,
   "peerDependencies": {
-    "@angular/core": ">=6.0.0 <9.0.0",
-    "@angular/common": ">=6.0.0 <9.0.0",
-    "@angular/forms": ">=6.0.0 <9.0.0"
+    "@angular/core": "^4.0.0",
+    "@angular/common": "^4.0.0",
+    "@angular/forms": "^4.0.0"
   }
 }

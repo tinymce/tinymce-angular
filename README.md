@@ -1,4 +1,4 @@
-# Official TinyMCE Angular Component
+# Official TinyMCE Angular Component for Angular 4
 
 ## About
 
@@ -8,7 +8,7 @@ For some quick demos, check out the [storybook](https://tinymce.github.io/tinymc
 ## Installation
 
 ```sh
-$ npm install @tinymce/tinymce-angular
+$ npm install @tinymce/tinymce-angular-legacy
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ $ npm install @tinymce/tinymce-angular
 Import the `EditorModule` from the npm package like this:
 
 ```tsx
-import { EditorModule } from '@tinymce/tinymce-angular';
+import { EditorModule } from '@tinymce/tinymce-angular-legacy';
 ```
 And add it to your application module:
 
