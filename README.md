@@ -7,6 +7,8 @@ For some quick demos, check out the [storybook](https://tinymce.github.io/tinymc
 
 ## Installation
 
+This package is for Angular 5+. For Angular 4, use `@tinymce/tinymce-angular-legacy`
+
 ```sh
 $ npm install @tinymce/tinymce-angular
 ```
