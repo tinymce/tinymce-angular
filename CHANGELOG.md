@@ -1,3 +1,6 @@
+## 3.3.0 (TBA)
+* Changed peer dependencies to support Angular 5
+
 ## 3.2.1 (2019-08-16)
 * Changed referrer policy to origin to allow cloud caching
 
