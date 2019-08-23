@@ -50,8 +50,8 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input() public plugins: string | undefined;
   @Input() public toolbar: string | string[] | null = null;
 
-  private _elementRef: ElementRef;
-  private _element: Element | undefined = undefined;
+  protected _elementRef: ElementRef;
+  protected _element: Element | undefined = undefined;
   private _disabled: boolean | undefined;
   private _editor: any;
 
