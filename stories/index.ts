@@ -13,7 +13,7 @@ import { EditorCountComponent } from './helpers/EditorCount.component';
 
 import '!style-loader!css-loader!@angular/material/prebuilt-themes/indigo-pink.css';
 
-const apiKey = 'qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc';
+const defaultProps = { apiKey: 'qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc' };
 
 storiesOf('Editor', module)
   .addDecorator(
@@ -28,7 +28,7 @@ storiesOf('Editor', module)
   .add('Stand-alone', () => ({
     component: EditorComponent,
     props: {
-      apiKey,
+      ...defaultProps,
       initialValue: '<p>Initial Content</p>'
     }
   }))
@@ -36,9 +36,7 @@ storiesOf('Editor', module)
     'Data Binding',
     () => ({
       component: BindingComponent,
-      props: {
-        apiKey
-      }
+      props: defaultProps
     }),
     {
       notes: 'Simple example of data binding with ngModel'
@@ -48,9 +46,7 @@ storiesOf('Editor', module)
     'Form Validation',
     () => ({
       component: BlogComponent,
-      props: {
-        apiKey
-      }
+      props: defaultProps
     }),
     {
       notes: 'Example of form validation and data binding with ngModel'
@@ -60,9 +56,7 @@ storiesOf('Editor', module)
     'Disabling',
     () => ({
       component: DisablingComponent,
-      props: {
-        apiKey
-      }
+      props: defaultProps
     }),
     {
       notes: 'Example of disabling/enabling the editor component'
@@ -72,9 +66,7 @@ storiesOf('Editor', module)
     'ViewQuery',
     () => ({
       component: ViewQueryComponent,
-      props: {
-        apiKey
-      }
+      props: defaultProps
     }),
     {
       notes: 'Example of obtaining a reference to the editor with a view query'
@@ -85,8 +77,8 @@ storiesOf('Editor', module)
     () => ({
       component: EditorComponent,
       props: {
-        cloudChannel: '5-dev',
-        apiKey
+        ...defaultProps,
+        cloudChannel: '5-dev'
       }
     }),
     {
@@ -97,9 +89,7 @@ storiesOf('Editor', module)
     'Material Tabs',
     () => ({
       component: MaterialTabs,
-      props: {
-        apiKey
-      },
+      props: defaultProps,
       moduleMetadata: {
         declarations: [MaterialTabs],
         imports: [BrowserAnimationsModule, MatTabsModule]
@@ -110,9 +100,7 @@ storiesOf('Editor', module)
     'Transclusion',
     () => ({
       component: TransclusionComponent,
-      props: {
-        apiKey
-      },
+      props: defaultProps,
       moduleMetadata: {
         declarations: [MenuComponent]
       }
