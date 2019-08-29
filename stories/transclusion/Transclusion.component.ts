@@ -1,4 +1,5 @@
 import { Component, Input, TemplateRef, ContentChild } from '@angular/core';
+import { apiKey } from '../Settings';
 // tslint:disable:max-classes-per-file
 
 @Component({
@@ -21,13 +22,14 @@ export class MenuComponent {
 
     <container [show]="show" [ngClass]="'container'">
       <ng-template #templateRef>
-        <editor [(ngModel)]="editorValue"></editor>
+        <editor [apiKey]="apiKey" [(ngModel)]="editorValue"></editor>
       </ng-template>
     </container>
   <div>
   `
 })
 export class TransclusionComponent {
+  public apiKey = apiKey;
   public editorValue = '';
   public show = true;
 

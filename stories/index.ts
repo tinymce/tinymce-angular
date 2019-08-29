@@ -10,10 +10,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TransclusionComponent, MenuComponent } from './transclusion/Transclusion.component';
 import { EditorCountComponent } from './helpers/EditorCount.component';
+import { apiKey } from './Settings';
 
 import '!style-loader!css-loader!@angular/material/prebuilt-themes/indigo-pink.css';
-
-const defaultProps = { apiKey: 'qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc' };
 
 storiesOf('Editor', module)
   .addDecorator(
@@ -28,15 +27,14 @@ storiesOf('Editor', module)
   .add('Stand-alone', () => ({
     component: EditorComponent,
     props: {
-      ...defaultProps,
+      apiKey,
       initialValue: '<p>Initial Content</p>'
     }
   }))
   .add(
     'Data Binding',
     () => ({
-      component: BindingComponent,
-      props: defaultProps
+      component: BindingComponent
     }),
     {
       notes: 'Simple example of data binding with ngModel'
@@ -45,8 +43,7 @@ storiesOf('Editor', module)
   .add(
     'Form Validation',
     () => ({
-      component: BlogComponent,
-      props: defaultProps
+      component: BlogComponent
     }),
     {
       notes: 'Example of form validation and data binding with ngModel'
@@ -55,8 +52,7 @@ storiesOf('Editor', module)
   .add(
     'Disabling',
     () => ({
-      component: DisablingComponent,
-      props: defaultProps
+      component: DisablingComponent
     }),
     {
       notes: 'Example of disabling/enabling the editor component'
@@ -65,8 +61,7 @@ storiesOf('Editor', module)
   .add(
     'ViewQuery',
     () => ({
-      component: ViewQueryComponent,
-      props: defaultProps
+      component: ViewQueryComponent
     }),
     {
       notes: 'Example of obtaining a reference to the editor with a view query'
@@ -77,7 +72,7 @@ storiesOf('Editor', module)
     () => ({
       component: EditorComponent,
       props: {
-        ...defaultProps,
+        apiKey,
         cloudChannel: '5-dev'
       }
     }),
@@ -89,7 +84,6 @@ storiesOf('Editor', module)
     'Material Tabs',
     () => ({
       component: MaterialTabs,
-      props: defaultProps,
       moduleMetadata: {
         declarations: [MaterialTabs],
         imports: [BrowserAnimationsModule, MatTabsModule]
@@ -100,7 +94,6 @@ storiesOf('Editor', module)
     'Transclusion',
     () => ({
       component: TransclusionComponent,
-      props: defaultProps,
       moduleMetadata: {
         declarations: [MenuComponent]
       }

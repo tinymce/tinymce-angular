@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { apiKey } from '../Settings';
 
 // tslint:disable:no-console
 @Component({
@@ -8,6 +9,7 @@ import { Component } from '@angular/core';
 export class BindingComponent {
   public isEditingContent = false;
   public content = '<p>Initial Content</p>';
+  public apiKey = apiKey;
 
   public editContent() {
     this.isEditingContent = !this.isEditingContent;

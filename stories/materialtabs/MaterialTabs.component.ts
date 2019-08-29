@@ -1,11 +1,13 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { apiKey } from '../Settings';
 
 @Component({
   templateUrl: './MaterialTabs.component.html'
 })
 export class MaterialTabs implements AfterViewInit {
   @ViewChild('tabGroup', { static: false }) public tabGroup: any;
+  public apiKey = apiKey;
   public activeTabIndex: number | undefined = undefined;
   public firstEditorValue = '';
   public secondEditorValue = '';
