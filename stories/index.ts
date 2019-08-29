@@ -13,6 +13,8 @@ import { EditorCountComponent } from './helpers/EditorCount.component';
 
 import '!style-loader!css-loader!@angular/material/prebuilt-themes/indigo-pink.css';
 
+const defaultProps = { apiKey: 'qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc' };
+
 storiesOf('Editor', module)
   .addDecorator(
     moduleMetadata({
@@ -26,13 +28,15 @@ storiesOf('Editor', module)
   .add('Stand-alone', () => ({
     component: EditorComponent,
     props: {
+      ...defaultProps,
       initialValue: '<p>Initial Content</p>'
     }
   }))
   .add(
     'Data Binding',
     () => ({
-      component: BindingComponent
+      component: BindingComponent,
+      props: defaultProps
     }),
     {
       notes: 'Simple example of data binding with ngModel'
@@ -41,7 +45,8 @@ storiesOf('Editor', module)
   .add(
     'Form Validation',
     () => ({
-      component: BlogComponent
+      component: BlogComponent,
+      props: defaultProps
     }),
     {
       notes: 'Example of form validation and data binding with ngModel'
@@ -50,7 +55,8 @@ storiesOf('Editor', module)
   .add(
     'Disabling',
     () => ({
-      component: DisablingComponent
+      component: DisablingComponent,
+      props: defaultProps
     }),
     {
       notes: 'Example of disabling/enabling the editor component'
@@ -59,7 +65,8 @@ storiesOf('Editor', module)
   .add(
     'ViewQuery',
     () => ({
-      component: ViewQueryComponent
+      component: ViewQueryComponent,
+      props: defaultProps
     }),
     {
       notes: 'Example of obtaining a reference to the editor with a view query'
@@ -70,6 +77,7 @@ storiesOf('Editor', module)
     () => ({
       component: EditorComponent,
       props: {
+        ...defaultProps,
         cloudChannel: '5-dev'
       }
     }),
@@ -81,6 +89,7 @@ storiesOf('Editor', module)
     'Material Tabs',
     () => ({
       component: MaterialTabs,
+      props: defaultProps,
       moduleMetadata: {
         declarations: [MaterialTabs],
         imports: [BrowserAnimationsModule, MatTabsModule]
@@ -91,6 +100,7 @@ storiesOf('Editor', module)
     'Transclusion',
     () => ({
       component: TransclusionComponent,
+      props: defaultProps,
       moduleMetadata: {
         declarations: [MenuComponent]
       }
