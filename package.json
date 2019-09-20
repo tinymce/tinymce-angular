@@ -10,15 +10,13 @@
     "test": "bedrock-auto -b chrome-headless -f tinymce-angular-component/src/test/ts/**/*Test.ts",
     "test-manual": "bedrock -f tinymce-angular-component/src/test/ts/**/*Test.ts",
     "clean": "rimraf dist",
-    "build": "yarn run clean && ng build && copyfiles README.md dist/tinymce-angular/",
+    "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && copyfiles README.md dist/tinymce-angular/",
     "prepare": "yarn run build",
     "publish": "yarn run build && (cd dist/tinymce-angular && yarn publish)"
   },
   "private": true,
   "dependencies": {},
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.800.0",
-    "@angular-devkit/build-ng-packagr": "^0.800.0",
     "@angular-devkit/core": "^8.0.0",
     "@angular/animations": "^8.0.0",
     "@angular/cdk": "^8.0.0",
