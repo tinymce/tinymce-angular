@@ -1,4 +1,4 @@
-## 3.3.1 (TBA)
+## 3.3.1 (2019-09-23)
 * Added tslib as a dependency. Inlined tslib helpers caused an issue for the Angular Ivy compiler
 
 ## 3.3.0 (2019-08-20)
