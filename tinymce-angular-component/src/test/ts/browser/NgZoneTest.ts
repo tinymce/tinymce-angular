@@ -3,7 +3,7 @@ import '../alien/InitTestEnvironment';
 import { NgZone, Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Assertions, Chain } from '@ephox/agar';
-import { UnitTest } from '@ephox/bedrock';
+import { UnitTest } from '@ephox/bedrock-client';
 import { EditorComponent } from '../../../main/ts/editor/editor.component';
 
 UnitTest.asynctest('NgZoneTest', (success, failure) => {
