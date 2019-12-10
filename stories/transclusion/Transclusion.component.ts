@@ -14,7 +14,13 @@ export class MenuComponent {
 }
 
 @Component({
-  styleUrls: ['./Transclusion.component.css'],
+  styles: [`
+    .container {
+      border: 1px solid blue;
+      display: block;
+      padding: 15px;
+    }
+  `],
   template: `
   <div>
     <editor-count></editor-count>

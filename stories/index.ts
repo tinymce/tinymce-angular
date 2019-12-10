@@ -12,7 +12,7 @@ import { TransclusionComponent, MenuComponent } from './transclusion/Transclusio
 import { EditorCountComponent } from './helpers/EditorCount.component';
 import { apiKey } from './Settings';
 
-import '!style-loader!css-loader!@angular/material/prebuilt-themes/indigo-pink.css';
+import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 storiesOf('Editor', module)
   .addDecorator(
