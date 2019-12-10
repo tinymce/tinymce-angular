@@ -5,7 +5,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgModel } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Assertions, Chain, Log, Pipeline } from '@ephox/agar';
-import { UnitTest } from '@ephox/bedrock';
+import { UnitTest } from '@ephox/bedrock-client';
 import { EditorComponent } from '../../../main/ts/editor/editor.component';
 import { EditorModule } from '../../../main/ts/editor/editor.module';
 

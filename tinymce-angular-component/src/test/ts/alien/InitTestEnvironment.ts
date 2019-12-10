@@ -1,4 +1,4 @@
-import 'core-js/es7/reflect';
+import 'core-js/features/reflect';
 import 'zone.js/dist/zone';
 import 'tinymce';
 
