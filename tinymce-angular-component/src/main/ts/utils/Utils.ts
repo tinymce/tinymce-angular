@@ -51,11 +51,14 @@ const mergePlugins = (initPlugins: string | string[], inputPlugins?: string | st
 // tslint:disable-next-line:no-empty
 const noop: (...args: any[]) => void = () => { };
 
+const isNullOrUndefined = (value: any): value is null | undefined => value === null || value === undefined;
+
 export {
   bindHandlers,
   uuid,
   isTextarea,
   normalizePluginArray,
   mergePlugins,
-  noop
+  noop,
+  isNullOrUndefined
 };
