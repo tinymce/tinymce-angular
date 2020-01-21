@@ -3,7 +3,7 @@ import { AfterViewInit, Component, ElementRef, forwardRef, Inject, Input, NgZone
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { getTinymce } from '../TinyMCE';
 import * as ScriptLoader from '../utils/ScriptLoader';
-import { bindHandlers, isTextarea, mergePlugins, uuid, noop } from '../utils/Utils';
+import { bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined } from '../utils/Utils';
 import { Events } from './Events';
 
 const scriptState = ScriptLoader.create();
@@ -45,13 +45,14 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input() public init: Record<string, any> | undefined;
   @Input() public id = '';
   @Input() public initialValue: string | undefined;
+  @Input() public outputFormat: 'html' | 'text' | undefined;
   @Input() public inline: boolean | undefined;
   @Input() public tagName: string | undefined;
   @Input() public plugins: string | undefined;
-  @Input() public toolbar: string | string[] | null = null;
+  @Input() public toolbar: string | string[] | undefined;
 
   private _elementRef: ElementRef;
-  private _element: Element | undefined = undefined;
+  private _element: Element | undefined;
   private _disabled: boolean | undefined;
   private _editor: any;
 
@@ -66,11 +67,10 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   }
 
   public writeValue(value: string | null): void {
-    this.initialValue = value || this.initialValue;
-    value = value || '';
-
-    if (this._editor && this._editor.initialized && typeof value === 'string') {
-      this._editor.setContent(value);
+    if (this._editor && this._editor.initialized) {
+      this._editor.setContent(isNullOrUndefined(value) ? '' : value);
+    } else {
+      this.initialValue = value === null ? undefined : value;
     }
   }
 
@@ -160,7 +160,9 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       this.ngZone.run(() => editor.setContent(this.initialValue));
     }
     editor.on('blur', () => this.ngZone.run(() => this.onTouchedCallback()));
-    editor.on('change keyup undo redo', () => this.ngZone.run(() => this.onChangeCallback(editor.getContent())));
+    editor.on('change keyup undo redo', () => {
+      this.ngZone.run(() => this.onChangeCallback(editor.getContent({ format: this.outputFormat })));
+    });
     bindHandlers(this, editor, initEvent);
   }
 }
