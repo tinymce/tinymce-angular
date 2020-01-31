@@ -1,4 +1,4 @@
-## 3.4.0 (TBA)
+## 3.4.0 (2020-01-31)
 * Added new `outputFormat` property for specifying the format of content emitted to form controls
 
 ## 3.3.1 (2019-09-23)
