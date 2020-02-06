@@ -45,7 +45,7 @@ node("primary") {
         npmInstall()
 
         echo "Platform: browser tests for " + permutation.name
-        bedrockTests(permutation.name, permutation.browser, "src/test/ts/browser")
+        bedrockTests(permutation.name, permutation.browser, "tinymce-angular-component/src/test/ts/browser")
       }
     }
   }
