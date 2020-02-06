@@ -56,7 +56,7 @@ node("primary") {
 
   stage("Deploying storybook to github") {
     if (isReleaseBranch()) {
-      sh 'npx storybook-to-ghpages'
+      sh 'yarn storybook-to-ghpages'
     }
   }
 }
