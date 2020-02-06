@@ -4,7 +4,7 @@ import { apiKey } from '../Settings';
 
 @Component({
   selector: 'viewquery',
-  templateUrl: './viewquery.component.html'
+  templateUrl: './Viewquery.component.html'
 })
 export class ViewQueryComponent {
   public apiKey = apiKey;
