@@ -11,4 +11,8 @@ This package is a thin wrapper around [TinyMCE](https://github.com/tinymce/tinym
 
 ### Issues
 
-Have you found an issue with tinymce-angular or do you have a feature request? Open up an [issue](https://github.com/tinymce/tinymce-angular/issues) and let us know or submit a [pull request](https://github.com/tinymce/tinymce-angular/pulls). *Note: for issues concerning TinyMCE please visit the [TinyMCE repository](https://github.com/tinymce/tinymce).*
+Have you found an issue with tinymce-angular or do you have a feature request? 
+Open up an [issue](https://github.com/tinymce/tinymce-angular/issues) and let us know 
+or submit a [pull request](https://github.com/tinymce/tinymce-angular/pulls). 
+
+_Note: for issues concerning TinyMCE please visit the [TinyMCE repository](https://github.com/tinymce/tinymce)._
