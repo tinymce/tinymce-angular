@@ -17,7 +17,7 @@ node("primary") {
   }
 
   stage("Building") {
-    npmInstall
+    npmInstall()
     exec "yarn run build"
   }
 
@@ -42,7 +42,7 @@ node("primary") {
         checkout scm
 
         echo "Installing tools"
-        npmInstall
+        npmInstall()
 
         echo "Platform: browser tests for " + permutation.name
         bedrockTests(permutation.name, permutation.browser, "src/test/ts/browser")
