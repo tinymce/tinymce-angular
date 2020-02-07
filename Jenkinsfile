@@ -44,10 +44,8 @@ node("primary") {
         echo "Installing tools"
         npmInstall()
 
-        dir ('tiny-angular-component') {
-          echo "Platform: browser tests for " + permutation.name
-          bedrockTests(permutation.name, permutation.browser, "src/test/ts/browser")
-        }
+        echo "Platform: browser tests for " + permutation.name
+        bedrockTests(permutation.name, permutation.browser, "tinymce-angular-component/src/test/ts/browser")
       }
     }
   }
