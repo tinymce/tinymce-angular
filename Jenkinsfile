@@ -55,8 +55,7 @@ node("primary") {
 
   stage("Deploying storybook to github") {
     if (isReleaseBranch()) {
-      sh 'git remote add upstream git@github.com:tinymce/tinymce-angular.git'
-      sh 'yarn storybook-to-ghpages --remote=upstream'
+      sh 'yarn storybook-to-ghpages -- --remote=upstream'
     }
   }
 }
