@@ -13,7 +13,7 @@ node("primary") {
   cleanWs()
 
   stage ("Checkout SCM") {
-    checkout scm
+    checkout localBranch(scm)
   }
 
   stage("Building") {
