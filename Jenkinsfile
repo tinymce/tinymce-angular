@@ -55,7 +55,9 @@ node("primary") {
 
   stage("Deploying storybook to github") {
     if (isReleaseBranch()) {
-      sh 'yarn storybook-to-ghpages'
+      sshagent (credentials: ['ccde5b3d-cf13-4d70-88cf-ae1e6dfd4ef4']) {
+        sh 'yarn storybook-to-ghpages'
+      }
     }
   }
 }
