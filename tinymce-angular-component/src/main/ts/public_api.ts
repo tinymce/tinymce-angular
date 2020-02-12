@@ -1,2 +1,2 @@
 export * from './editor/editor.module';
-export { EditorComponent } from './editor/editor.component';
+export { EditorComponent, TINYMCE_SCRIPT_SRC } from './editor/editor.component';

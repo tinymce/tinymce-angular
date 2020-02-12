@@ -1,3 +1,6 @@
+## 3.5.0 (TBA)
+* Added new `TINYMCE_SCRIPT_SRC` injection token. To be used in a dependency injection provider to specify an external version of TinyMCE to load
+
 ## 3.4.0 (2020-01-31)
 * Added new `outputFormat` property for specifying the format of content emitted to form controls
 
