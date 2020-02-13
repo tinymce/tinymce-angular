@@ -2,11 +2,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, forwardRef, Inject, Input, NgZone, OnDestroy, PLATFORM_ID, InjectionToken, Optional } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { getTinymce } from '../TinyMCE';
-import * as ScriptLoader from '../utils/ScriptLoader';
 import { bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined } from '../utils/Utils';
 import { Events } from './Events';
-
-const scriptState = ScriptLoader.create();
+import { ScriptLoader } from '../utils/ScriptLoader';
 
 export const TINYMCE_SCRIPT_SRC = new InjectionToken<string>('TINYMCE_SCRIPT_SRC');
 
@@ -107,7 +105,6 @@ constructor(
         this.initialise();
       } else if (this._element && this._element.ownerDocument) {
         ScriptLoader.load(
-          scriptState,
           this._element.ownerDocument,
           this.getScriptSrc(),
           this.initialise
