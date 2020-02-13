@@ -9,8 +9,7 @@ import { UnitTest } from '@ephox/bedrock-client';
 import { Arr, Strings } from '@ephox/katamari';
 import { SelectorFilter, Attr, Element, Remove } from '@ephox/sugar';
 
-import { EditorComponent, TINYMCE_SCRIPT_SRC } from '../../../main/ts/editor/editor.component';
-import { EditorModule } from '../../../main/ts/editor/editor.module';
+import { EditorModule, EditorComponent, TINYMCE_SCRIPT_SRC } from '../../../main/ts/public_api';
 import { ScriptLoader } from '../../../main/ts/utils/ScriptLoader';
 
 UnitTest.asynctest('LoadTinyTest', (success, failure) => {

@@ -6,7 +6,7 @@ import { Assertions, Chain, Pipeline, Log } from '@ephox/agar';
 import { UnitTest } from '@ephox/bedrock-client';
 import { VersionLoader } from '@tinymce/miniature';
 
-import { EditorComponent } from '../../../main/ts/editor/editor.component';
+import { EditorComponent } from '../../../main/ts/public_api';
 
 UnitTest.asynctest('NgZoneTest', (success, failure) => {
   const createComponent = <T>(componentType: Type<T>) => {
