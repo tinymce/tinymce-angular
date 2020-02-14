@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Chain, Log, Pipeline, Assertions } from '@ephox/agar';
 import { UnitTest } from '@ephox/bedrock-client';
-import { Arr, Strings } from '@ephox/katamari';
+import { Arr, Strings, Global } from '@ephox/katamari';
 import { SelectorFilter, Attr, Element, Remove } from '@ephox/sugar';
 
 import { EditorModule, EditorComponent, TINYMCE_SCRIPT_SRC } from '../../../main/ts/public_api';
@@ -43,8 +43,8 @@ UnitTest.asynctest('LoadTinyTest', (success, failure) => {
   const cDeleteTinymce = Chain.op(() => {
     ScriptLoader.reinitialize();
 
-    delete (window as any).tinymce;
-    delete (window as any).tinyMCE;
+    delete Global.tinymce;
+    delete Global.tinyMCE;
 
     const hasTinymceUri = (attrName: string) => (elm: Element) => {
       return Attr.getOpt(elm, attrName).exists((src) => Strings.contains(src, 'tinymce'));
@@ -63,7 +63,7 @@ UnitTest.asynctest('LoadTinyTest', (success, failure) => {
   });
 
   const cAssertTinymceVersion = (version: '4' | '5') => Chain.op(() => {
-    Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, (window as any).tinymce.majorVersion);
+    Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, Global.tinymce.majorVersion);
   });
 
   Pipeline.async({}, [
@@ -87,7 +87,7 @@ UnitTest.asynctest('LoadTinyTest', (success, failure) => {
         Assertions.assertEq(
           'TinyMCE should have been loaded from Cloud',
           'https://cdn.tiny.cloud/1/a-fake-api-key/tinymce/5-dev',
-          (window as any).tinymce.baseURI.source
+          Global.tinymce.baseURI.source
         );
       }),
       cTeardown,
