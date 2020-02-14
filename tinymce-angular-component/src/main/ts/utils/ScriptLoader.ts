@@ -36,8 +36,13 @@ const CreateScriptLoader = (): ScriptLoader => {
     scriptTag.referrerPolicy = 'origin';
     scriptTag.type = 'application/javascript';
     scriptTag.id = scriptId;
-    scriptTag.addEventListener('load', callback);
     scriptTag.src = url;
+
+    const handler = () => {
+      callback();
+      scriptTag.removeEventListener('load', handler);
+    };
+    scriptTag.addEventListener('load', handler);
     if (doc.head) {
       doc.head.appendChild(scriptTag);
     }
