@@ -1,4 +1,6 @@
-## 3.5.0 (TBA)
+## 4.0.0 (TBA)
+This major release is compatible with Angular ^9.0.0
+* Changed peer dependencies to support Angular 9
 * Added new `TINYMCE_SCRIPT_SRC` injection token. To be used in a dependency injection provider to specify an external version of TinyMCE to load
 
 ## 3.4.0 (2020-01-31)
