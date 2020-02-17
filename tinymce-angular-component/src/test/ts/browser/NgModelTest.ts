@@ -7,10 +7,9 @@ import { By } from '@angular/platform-browser';
 import { Assertions, Chain, Log, Pipeline, Waiter, GeneralSteps, Keyboard, Keys } from '@ephox/agar';
 import { UnitTest } from '@ephox/bedrock-client';
 import { VersionLoader } from '@tinymce/miniature';
-
-import { EditorComponent } from '../../../main/ts/editor/editor.component';
-import { EditorModule } from '../../../main/ts/editor/editor.module';
 import { Element } from '@ephox/sugar';
+
+import { EditorModule, EditorComponent } from '../../../main/ts/public_api';
 
 UnitTest.asynctest('NgModelTest', (success, failure) => {
   // tslint:disable:max-classes-per-file

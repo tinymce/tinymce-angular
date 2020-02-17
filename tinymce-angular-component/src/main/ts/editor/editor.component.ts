@@ -1,12 +1,12 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, forwardRef, Inject, Input, NgZone, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, forwardRef, Inject, Input, NgZone, OnDestroy, PLATFORM_ID, InjectionToken, Optional } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { getTinymce } from '../TinyMCE';
-import * as ScriptLoader from '../utils/ScriptLoader';
 import { bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined } from '../utils/Utils';
 import { Events } from './Events';
+import { ScriptLoader } from '../utils/ScriptLoader';
 
-const scriptState = ScriptLoader.create();
+export const TINYMCE_SCRIPT_SRC = new InjectionToken<string>('TINYMCE_SCRIPT_SRC');
 
 const EDITOR_COMPONENT_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -59,7 +59,12 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   private onTouchedCallback = noop;
   private onChangeCallback = noop;
 
-  constructor(elementRef: ElementRef, ngZone: NgZone, @Inject(PLATFORM_ID) private platformId: Object) {
+constructor(
+  elementRef: ElementRef,
+  ngZone: NgZone,
+  @Inject(PLATFORM_ID) private platformId: Object,
+  @Optional() @Inject(TINYMCE_SCRIPT_SRC) private tinymceScriptSrc?: string
+  ) {
     super();
     this._elementRef = elementRef;
     this.ngZone = ngZone;
@@ -99,11 +104,11 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       if (getTinymce() !== null) {
         this.initialise();
       } else if (this._element && this._element.ownerDocument) {
-        const doc = this._element.ownerDocument;
-        const channel = this.cloudChannel;
-        const apiKey = this.apiKey;
-
-        ScriptLoader.load(scriptState, doc, `https://cdn.tiny.cloud/1/${apiKey}/tinymce/${channel}/tinymce.min.js`, this.initialise);
+        ScriptLoader.load(
+          this._element.ownerDocument,
+          this.getScriptSrc(),
+          this.initialise
+        );
       }
     }
   }
@@ -153,6 +158,12 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     this.ngZone.runOutsideAngular(() => {
       getTinymce().init(finalInit);
     });
+  }
+
+  private getScriptSrc() {
+    return isNullOrUndefined(this.tinymceScriptSrc) ?
+      `https://cdn.tiny.cloud/1/${this.apiKey}/tinymce/${this.cloudChannel}/tinymce.min.js` :
+      this.tinymceScriptSrc;
   }
 
   private initEditor(initEvent: Event, editor: any) {

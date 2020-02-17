@@ -8,8 +8,7 @@ import { Assertions, Chain, Log, Pipeline } from '@ephox/agar';
 import { UnitTest } from '@ephox/bedrock-client';
 import { VersionLoader } from '@tinymce/miniature';
 
-import { EditorComponent } from '../../../main/ts/editor/editor.component';
-import { EditorModule } from '../../../main/ts/editor/editor.module';
+import { EditorComponent, EditorModule } from '../../../main/ts/public_api';
 
 UnitTest.asynctest('FormControlTest', (success, failure) => {
   @Component({
