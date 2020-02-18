@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
-import { apiKey } from '../Settings';
+import { apiKey, sampleContent } from '../Settings';
 
 @Component({
-  selector: 'testing-disabling',
-  template: `
-    <button (click)="toggleDisabled()">{{ isDisabled ? 'enable' : 'disable' }}</button>
-    <editor [apiKey]="apiKey" [disabled]="isDisabled" initialValue="<p>hello world</p>"></editor>
-  `
+  templateUrl: './Disabling.component.html'
+
 })
 export class DisablingComponent {
   public isDisabled = false;
   public apiKey = apiKey;
+  public initialValue = sampleContent;
   public toggleDisabled = () => (this.isDisabled = !this.isDisabled);
 }

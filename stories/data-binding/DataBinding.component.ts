@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { apiKey } from '../Settings';
+import { apiKey, sampleContent } from '../Settings';
 
 // tslint:disable:no-console
 @Component({
-  selector: 'binding',
   templateUrl: './DataBinding.component.html'
 })
 export class BindingComponent {
-  public isEditingContent = false;
-  public content = '<p>Initial Content</p>';
+  public isEditingContent = true;
+  public content = sampleContent;
   public apiKey = apiKey;
 
   public editContent() {
