@@ -1,0 +1,7 @@
+<button (click)="toggleDisabled()">{{ isDisabled ? 'enable' : 'disable' }}</button>
+<editor
+  [apiKey]="apiKey"
+  [disabled]="isDisabled"
+  [initialValue]="initialValue"
+  [init]="{ height: 300 }"
+></editor>

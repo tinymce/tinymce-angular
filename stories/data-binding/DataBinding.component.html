@@ -1,5 +1,3 @@
-<editor-count></editor-count>
-
 <button (click)="editContent()" [innerText]="isEditingContent ? 'Save' : 'Edit'"></button>
 
 <div *ngIf="!isEditingContent" [innerHTML]="content | safe: 'html'" ></div>
@@ -9,6 +7,7 @@
   (onInit)="log($event)"
   (onKeyDown)="log($event)"
   [apiKey]="apiKey"
+  [init]="{ height: 300 }"
   ></editor>
 
-<textarea [(ngModel)]="content" cols="30" rows="10"></textarea>
+<textarea [(ngModel)]="content" style="width: 100%;" rows="10"></textarea>

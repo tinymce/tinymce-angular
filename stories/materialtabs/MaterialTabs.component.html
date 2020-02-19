@@ -1,5 +1,3 @@
-<editor-count></editor-count>
-
 <mat-tab-group #tabGroup (selectedTabChange)="handleTabChange($event)">
   <mat-tab label="First Tab">
     <editor [apiKey]="apiKey" [(ngModel)]="firstEditorValue" *ngIf="activeTabIndex===0"></editor>

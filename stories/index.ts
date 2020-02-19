@@ -9,8 +9,7 @@ import { MaterialTabs } from './materialtabs/MaterialTabs.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TransclusionComponent, MenuComponent } from './transclusion/Transclusion.component';
-import { EditorCountComponent } from './helpers/EditorCount.component';
-import { apiKey } from './Settings';
+import { apiKey, sampleContent } from './Settings';
 
 import '@angular/material/prebuilt-themes/indigo-pink.css';
 
@@ -19,17 +18,27 @@ storiesOf('Editor', module)
     moduleMetadata({
       declarations: [
         EditorComponent,
-        SafePipe,
-        EditorCountComponent
+        SafePipe
       ]
     })
   )
-  .add('Stand-alone', () => ({
+  .add('Iframe editor', () => ({
     component: EditorComponent,
     props: {
       apiKey,
-      initialValue: '<p>Initial Content</p>'
+      initialValue: sampleContent,
+      init: {
+        height: 300
+      }
     }
+  }))
+  .add('Inline editor', () => ({
+    component: EditorComponent,
+    template: `
+      <div style="padding-top: 100px;">
+        <editor apiKey="${apiKey}" inline initialValue='${sampleContent}'></editor>
+      </div>
+    `
   }))
   .add(
     'Data Binding',
@@ -68,19 +77,6 @@ storiesOf('Editor', module)
     }
   )
   .add(
-    'CloudChannel: 5-dev',
-    () => ({
-      component: EditorComponent,
-      props: {
-        apiKey,
-        cloudChannel: '5-dev'
-      }
-    }),
-    {
-      notes: 'Make sure to do a full refresh of this page to load Tinymce 5.'
-    }
-  )
-  .add(
     'Material Tabs',
     () => ({
       component: MaterialTabs,
@@ -100,5 +96,18 @@ storiesOf('Editor', module)
     }),
     {
       notes: 'Alternative to using ng-content for transclusion.'
+    }
+  )
+  .add(
+    'CloudChannel: 5-dev',
+    () => ({
+      component: EditorComponent,
+      props: {
+        apiKey,
+        cloudChannel: '5-dev'
+      }
+    }),
+    {
+      notes: 'Editor with cloudChannel set to 5-dev, please make sure to reload page to load TinyMCE 5.'
     }
   );

@@ -23,7 +23,6 @@ export class MenuComponent {
   `],
   template: `
   <div>
-    <editor-count></editor-count>
     <button [innerText]="show ? 'Hide' : 'Show'" (click)="handleToggle()"></button>
 
     <container [show]="show" [ngClass]="'container'">
