@@ -1,7 +1,6 @@
 {
   "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../dist/tinymce-angular",
-  "workingDirectory": ".ng_build",
   "lib": {
     "entryFile": "./src/main/ts/public_api.ts"
   }
