@@ -61,8 +61,8 @@ node("primary") {
     }
   }
 
-  stage("Publish") {
-    if (isReleaseBranch()) {
+  if (isReleaseBranch()) {
+    stage("Publish") {
       sh 'yarn run publish'
     }
   }
