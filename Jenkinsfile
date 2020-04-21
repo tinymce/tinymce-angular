@@ -60,4 +60,10 @@ node("primary") {
       }
     }
   }
+
+  stage("Publish") {
+    if (isReleaseBranch()) {
+      sh 'yarn run publish'
+    }
+  }
 }
