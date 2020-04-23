@@ -5,6 +5,8 @@
   "author": "Ephox Inc",
   "license": "Apache-2.0",
   "scripts": {
+    "package-name": "echo $npm_package_name",
+    "package-version": "echo $npm_package_version",
     "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
     "storybook": "yarn start-storybook -p 9001 -c .storybook",
     "test": "yarn bedrock-auto -b chrome-headless -f tinymce-angular-component/src/test/ts/**/*Test.ts",
