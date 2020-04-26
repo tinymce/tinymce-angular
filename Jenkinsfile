@@ -1,5 +1,5 @@
 #!groovy
-@Library('waluigi@v2.0.0') _
+@Library('waluigi@v3.2.0') _
 
 properties([
   disableConcurrentBuilds(),
@@ -61,38 +61,9 @@ node("primary") {
     }
   }
 
-  if (isReleaseBranch() && isReleasable()) {
+  if (isReleaseBranch() && isPackageNewerVersion()) {
     stage("Publish") {
       sh 'yarn run publish'
     }
   }
-}
-
-def isNewerVersion(String current, String next) {
-  List currentV = current.tokenize('.')
-  List nextV = next.tokenize('.')
-  def minIndex = Math.min(currentV.size(), nextV.size())
-  for (int i = 0; i < minIndex; i++) {
-    if (nextV[i].toInteger() > currentV[i].toInteger()) {
-      return true
-    } else if (nextV[i].toInteger() < currentV[i].toInteger()) {
-      return false
-    }
-  }
-  return false
-}
-
-def isReleasable() {
-  def packageName = sh(script: 'npm run package-name -s', returnStdout: true).trim()
-  echo "Checking releasability for package: " + packageName
-  if (packageName) {
-    def remoteVersion = sh(script: "npm view ${packageName} version", returnStdout: true)
-    echo "Validating remote version: " + remoteVersion
-    def localVersion = sh(script: 'npm run package-version -s', returnStdout: true)
-    echo "Validating local version: " + localVersion
-    if (localVersion) {
-      return isNewerVersion(remoteVersion, localVersion)
-    }
-  }
-  return false
 }
