@@ -1,5 +1,5 @@
 #!groovy
-@Library('waluigi@v2.0.0') _
+@Library('waluigi@v3.2.0') _
 
 properties([
   disableConcurrentBuilds(),
@@ -61,7 +61,7 @@ node("primary") {
     }
   }
 
-  if (isReleaseBranch()) {
+  if (isReleaseBranch() && isPackageNewerVersion()) {
     stage("Publish") {
       sh 'yarn run publish'
     }

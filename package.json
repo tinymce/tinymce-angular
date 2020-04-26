@@ -12,7 +12,7 @@
     "clean": "yarn rimraf dist",
     "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && copyfiles README.md dist/tinymce-angular/",
     "prepare": "yarn run build",
-    "publish": "yarn run build && (cd dist/tinymce-angular && yarn publish)"
+    "publish": "yarn run build && (cd dist/tinymce-angular && npm publish)"
   },
   "private": true,
   "dependencies": {},
