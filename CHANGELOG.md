@@ -1,3 +1,6 @@
+## 3.5.1 (2020-04-30)
+* Upgraded jquery in dev dependencies in response to security alert.
+
 ## 3.5.0 (2020-03-02)
 * Added new `TINYMCE_SCRIPT_SRC` injection token. To be used in a dependency injection provider to specify an external version of TinyMCE to load
 
