@@ -53,8 +53,8 @@ node("primary") {
     parallel processes
   }
 
-  stage("Deploying storybook to github") {
-    if (isReleaseBranch()) {
+  if (isReleaseBranch()) {
+    stage("Deploying storybook to github") {
       sshagent (credentials: ['ccde5b3d-cf13-4d70-88cf-ae1e6dfd4ef4']) {
         sh 'yarn storybook-to-ghpages'
       }
@@ -63,7 +63,8 @@ node("primary") {
 
   if (isReleaseBranch() && isPackageNewerVersion()) {
     stage("Publish") {
-      sh 'yarn run publish'
+      sh 'yarn run build'
+      sh 'cd dist/tinymce-angular && npm publish'
     }
   }
 }

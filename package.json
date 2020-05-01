@@ -10,9 +10,7 @@
     "test": "yarn bedrock-auto -b chrome-headless -f tinymce-angular-component/src/test/ts/**/*Test.ts",
     "test-manual": "bedrock -f tinymce-angular-component/src/test/ts/**/*Test.ts",
     "clean": "yarn rimraf dist",
-    "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && copyfiles README.md dist/tinymce-angular/",
-    "prepare": "yarn run build",
-    "publish": "yarn run build && (cd dist/tinymce-angular && npm publish)"
+    "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && json -I -f dist/tinymce-angular/package.json -e 'this.version=process.env.npm_package_version' && copyfiles README.md dist/tinymce-angular/"
   },
   "private": true,
   "dependencies": {},
@@ -43,6 +41,7 @@
     "codelyzer": "^5.0.1",
     "copyfiles": "^2.1.0",
     "core-js": "^3.6.5",
+    "json": "^9.0.6",
     "ng-packagr": "^9.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
