@@ -12,6 +12,7 @@ import { TransclusionComponent, MenuComponent } from './transclusion/Transclusio
 import { apiKey, sampleContent } from './Settings';
 
 import '@angular/material/prebuilt-themes/indigo-pink.css';
+import { EventBindingComponent } from './event-binding/EventBinding.component';
 
 storiesOf('Editor', module)
   .addDecorator(
@@ -39,6 +40,9 @@ storiesOf('Editor', module)
         <editor apiKey="${apiKey}" inline initialValue='${sampleContent}'></editor>
       </div>
     `
+  }))
+  .add('Event binding', () => ({
+    component: EventBindingComponent,
   }))
   .add(
     'Data Binding',
