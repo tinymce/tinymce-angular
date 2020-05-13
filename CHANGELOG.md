@@ -1,3 +1,6 @@
+## 3.5.2 (2020-05-11)
+* Fixed event binding order.
+
 ## 3.5.1 (2020-04-30)
 * Upgraded jquery in dev dependencies in response to security alert.
 

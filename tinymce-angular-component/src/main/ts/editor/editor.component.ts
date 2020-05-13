@@ -142,8 +142,9 @@ constructor(
       setup: (editor: any) => {
         this._editor = editor;
         editor.on('init', (e: Event) => {
-          this.initEditor(e, editor);
+          this.initEditor(editor);
         });
+        bindHandlers(this, editor);
 
         if (this.init && typeof this.init.setup === 'function') {
           this.init.setup(editor);
@@ -166,14 +167,13 @@ constructor(
       this.tinymceScriptSrc;
   }
 
-  private initEditor(initEvent: Event, editor: any) {
-    if (typeof this.initialValue === 'string') {
-      this.ngZone.run(() => editor.setContent(this.initialValue));
-    }
+  private initEditor(editor: any) {
     editor.on('blur', () => this.ngZone.run(() => this.onTouchedCallback()));
     editor.on('change keyup undo redo', () => {
       this.ngZone.run(() => this.onChangeCallback(editor.getContent({ format: this.outputFormat })));
     });
-    bindHandlers(this, editor, initEvent);
+    if (typeof this.initialValue === 'string') {
+      this.ngZone.run(() => editor.setContent(this.initialValue));
+    }
   }
 }
