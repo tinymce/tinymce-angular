@@ -8,6 +8,7 @@
   (onKeyDown)="log($event)"
   [apiKey]="apiKey"
   [init]="{ height: 300 }"
+  [modelEvents]="modelEvents"
   ></editor>
 
 <textarea [(ngModel)]="content" style="width: 100%;" rows="10"></textarea>
