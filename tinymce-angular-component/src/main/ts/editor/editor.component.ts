@@ -50,6 +50,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input() public tagName: string | undefined;
   @Input() public plugins: string | undefined;
   @Input() public toolbar: string | string[] | undefined;
+  @Input() public modelEvents = 'change keyup undo redo';
 
   private _elementRef: ElementRef;
   private _element: Element | undefined;
@@ -169,7 +170,7 @@ constructor(
 
   private initEditor(editor: any) {
     editor.on('blur', () => this.ngZone.run(() => this.onTouchedCallback()));
-    editor.on('change keyup undo redo', () => {
+    editor.on(this.modelEvents, () => {
       this.ngZone.run(() => this.onChangeCallback(editor.getContent({ format: this.outputFormat })));
     });
     if (typeof this.initialValue === 'string') {
