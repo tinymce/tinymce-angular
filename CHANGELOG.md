@@ -1,4 +1,4 @@
-## 3.6.0 (TBD)
+## 3.6.0 (2020-05-22)
 * Added `modelEvents` property to update NgModel
 
 ## 3.5.2 (2020-05-11)
