@@ -174,7 +174,10 @@ constructor(
       this.ngZone.run(() => this.onChangeCallback(editor.getContent({ format: this.outputFormat })));
     });
     if (typeof this.initialValue === 'string') {
-      this.ngZone.run(() => editor.setContent(this.initialValue));
+      this.ngZone.run(() => {
+        editor.setContent(this.initialValue);
+        this.onChangeCallback(editor.getContent({ format: this.outputFormat }));
+      });
     }
   }
 }
