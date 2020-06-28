@@ -1,4 +1,8 @@
-## 3.6.1 (TBD)
+## 4.0.0 (TBD)
+This major release is compatible with Angular ^9.0.0
+* Changed peer dependencies to support Angular 9
+
+## 3.6.1 (2020-05-26)
 * Setting the initial value on the editor now propagates the editor's content
 
 ## 3.6.0 (2020-05-22)
