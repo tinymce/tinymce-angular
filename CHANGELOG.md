@@ -1,4 +1,4 @@
-## 3.6.1 (TBD)
+## 3.6.1 (2020-05-26)
 * Setting the initial value on the editor now propagates the editor's content
 
 ## 3.6.0 (2020-05-22)
