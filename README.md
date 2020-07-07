@@ -9,6 +9,10 @@ This package is a thin wrapper around [TinyMCE](https://github.com/tinymce/tinym
 * For the TinyMCE Angular Technical Reference, see: [TinyMCE Documentation - TinyMCE Angular Technical Reference](https://www.tiny.cloud/docs/integrations/angular/#tinymceangulartechnicalreference).
 * For our quick demos, check out the TinyMCE Angular [Storybook](https://tinymce.github.io/tinymce-angular/).
 
+### Support
+
+Version 4.0 is intended to support Angular 10. For Angular 8 and below we recommend using previous versions of the wrapper.
+
 ### Issues
 
 Have you found an issue with tinymce-angular or do you have a feature request? 
