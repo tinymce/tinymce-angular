@@ -1,3 +1,7 @@
+## 4.0.0 (2020-07-07)
+This major release is compatible with Angular ^10.0.0
+* Changed peer dependencies to support Angular 9 and 10
+
 ## 3.6.1 (2020-05-26)
 * Setting the initial value on the editor now propagates the editor's content
 
