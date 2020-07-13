@@ -1,3 +1,6 @@
+## 4.1.0 (TBD)
+* Added `onInitNgModel` event
+
 ## 4.0.0 (2020-07-07)
 This major release is compatible with Angular ^10.0.0
 * Changed peer dependencies to support Angular 9 and 10
