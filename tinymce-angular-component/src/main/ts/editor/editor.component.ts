@@ -177,6 +177,9 @@ constructor(
       this.ngZone.run(() => {
         editor.setContent(this.initialValue);
         this.onChangeCallback(editor.getContent({ format: this.outputFormat }));
+        if (this.onInitNgModel !== undefined) {
+          this.onInitNgModel.emit(editor);
+        }
       });
     }
   }

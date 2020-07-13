@@ -30,4 +30,8 @@ export class EventBindingComponent {
   public angularInit() {
     console.log('init by angular');
   }
+
+  public realAngularInit(e1: any) {
+    console.log('Ready NgModel', e1);
+  }
 }
