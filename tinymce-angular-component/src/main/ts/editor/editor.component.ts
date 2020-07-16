@@ -50,7 +50,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input() public tagName: string | undefined;
   @Input() public plugins: string | undefined;
   @Input() public toolbar: string | string[] | undefined;
-  @Input() public modelEvents = 'change keyup undo redo';
+  @Input() public modelEvents = 'change input undo redo';
 
   private _elementRef: ElementRef;
   private _element: Element | undefined;
@@ -177,6 +177,9 @@ constructor(
       this.ngZone.run(() => {
         editor.setContent(this.initialValue);
         this.onChangeCallback(editor.getContent({ format: this.outputFormat }));
+        if (this.onInitNgModel !== undefined) {
+          this.onInitNgModel.emit(editor);
+        }
       });
     }
   }

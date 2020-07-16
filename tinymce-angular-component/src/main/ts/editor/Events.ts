@@ -49,6 +49,7 @@ export class Events {
   @Output() public onGetContent: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onHide: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onInit: EventEmitter<EventObj<any>> = new EventEmitter();
+  @Output() public onInitNgModel: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onLoadContent: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onNodeChange: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onPostProcess: EventEmitter<EventObj<any>> = new EventEmitter();
