@@ -1,4 +1,4 @@
-## 4.1.0 (TBD)
+## 4.1.0 (2020-07-20)
 * Added `onInitNgModel` event
 * Use `input` instead of `keyup` as default modelEvent
 
