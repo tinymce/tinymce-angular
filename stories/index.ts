@@ -1,6 +1,7 @@
 import { moduleMetadata, storiesOf } from '@storybook/angular';
 import { EditorComponent } from '../tinymce-angular-component/src/main/ts/editor/editor.component';
 import { BindingComponent } from './data-binding/DataBinding.component';
+import { FormControlComponent } from './form-control/FormControl.component';
 import { BlogComponent } from './formvalidation/FormValidation.component';
 import { SafePipe } from './pipes/Safe.pipe';
 import { DisablingComponent } from './disable/Disable.component';
@@ -13,6 +14,7 @@ import { apiKey, sampleContent } from './Settings';
 
 import '@angular/material/prebuilt-themes/indigo-pink.css';
 import { EventBindingComponent } from './event-binding/EventBinding.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 storiesOf('Editor', module)
   .addDecorator(
@@ -51,6 +53,18 @@ storiesOf('Editor', module)
     }),
     {
       notes: 'Simple example of data binding with ngModel'
+    }
+  )
+  .add(
+    'Form Control',
+    () => ({
+      component: FormControlComponent,
+      moduleMetadata: {
+        imports: [ReactiveFormsModule, FormsModule]
+      }
+    }),
+    {
+      notes: 'Simple example of subscribing to valueChanges'
     }
   )
   .add(
