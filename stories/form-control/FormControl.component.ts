@@ -10,7 +10,7 @@ export class FormControlComponent {
 
   constructor(private readonly formBuilder: FormBuilder) {
     this.formControl.valueChanges.subscribe(console.log);
-    this.formControl.setValue('<p>Hi</p>');
+    this.formControl.setValue('<p>Initial value</p>');
     // Console log should be triggered just once
   }
 }
