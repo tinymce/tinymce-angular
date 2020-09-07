@@ -1,0 +1,38 @@
+<editor
+  [apiKey]="apiKey"
+  [ngModel]="fieldValue"
+  [init]="initObject"
+  allowedEvents="onMouseEnter,onMouseLeave"
+  ignoreEvents="onMouseLeave"
+  (onMouseEnter)="logMouseEnter()"
+  (onMouseLeave)="logMouseLeave()"
+></editor>
+
+<editor
+  [apiKey]="apiKey"
+  [ngModel]="fieldValue"
+  [init]="initObject"
+  [allowedEvents]="['onMouseEnter', 'onMouseLeave']"
+  [ignoreEvents]="['onMouseLeave']"
+  (onMouseEnter)="logMouseEnter()"
+  (onMouseLeave)="logMouseLeave()"
+></editor>
+
+<editor
+  [apiKey]="apiKey"
+  [ngModel]="fieldValue"
+  [init]="initObject"
+  ignoreEvents="onMouseLeave"
+  (onMouseEnter)="logMouseEnter()"
+  (onMouseLeave)="logMouseLeave()"
+></editor>
+
+<editor
+  [apiKey]="apiKey"
+  [ngModel]="fieldValue"
+  [init]="initObject"
+  [allowedEvents]="allowed"
+  [ignoreEvents]="ignore"
+  (onMouseEnter)="logMouseEnter()"
+  (onMouseLeave)="logMouseLeave()"
+></editor>

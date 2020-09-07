@@ -13,6 +13,7 @@ import { apiKey, sampleContent } from './Settings';
 
 import '@angular/material/prebuilt-themes/indigo-pink.css';
 import { EventBindingComponent } from './event-binding/EventBinding.component';
+import { EventForwardingComponent } from './event-forwarding/EventForwarding.component';
 
 storiesOf('Editor', module)
   .addDecorator(
@@ -43,6 +44,9 @@ storiesOf('Editor', module)
   }))
   .add('Event binding', () => ({
     component: EventBindingComponent,
+  }))
+  .add('Event forwarding', () => ({
+    component: EventForwardingComponent,
   }))
   .add(
     'Data Binding',
