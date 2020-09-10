@@ -9,7 +9,7 @@ import { ViewQueryComponent } from './viewquery/Viewquery.component';
 import { MaterialTabs } from './materialtabs/MaterialTabs.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TransclusionComponent, MenuComponent } from './transclusion/Transclusion.component';
+import { ContainerComponent, ContentProjectionComponent } from './contentprojection/ContentProjection.component';
 import { apiKey, sampleContent } from './Settings';
 
 import '@angular/material/prebuilt-themes/indigo-pink.css';
@@ -105,15 +105,15 @@ storiesOf('Editor', module)
     })
   )
   .add(
-    'Transclusion',
+    'Content Projection',
     () => ({
-      component: TransclusionComponent,
+      component: ContentProjectionComponent,
       moduleMetadata: {
-        declarations: [MenuComponent]
+        declarations: [ContainerComponent]
       }
     }),
     {
-      notes: 'Alternative to using ng-content for transclusion.'
+      notes: 'Content projection workaround.'
     }
   )
   .add(
