@@ -1,3 +1,8 @@
+## 4.2.0 (TBD)
+* Added `allowedEvents` to specify what events are emitted by the component
+* Added `ignoreEvents` to blacklist events not be emitted by the component
+* Remove`change` event being emitted on initialization if the value is not changed by the editor
+
 ## 4.1.0 (2020-07-20)
 * Added `onInitNgModel` event
 * Use `input` instead of `keyup` as default modelEvent

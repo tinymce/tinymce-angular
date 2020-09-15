@@ -14,6 +14,7 @@ import { apiKey, sampleContent } from './Settings';
 
 import '@angular/material/prebuilt-themes/indigo-pink.css';
 import { EventBindingComponent } from './event-binding/EventBinding.component';
+import { EventForwardingComponent } from './event-forwarding/EventForwarding.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 storiesOf('Editor', module)
@@ -45,6 +46,9 @@ storiesOf('Editor', module)
   }))
   .add('Event binding', () => ({
     component: EventBindingComponent,
+  }))
+  .add('Event forwarding', () => ({
+    component: EventForwardingComponent,
   }))
   .add(
     'Data Binding',
