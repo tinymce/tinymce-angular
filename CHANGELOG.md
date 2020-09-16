@@ -1,6 +1,6 @@
-## 4.2.0 (TBD)
+## 4.2.0 (2020-09-16)
 * Added `allowedEvents` to specify what events are emitted by the component
-* Added `ignoreEvents` to blacklist events not be emitted by the component
+* Added `ignoreEvents` to blacklist events not to be emitted by the component
 * Remove`change` event being emitted on initialization if the value is not changed by the editor
 
 ## 4.1.0 (2020-07-20)
