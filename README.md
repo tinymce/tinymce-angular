@@ -11,7 +11,15 @@ This package is a thin wrapper around [TinyMCE](https://github.com/tinymce/tinym
 
 ### Support
 
-Version 4.0 is intended to support Angular 10. For Angular 8 and below we recommend using previous versions of the wrapper.
+For Angular 9+, use integration version 4.x:
+
+`npm install @tinymce/tinymce-angular@^4.0.0`
+
+For Angular 8 and below use integration version 3.x:
+
+`npm install @tinymce/tinymce-angular@^3.0.0`
+
+Versions below Angular 6 are not supported.
 
 ### Issues
 
