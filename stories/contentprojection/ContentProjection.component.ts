@@ -1,6 +1,6 @@
+/* eslint-disable max-classes-per-file */
 import { Component, TemplateRef, Input } from '@angular/core';
 import { apiKey } from '../Settings';
-// tslint:disable:max-classes-per-file
 
 /*
   Normally when projecting content you would use ng-content but this is not something that works
@@ -17,13 +17,13 @@ import { apiKey } from '../Settings';
 
 @Component({
   selector: 'container',
-  styles: [`
+  styles: [ `
     .container {
       border: 1px solid blue;
       display: block;
       padding: 15px;
     }
-  `],
+  ` ],
   template: `
     <ng-template #placeHolder>
       <p>I am a placeholder.</p>
@@ -36,8 +36,8 @@ import { apiKey } from '../Settings';
   `
 })
 export class ContainerComponent {
+  @Input() public editorTemplate!: TemplateRef<any>;
   public show = true;
-  @Input() editorTemplate!: TemplateRef<any>;
 
   public handleToggle() {
     this.show = !this.show;

@@ -26,8 +26,8 @@ UnitTest.asynctest('FormControlTest', (success, failure) => {
 
   const cSetupEditorWithFormControl = Chain.async<void, TestContext>((_, next) => {
     TestBed.configureTestingModule({
-      imports: [EditorModule, ReactiveFormsModule],
-      declarations: [EditorWithFormControl]
+      imports: [ EditorModule, ReactiveFormsModule ],
+      declarations: [ EditorWithFormControl ]
     }).compileComponents();
 
     const fixture = TestBed.createComponent(EditorWithFormControl);

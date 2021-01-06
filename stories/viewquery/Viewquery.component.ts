@@ -7,8 +7,8 @@ import { apiKey } from '../Settings';
   templateUrl: './Viewquery.component.html'
 })
 export class ViewQueryComponent {
-  public apiKey = apiKey;
   @ViewChild(EditorComponent, { static: true }) public editorComponent!: EditorComponent;
+  public apiKey = apiKey;
 
   public undo() {
     this.editorComponent.editor.undoManager.undo();

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Component } from '@angular/core';
 import { apiKey } from '../Settings';
 
@@ -10,7 +11,7 @@ export class EventBindingComponent {
   public initObject = {
     height: 500,
     setup: (editor: any) => {
-      editor.on('SetContent', (e: any) => this.tinySetContent());
+      editor.on('SetContent', (_e: any) => this.tinySetContent());
       editor.on('Init', () => this.tinyInit());
     }
   };

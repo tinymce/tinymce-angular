@@ -15,7 +15,7 @@ UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
 
   const cSetupEnv = () => Chain.async((_, next, die) => {
     TestBed.configureTestingModule({
-      declarations: [EditorComponent]
+      declarations: [ EditorComponent ]
     }).compileComponents().then(next, die);
   });
 
@@ -47,7 +47,7 @@ UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
     }),
     Waiter.cTryUntil(
       'waiting for events firing',
-      store.cAssertEq('Only keyup should fire. Other events must be ignored or not allowed', ['keyup.zone=true']),
+      store.cAssertEq('Only keyup should fire. Other events must be ignored or not allowed', [ 'keyup.zone=true' ]),
       1000
     )
   ]);

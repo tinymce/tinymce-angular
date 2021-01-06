@@ -20,8 +20,8 @@ UnitTest.asynctest('LoadTinyTest', (success, failure) => {
     class EditorLoad { }
 
     TestBed.configureTestingModule({
-      imports: [EditorModule, FormsModule],
-      declarations: [EditorLoad],
+      imports: [ EditorModule, FormsModule ],
+      declarations: [ EditorLoad ],
       providers
     }).compileComponents();
 
@@ -46,9 +46,7 @@ UnitTest.asynctest('LoadTinyTest', (success, failure) => {
     delete Global.tinymce;
     delete Global.tinyMCE;
 
-    const hasTinymceUri = (attrName: string) => (elm: Element) => {
-      return Attr.getOpt(elm, attrName).exists((src) => Strings.contains(src, 'tinymce'));
-    };
+    const hasTinymceUri = (attrName: string) => (elm: Element) => Attr.getOpt(elm, attrName).exists((src) => Strings.contains(src, 'tinymce'));
 
     const elements = Arr.flatten([
       Arr.filter(SelectorFilter.all('script'), hasTinymceUri('src')),
@@ -70,18 +68,18 @@ UnitTest.asynctest('LoadTinyTest', (success, failure) => {
     Log.chainsAsStep('Should be able to load local version of TinyMCE specified via depdendency injection', '', [
       cDeleteTinymce,
 
-      cSetupEditor([], [ { provide: TINYMCE_SCRIPT_SRC, useValue: '/project/node_modules/tinymce-5/tinymce.min.js' } ]),
+      cSetupEditor([], [{ provide: TINYMCE_SCRIPT_SRC, useValue: '/project/node_modules/tinymce-5/tinymce.min.js' }]),
       cAssertTinymceVersion('5'),
       cTeardown,
       cDeleteTinymce,
 
-      cSetupEditor([], [ { provide: TINYMCE_SCRIPT_SRC, useValue: '/project/node_modules/tinymce-4/tinymce.min.js' } ]),
+      cSetupEditor([], [{ provide: TINYMCE_SCRIPT_SRC, useValue: '/project/node_modules/tinymce-4/tinymce.min.js' }]),
       cAssertTinymceVersion('4'),
       cTeardown,
       cDeleteTinymce,
     ]),
     Log.chainsAsStep('Should be able to load TinyMCE from Cloud', '', [
-      cSetupEditor(['apiKey="a-fake-api-key"', 'cloudChannel="5-dev"'], []),
+      cSetupEditor([ 'apiKey="a-fake-api-key"', 'cloudChannel="5-dev"' ], []),
       cAssertTinymceVersion('5'),
       Chain.op(() => {
         Assertions.assertEq(

@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import '../alien/InitTestEnvironment';
 
 import { Component } from '@angular/core';
@@ -31,8 +32,8 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
     class EditorWithNgModel extends Base { }
 
     TestBed.configureTestingModule({
-      imports: [EditorModule, FormsModule],
-      declarations: [EditorWithNgModel]
+      imports: [ EditorModule, FormsModule ],
+      declarations: [ EditorWithNgModel ]
     }).compileComponents();
 
     const fixture = TestBed.createComponent(EditorWithNgModel);
@@ -55,24 +56,20 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
     TestBed.resetTestingModule();
   });
 
-  const cAssertNgModelState = (prop: 'valid' | 'pristine' | 'touched', expected: boolean) => {
-    return Chain.op((context: TestContext) => {
-      Assertions.assertEq(
-        'assert ngModel ' + prop + ' state',
-        expected,
-        context.ngModel[prop]
-      );
-    });
-  };
+  const cAssertNgModelState = (prop: 'valid' | 'pristine' | 'touched', expected: boolean) => Chain.op((context: TestContext) => {
+    Assertions.assertEq(
+      'assert ngModel ' + prop + ' state',
+      expected,
+      context.ngModel[prop]
+    );
+  });
 
-  const cFakeType = (str: string) => {
-    return Chain.op((context: TestContext) => {
-      const editor = context.editorComponent.editor;
-      editor.getBody().innerHTML = '<p>' + str + '</p>';
-      Keyboard.keystroke(Keys.space(), {}, Element.fromDom(editor.getBody()));
-      context.fixture.detectChanges();
-    });
-  };
+  const cFakeType = (str: string) => Chain.op((context: TestContext) => {
+    const editor = context.editorComponent.editor;
+    editor.getBody().innerHTML = '<p>' + str + '</p>';
+    Keyboard.keystroke(Keys.space(), {}, Element.fromDom(editor.getBody()));
+    context.fixture.detectChanges();
+  });
 
   const sTestVersion = (version: '4' | '5') => VersionLoader.sWithVersion(version, GeneralSteps.sequence([
     Log.chainsAsStep('', 'should be pristine, untouched, and valid initially', [
@@ -119,7 +116,7 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
     ]),
 
     Log.chainsAsStep('', 'Test outputFormat="text"', [
-      cSetupEditorWithNgModel(['outputFormat="text"']),
+      cSetupEditorWithNgModel([ 'outputFormat="text"' ]),
       cFakeType('X'),
       Chain.op((context: TestContext) => {
         Assertions.assertEq(
@@ -132,7 +129,7 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
     ]),
 
     Log.chainsAsStep('', 'Test outputFormat="html"', [
-      cSetupEditorWithNgModel(['outputFormat="html"']),
+      cSetupEditorWithNgModel([ 'outputFormat="html"' ]),
       cFakeType('X'),
       Chain.op((context: TestContext) => {
         Assertions.assertEq(
