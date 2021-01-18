@@ -8,7 +8,7 @@ import { By } from '@angular/platform-browser';
 import { Assertions, Chain, Log, Pipeline, Waiter, GeneralSteps, Keyboard, Keys } from '@ephox/agar';
 import { UnitTest } from '@ephox/bedrock-client';
 import { VersionLoader } from '@tinymce/miniature';
-import { Element } from '@ephox/sugar';
+import { SugarElement } from '@ephox/sugar';
 
 import { EditorModule, EditorComponent } from '../../../main/ts/public_api';
 
@@ -67,7 +67,7 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
   const cFakeType = (str: string) => Chain.op((context: TestContext) => {
     const editor = context.editorComponent.editor;
     editor.getBody().innerHTML = '<p>' + str + '</p>';
-    Keyboard.keystroke(Keys.space(), {}, Element.fromDom(editor.getBody()));
+    Keyboard.keystroke(Keys.space(), {}, SugarElement.fromDom(editor.getBody()));
     context.fixture.detectChanges();
   });
 
