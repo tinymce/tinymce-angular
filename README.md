@@ -19,7 +19,7 @@ For Angular 8 and below use integration version 3.x:
 
 `npm install @tinymce/tinymce-angular@^3.0.0`
 
-Versions below Angular 6 are not supported.
+Versions below Angular 5 are not supported.
 
 ### Issues
 
