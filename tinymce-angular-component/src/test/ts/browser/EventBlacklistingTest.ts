@@ -15,7 +15,7 @@ UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
 
   const cSetupEnv = () => Chain.async((_, next, die) => {
     TestBed.configureTestingModule({
-      declarations: [EditorComponent]
+      declarations: [ EditorComponent ]
     }).compileComponents().then(next, die);
   });
 
@@ -23,34 +23,19 @@ UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
     TestBed.resetTestingModule();
   });
 
-  const cCreateEditor = Chain.injectThunked(() => {
+  const cSetupEditorComponent = Chain.async<void, any>((_, next) => {
     const fixture = TestBed.createComponent(EditorComponent);
-    fixture.componentInstance.allowedEvents = 'onKeyUp,onClick';
+    fixture.componentInstance.allowedEvents = 'onKeyUp,onClick,onInit';
     fixture.componentInstance.ignoreEvents = 'onClick';
     fixture.detectChanges();
-    return fixture;
-  });
-
-  const cTest = Chain.fromParent(cCreateEditor, [
-    Chain.op((fixture) => {
-      fixture.componentInstance.onKeyUp.subscribe(() => {
-        const inZone = NgZone.isInAngularZone();
-        store.adder('keyup.zone=' + inZone)();
+    fixture.componentInstance.onInit.subscribe(() => {
+      fixture.componentInstance.editor.on('SkinLoaded', () => {
+        setTimeout(() => {
+          next(fixture);
+        }, 0);
       });
-      fixture.componentInstance.onKeyDown.subscribe(store.adder('keydown'));
-      fixture.componentInstance.onClick.subscribe(store.adder('click'));
-    }),
-    Chain.op((fixture) => {
-      fixture.componentInstance.editor.fire('keydown');
-      fixture.componentInstance.editor.fire('keyclick');
-      fixture.componentInstance.editor.fire('keyup');
-    }),
-    Waiter.cTryUntil(
-      'waiting for events firing',
-      store.cAssertEq('Only keyup should fire. Other events must be ignored or not allowed', ['keyup.zone=true']),
-      1000
-    )
-  ]);
+    });
+  });
 
   const sTestVersion = (version: '4' | '5') => VersionLoader.sWithVersion(
     version,
@@ -58,7 +43,26 @@ UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
       [
         store.cClear,
         cSetupEnv(),
-        cTest,
+        cSetupEditorComponent,
+        Chain.op((fixture) => {
+          fixture.componentInstance.onKeyUp.subscribe(() => {
+            const inZone = NgZone.isInAngularZone();
+            store.adder('keyup.zone=' + inZone)();
+          });
+          fixture.componentInstance.onKeyDown.subscribe(store.adder('keydown'));
+          fixture.componentInstance.onClick.subscribe(store.adder('click'));
+        }),
+        Chain.op((fixture) => {
+          fixture.componentInstance.editor.fire('keydown');
+          fixture.componentInstance.editor.fire('keyclick');
+          fixture.componentInstance.editor.fire('keyup');
+        }),
+        Waiter.cTryUntil(
+          'Waiting for events to fire',
+          store.cAssertEq('Only keyup should fire', [ 'keyup.zone=true']),
+          1000
+        ),
+        // cTest,
         cTeardownEnv
       ])
   );

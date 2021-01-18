@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Component } from '@angular/core';
 import { apiKey } from '../Settings';
 
@@ -6,8 +7,8 @@ import { apiKey } from '../Settings';
 })
 export class EventForwardingComponent {
   public apiKey = apiKey;
-  public allowed = ['onMouseLeave', 'onMouseEnter'];
-  public ignore = ['onMouseLeave'];
+  public allowed = [ 'onMouseLeave', 'onMouseEnter' ];
+  public ignore = [ 'onMouseLeave' ];
   public fieldValue = 'some value';
   public initObject = {
     height: 260,
@@ -18,6 +19,6 @@ export class EventForwardingComponent {
   }
 
   public logMouseLeave() {
-    console.log('Log mouse leave')
+    console.log('Log mouse leave');
   }
 }

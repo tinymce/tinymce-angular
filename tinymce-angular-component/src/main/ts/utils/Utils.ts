@@ -23,7 +23,7 @@ const getValidEvents = (ctx: EditorComponent): (keyof Events)[] => {
   const allowedEvents = parseStringProperty(ctx.allowedEvents, validEvents).filter(
     (event) => validEvents.includes(event as (keyof Events)) && !ignoredEvents.includes(event)) as (keyof Events)[];
   return allowedEvents;
-}
+};
 
 const parseStringProperty = (property: string | string[] | undefined, defaultValue: (keyof Events)[]): string[] => {
   if ( typeof property === 'string') {
@@ -47,9 +47,7 @@ const uuid = (prefix: string): string => {
   return prefix + '_' + random + unique + String(time);
 };
 
-const isTextarea = (element?: Element): element is HTMLTextAreaElement => {
-  return typeof element !== 'undefined' && element.tagName.toLowerCase() === 'textarea';
-};
+const isTextarea = (element?: Element): element is HTMLTextAreaElement => typeof element !== 'undefined' && element.tagName.toLowerCase() === 'textarea';
 
 const normalizePluginArray = (plugins?: string | string[]): string[] => {
   if (typeof plugins === 'undefined' || plugins === '') {
@@ -62,7 +60,7 @@ const normalizePluginArray = (plugins?: string | string[]): string[] => {
 const mergePlugins = (initPlugins: string | string[], inputPlugins?: string | string[]) =>
   normalizePluginArray(initPlugins).concat(normalizePluginArray(inputPlugins));
 
-// tslint:disable-next-line:no-empty
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop: (...args: any[]) => void = () => { };
 
 const isNullOrUndefined = (value: any): value is null | undefined => value === null || value === undefined;

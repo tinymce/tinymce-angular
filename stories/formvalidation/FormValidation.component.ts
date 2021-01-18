@@ -3,7 +3,7 @@ import { apiKey } from '../Settings';
 
 @Component({
   templateUrl: './FormValidation.component.html',
-  styles: [`
+  styles: [ `
     .valid {
       border: 2px solid rgb(138, 201, 138);
     }
@@ -15,7 +15,7 @@ import { apiKey } from '../Settings';
     .preview {
       border: 1px solid rgb(190, 190, 190);
     }
-  `]
+  ` ]
 })
 export class BlogComponent {
   public submitted = false;

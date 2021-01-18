@@ -1,7 +1,7 @@
+/* eslint-disable no-console */
 import { Component } from '@angular/core';
 import { apiKey, modelEvents, sampleContent } from '../Settings';
 
-// tslint:disable:no-console
 @Component({
   templateUrl: './DataBinding.component.html'
 })

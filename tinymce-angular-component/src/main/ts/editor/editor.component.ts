@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-parameter-properties */
 import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, forwardRef, Inject, Input, NgZone, OnDestroy, PLATFORM_ID, InjectionToken, Optional } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -17,28 +18,10 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR = {
 @Component({
   selector: 'editor',
   template: '<ng-template></ng-template>',
-  styles: [':host { display: block; }'],
-  providers: [EDITOR_COMPONENT_VALUE_ACCESSOR]
+  styles: [ ':host { display: block; }' ],
+  providers: [ EDITOR_COMPONENT_VALUE_ACCESSOR ]
 })
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
-
-  @Input()
-  set disabled(val) {
-    this._disabled = val;
-    if (this._editor && this._editor.initialized) {
-      this._editor.setMode(val ? 'readonly' : 'design');
-    }
-  }
-
-  get disabled() {
-    return this._disabled;
-  }
-
-  get editor() {
-    return this._editor;
-  }
-
-  public ngZone: NgZone;
 
   @Input() public cloudChannel = '5';
   @Input() public apiKey = 'no-api-key';
@@ -54,6 +37,24 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input() public allowedEvents: string | string[] | undefined;
   @Input() public ignoreEvents: string | string[] | undefined;
 
+  @Input()
+  public set disabled(val) {
+    this._disabled = val;
+    if (this._editor && this._editor.initialized) {
+      this._editor.setMode(val ? 'readonly' : 'design');
+    }
+  }
+
+  public get disabled() {
+    return this._disabled;
+  }
+
+  public get editor() {
+    return this._editor;
+  }
+
+  public ngZone: NgZone;
+
   private _elementRef: ElementRef;
   private _element: Element | undefined;
   private _disabled: boolean | undefined;
@@ -62,11 +63,11 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   private onTouchedCallback = noop;
   private onChangeCallback = noop;
 
-constructor(
-  elementRef: ElementRef,
-  ngZone: NgZone,
-  @Inject(PLATFORM_ID) private platformId: Object,
-  @Optional() @Inject(TINYMCE_SCRIPT_SRC) private tinymceScriptSrc?: string
+  public constructor(
+    elementRef: ElementRef,
+    ngZone: NgZone,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Optional() @Inject(TINYMCE_SCRIPT_SRC) private tinymceScriptSrc?: string
   ) {
     super();
     this._elementRef = elementRef;
@@ -101,8 +102,7 @@ constructor(
   public ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
       this.id = this.id || uuid('tiny-angular');
-      this.inline =
-        typeof this.inline !== 'undefined' ? (typeof this.inline === 'boolean' ? this.inline : true) : this.init && this.init.inline;
+      this.inline = this.inline !== undefined ? this.inline !== false : !!(this.init?.inline);
       this.createElement();
       if (getTinymce() !== null) {
         this.initialise();
@@ -110,7 +110,7 @@ constructor(
         ScriptLoader.load(
           this._element.ownerDocument,
           this.getScriptSrc(),
-          this.initialise
+          this.initialise.bind(this)
         );
       }
     }
@@ -144,7 +144,7 @@ constructor(
       toolbar: this.toolbar || (this.init && this.init.toolbar),
       setup: (editor: any) => {
         this._editor = editor;
-        editor.on('init', (e: Event) => {
+        editor.on('init', (_e: unknown) => {
           this.initEditor(editor);
         });
         bindHandlers(this, editor);
