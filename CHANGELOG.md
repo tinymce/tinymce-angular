@@ -1,3 +1,6 @@
+## Unreleased
+* Adopted beehive-flow release process
+
 ## 4.2.0 (2020-09-16)
 * Added `allowedEvents` to specify what events are emitted by the component
 * Added `ignoreEvents` to blacklist events not to be emitted by the component

@@ -59,7 +59,7 @@ UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
         }),
         Waiter.cTryUntil(
           'Waiting for events to fire',
-          store.cAssertEq('Only keyup should fire', [ 'keyup.zone=true']),
+          store.cAssertEq('Only keyup should fire', [ 'keyup.zone=true' ]),
           1000
         ),
         // cTest,
