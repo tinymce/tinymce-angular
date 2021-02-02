@@ -37,7 +37,7 @@
     "@storybook/addon-notes": "~5.3.21",
     "@storybook/angular": "~6.0.21",
     "@storybook/storybook-deployer": "^2.8.1",
-    "@tinymce/beehive-flow": "^0.10.1",
+    "@tinymce/beehive-flow": "^0.12.0",
     "@tinymce/eslint-plugin": "^1.7.2",
     "@tinymce/miniature": "^2.2.1",
     "@types/node": "^14.0.14",
