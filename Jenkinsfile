@@ -48,7 +48,7 @@ node("primary") {
 
   stage("storybook") {
     def status = beehiveFlowStatus();
-    if (status.branchState == 'releaseReady' && status.isLatestReleaseBranch) {
+    if (status.branchState == 'releaseReady' && status.isLatest) {
       sshagent (credentials: ['ccde5b3d-cf13-4d70-88cf-ae1e6dfd4ef4']) {
         sh 'yarn storybook-to-ghpages'
       }
