@@ -1,5 +1,6 @@
 ## Unreleased
 * Adopted beehive-flow release process
+* Support for Angular 11
 
 ## 4.2.0 (2020-09-16)
 * Added `allowedEvents` to specify what events are emitted by the component
