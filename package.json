@@ -1,6 +1,4 @@
 {
-  "name": "@tinymce/tinymce-angular",
-  "version": "4.2.1-rc",
   "description": "Official TinyMCE Angular Component",
   "author": "Ephox Inc",
   "license": "Apache-2.0",
@@ -62,5 +60,7 @@
     "webpack": "^4.43.0",
     "zone.js": "~0.11.3"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "version": "4.2.1",
+  "name": "@tinymce/tinymce-angular"
 }
