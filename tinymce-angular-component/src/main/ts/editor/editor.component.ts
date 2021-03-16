@@ -172,9 +172,7 @@ constructor(
 
   private initEditor(editor: any) {
     editor.on('blur', () => this.ngZone.run(() => this.onTouchedCallback()));
-    editor.on(this.modelEvents, () => {
-      this.emitOnChange(editor);
-    });
+    editor.on(this.modelEvents, () => this.ngZone.run(() => this.emitOnChange(editor)));
     if (typeof this.initialValue === 'string') {
       this.ngZone.run(() => {
         editor.setContent(this.initialValue);
