@@ -61,7 +61,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   private _editor: any;
 
   private onTouchedCallback = noop;
-  private onChangeCallback = noop;
+  private onChangeCallback: any;
 
   public constructor(
     elementRef: ElementRef,
@@ -172,19 +172,23 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   private initEditor(editor: any) {
     editor.on('blur', () => this.ngZone.run(() => this.onTouchedCallback()));
-    editor.on(this.modelEvents, () => {
-      this.ngZone.run(() => this.onChangeCallback(editor.getContent({ format: this.outputFormat })));
-    });
+    editor.on(this.modelEvents, () => this.ngZone.run(() => this.emitOnChange(editor)));
     if (typeof this.initialValue === 'string') {
       this.ngZone.run(() => {
         editor.setContent(this.initialValue);
         if (editor.getContent() !== this.initialValue) {
-          this.onChangeCallback(editor.getContent({ format: this.outputFormat }));
+          this.emitOnChange(editor);
         }
         if (this.onInitNgModel !== undefined) {
           this.onInitNgModel.emit(editor);
         }
       });
+    }
+  }
+
+  private emitOnChange(editor: any) {
+    if (this.onChangeCallback) {
+      this.onChangeCallback(editor.getContent({ format: this.outputFormat }));
     }
   }
 }
