@@ -126,6 +126,9 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     const tagName = typeof this.tagName === 'string' ? this.tagName : 'div';
     this._element = document.createElement(this.inline ? tagName : 'textarea');
     if (this._element) {
+      if (document.getElementById(this.id)) {
+        console.warn(`TinyMCE-Angular: an element with id [${this.id}] already exists. Editors with duplicate Id will not be able to mount`);
+      }
       this._element.id = this.id;
       if (isTextarea(this._element)) {
         this._element.style.visibility = 'hidden';
