@@ -60,6 +60,7 @@ export class Events {
   @Output() public onRedo: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onRemove: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onReset: EventEmitter<EventObj<any>> = new EventEmitter();
+  @Output() public onResizeEditor: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onSaveContent: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onSetAttrib: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onObjectResizeStart: EventEmitter<EventObj<any>> = new EventEmitter();
@@ -127,6 +128,7 @@ export const validEvents: (keyof Events)[] = [
   'onRedo',
   'onRemove',
   'onReset',
+  'onResizeEditor',
   'onSaveContent',
   'onSelectionChange',
   'onSetAttrib',
