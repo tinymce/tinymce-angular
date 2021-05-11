@@ -1,112 +1,251 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
 ## Unreleased
-* Adopted beehive-flow release process
-* Support for Angular 11
 
-## 4.2.0 (2020-09-16)
-* Added `allowedEvents` to specify what events are emitted by the component
-* Added `ignoreEvents` to blacklist events not to be emitted by the component
-* Remove`change` event being emitted on initialization if the value is not changed by the editor
+## 4.2.2 (2021-03-18)
 
-## 4.1.0 (2020-07-20)
-* Added `onInitNgModel` event
-* Use `input` instead of `keyup` as default modelEvent
+### Added
 
-## 4.0.0 (2020-07-07)
-This major release is compatible with Angular ^10.0.0
-* Changed peer dependencies to support Angular 9 and 10
+- Event `ResizeEditor` to event handler
+- Warning on multiple ediotrs with same Id
 
-## 3.6.1 (2020-05-26)
-* Setting the initial value on the editor now propagates the editor's content
+## 4.2.1 (2021-02-10)
 
-## 3.6.0 (2020-05-22)
-* Added `modelEvents` property to update NgModel
+### Added
 
-## 3.5.2 (2020-05-11)
-* Fixed event binding order.
+- Beehive-flow release process
+- Support for Angular 11
+- Adopted beehive-flow release process
+- Support for Angular 11
 
-## 3.5.1 (2020-04-30)
-* Upgraded jquery in dev dependencies in response to security alert.
+## 4.2.0 - 2020-09-16
 
-## 3.5.0 (2020-03-02)
-* Added new `TINYMCE_SCRIPT_SRC` injection token. To be used in a dependency injection provider to specify an external version of TinyMCE to load
+### Added
 
-## 3.4.0 (2020-01-31)
-* Added new `outputFormat` property for specifying the format of content emitted to form controls
+- Added `allowedEvents` to specify what events are emitted by the component
+- Added `ignoreEvents` to blacklist events not to be emitted by the component
 
-## 3.3.1 (2019-09-23)
-* Added tslib as a dependency. Inlined tslib helpers caused an issue for the Angular Ivy compiler
+### Removed
 
-## 3.3.0 (2019-08-20)
-* Changed peer dependencies to support Angular 5
+- Remove`change` event being emitted on initialization if the value is not changed by the editor
 
-## 3.2.1 (2019-08-16)
-* Changed referrer policy to origin to allow cloud caching
+## 4.1.0 - 2020-07-20
 
-## 3.2.0 (2019-07-01)
-* Added a getter for obtaining a reference to the editor
-* Fixed a bug that made EventEmitters run outside of NgZone. Patch contributed by garrettld #GH-95
+### Added
 
-## 3.1.0 (2019-06-06)
-* Changed the CDN URL to use `cdn.tiny.cloud`
-* Changed peer dependencies to support Angular 8.
+- Added `onInitNgModel` event
+- Use `input` instead of `keyup` as default modelEvent
 
-## 3.0.1 (2019-04-21)
-* Fixed a bug where `ControlValueAccessor.writeValue()` or setting content programmatically would set `FormControl` pristine/dirty flags
+## 4.0.0 - 2020-07-07
 
-## 3.0.0 (2019-02-11)
-* Changed default cloudChannel to `'5'`.
+### Added
 
-## 2.5.0 (2019-01-17)
-* Add EditorComponent to public api.
+- Compatibility with Angular ^10.0.0 compatibility
 
-## 2.4.1 (2019-01-09)
-* Fixed a bug where `FormGroup.reset()` didn't clear the editor content when used in a formgroup. Patch contributed by nishanthkarthik.
+### Changed
 
-## 2.4.0 (2019-01-07)
-* Make editor always invoke touched callback on blur. Patch contributed by joensindholt 
+- Changed peer dependencies to support Angular 9 and 10
 
-## 2.3.3 (2018-12-14)
-* Improved documentation.
+## 3.6.1 - 2020-05-26
 
-## 2.3.2 (2018-12-03)
-* Change deps to support Angular 7.
+### Changed
 
-## 2.3.1 (2018-10-10)
-* Fixed incorrect documentation in readme.md file.
+- Setting the initial value on the editor now propagates the editor's content
 
-## 2.3.0 (2018-10-08)
-* Added platform detection to make the package work better with SSR.
+## 3.6.0 - 2020-05-22
 
-## 2.2.0 (2018-09-26)
-* Added support for disabling the editor via the `disabled` attribute.
+### Added
 
-## 2.1.0 (2018-09-24)
-* Fixed bug where textarea was being added to editor content if id was set.
-* Changed `inline` attribute to accept truthy values, so you can now do this: `<editor inline></editor>` instead of the earlier `<editor [inline]="true"></editor>`.
+- Added `modelEvents` property to update NgModel
 
-## 2.0.1 (2018-09-03)
-* Fixed broken links in readme.
+## 3.5.2 - 2020-05-11
 
-## 2.0.0 (2018-05-08)
-* Migrate to Angular and rxjs version 6
+### Fixed
 
-## 1.0.9 (2018-05-04)
-* Added `undo` and `redo` events to ngModel onChangeCallback.
+- Fixed event binding order.
 
-## 1.0.8 (2018-04-26)
-* Added null check before removing editor to check that tinymce is actually available.
+## 3.5.1 - 2020-04-30
 
-## 1.0.7 (2018-04-06)
-* Fixed bug with onInit not firing and removed onPreInit shorthand.
+### Fixed
 
-## 1.0.6 (2018-04-06)
-* Changed so tinymce.init is run outside of angular with ngzone.
+- Upgraded jquery in dev dependencies in response to security alert.
 
-## 1.0.5 (2018-02-15)
-* Fixed bug where is wasn't possible to set inline in the init object, only on the shorthand.
+## 3.5.0 - 2020-03-02
 
-## 1.0.4 (2018-02-14)
-* Fixed bug where the component threw errors because it tried to setContent on an editor that had not been initialized fully.
+### Added
 
-## 1.0.3 (2018-02-13)
-* Fixed bug where the component threw errors on change when not used together with the forms module.
+- Added new `TINYMCE_SCRIPT_SRC` injection token. To be used in a dependency injection provider to specify an external version of TinyMCE to load
+
+## 3.4.0 - 2020-01-31
+
+### Added
+
+- Added new `outputFormat` property for specifying the format of content emitted to form controls
+
+## 3.3.1 - 2019-09-23
+
+### Added
+
+- Added tslib as a dependency. Inlined tslib helpers caused an issue for the Angular Ivy compiler
+
+## 3.3.0 - 2019-08-20
+
+### Changed
+
+- Changed peer dependencies to support Angular 5
+
+## 3.2.1 - 2019-08-16
+
+### Changed
+
+- Changed referrer policy to origin to allow cloud caching
+
+## 3.2.0 - 2019-07-01
+
+### Added
+- Added a getter for obtaining a reference to the editor
+
+### Fixed
+- Fixed a bug that made EventEmitters run outside of NgZone. Patch contributed by garrettld #GH-95
+
+## 3.1.0 - 2019-06-06
+
+### Added
+
+- Angular 8 support
+
+### Changed
+
+- Changed the CDN URL to use `cdn.tiny.cloud`
+
+## 3.0.1 - 2019-04-21
+
+### Fixed
+
+- Fixed a bug where `ControlValueAccessor.writeValue()` or setting content programmatically would set `FormControl` pristine/dirty flags
+
+## 3.0.0 - 2019-02-11
+
+### Changed
+
+- Changed default cloudChannel to `'5'`.
+
+## 2.5.0 - 2019-01-17
+
+### Added
+
+- Add EditorComponent to public api.
+
+## 2.4.1 - 2019-01-09
+
+### Fixed
+
+- Fixed a bug where `FormGroup.reset()` didn't clear the editor content when used in a formgroup. Patch contributed by nishanthkarthik.
+
+## 2.4.0 - 2019-01-07
+
+### Added
+
+- Make editor always invoke touched callback on blur. Patch contributed by joensindholt 
+
+## 2.3.3 - 2018-12-14
+
+### Fixed
+
+- Improved documentation.
+
+## 2.3.2 - 2018-12-03
+
+### Added
+
+- Angular 7 support
+
+## 2.3.1 - 2018-10-10
+
+### Fixed
+
+- Fixed incorrect documentation in readme.md file.
+
+## 2.3.0 - 2018-10-08
+
+### Added
+
+- Added platform detection to make the package work better with SSR.
+
+## 2.2.0 - 2018-09-26
+
+### Added
+
+- Added support for disabling the editor via the `disabled` attribute.
+
+## 2.1.0 - 2018-09-24
+
+### Fixed
+
+- Fixed bug where textarea was being added to editor content if id was set.
+  
+### Changed
+
+- Changed `inline` attribute to accept truthy values, so you can now do this: `<editor inline></editor>` instead of the earlier `<editor [inline]="true"></editor>`.
+
+## 2.0.1 - 2018-09-03
+
+### Fixec
+
+- Fixed broken links in readme.
+
+## 2.0.0 - 2018-05-08
+
+### Added
+
+- Angular 6 support
+
+### Changed  
+
+- rxjs version 6
+
+## 1.0.9 - 2018-05-04
+
+### Added
+
+- Added `undo` and `redo` events to ngModel onChangeCallback.
+
+## 1.0.8 - 2018-04-26
+
+### Fixed
+
+- Added null check before removing editor to check that tinymce is actually available.
+
+## 1.0.7 - 2018-04-06
+
+### Fixed
+
+- Fixed bug with onInit not firing and removed onPreInit shorthand.
+
+## 1.0.6 - 2018-04-06
+
+### Changed
+
+- Changed so tinymce.init is run outside of angular with ngzone.
+
+## 1.0.5 - 2018-02-15
+
+### Fixed
+
+- Fixed bug where is wasn't possible to set inline in the init object, only on the shorthand.
+
+## 1.0.4 - 2018-02-14
+
+### Fixed
+
+- Fixed bug where the component threw errors because it tried to setContent on an editor that had not been initialized fully.
+
+## 1.0.3 - 2018-02-13
+
+### Fixed
+
+- Fixed bug where the component threw errors on change when not used together with the forms module.
