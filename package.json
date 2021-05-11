@@ -61,6 +61,6 @@
     "zone.js": "~0.11.4"
   },
   "dependencies": {},
-  "version": "4.2.3",
+  "version": "4.2.4-rc",
   "name": "@tinymce/tinymce-angular"
 }
