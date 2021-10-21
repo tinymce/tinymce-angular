@@ -26,7 +26,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   @Input() public cloudChannel = '5';
   @Input() public apiKey = 'no-api-key';
-  @Input() public init: Record<string, any> | undefined;
+  @Input() public init: RawEditorSettings | undefined;
   @Input() public id = '';
   @Input() public initialValue: string | undefined;
   @Input() public outputFormat: 'html' | 'text' | undefined;
@@ -142,10 +142,11 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   public initialise() {
     const finalInit: RawEditorSettings = {
       ...this.init,
+      selector: undefined,
       target: this._element,
       inline: this.inline,
       readonly: this.disabled,
-      plugins: mergePlugins(this.init && this.init.plugins, this.plugins),
+      plugins: mergePlugins(this.init?.plugins!, this.plugins),
       toolbar: this.toolbar || (this.init && this.init.toolbar),
       setup: (editor: TinyMCEEditor) => {
         this._editor = editor;
