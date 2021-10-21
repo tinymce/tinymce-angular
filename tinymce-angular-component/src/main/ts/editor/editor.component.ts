@@ -146,7 +146,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       target: this._element,
       inline: this.inline,
       readonly: this.disabled,
-      plugins: mergePlugins(this.init?.plugins!, this.plugins),
+      plugins: mergePlugins((this.init && this.init.plugins) as string, this.plugins),
       toolbar: this.toolbar || (this.init && this.init.toolbar),
       setup: (editor: TinyMCEEditor) => {
         this._editor = editor;
