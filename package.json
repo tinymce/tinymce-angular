@@ -9,7 +9,8 @@
     "test-manual": "bedrock -f tinymce-angular-component/src/test/ts/**/*Test.ts",
     "clean": "yarn rimraf dist",
     "lint": "eslint tinymce-angular-component/src/**/*.ts stories/**/*.ts",
-    "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && json -I -f dist/tinymce-angular/package.json -e 'this.version=process.env.npm_package_version' && copyfiles README.md dist/tinymce-angular/"
+    "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && json -I -f dist/tinymce-angular/package.json -e 'this.version=process.env.npm_package_version' && copyfiles README.md dist/tinymce-angular/",
+    "postinstall": "ngcc --properties es2015 browser module main"
   },
   "private": true,
   "devDependencies": {
