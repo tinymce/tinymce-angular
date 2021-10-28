@@ -65,7 +65,7 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
   });
 
   const cFakeType = (str: string) => Chain.op((context: TestContext) => {
-    const editor = context.editorComponent.editor;
+    const editor = context.editorComponent.editor!;
     editor.getBody().innerHTML = '<p>' + str + '</p>';
     Keyboard.keystroke(Keys.space(), {}, SugarElement.fromDom(editor.getBody()));
     context.fixture.detectChanges();
@@ -90,7 +90,7 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
         Assertions.assertEq(
           'Value should have been written to the editor',
           '<p>X</p>',
-          context.editorComponent.editor.getContent()
+          context.editorComponent.editor?.getContent()
         );
       })),
       cAssertNgModelState('valid', true),
@@ -106,7 +106,7 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
       cAssertNgModelState('pristine', false),
       cAssertNgModelState('touched', false),
       Chain.op((context: TestContext) => {
-        context.editorComponent.editor.fire('blur');
+        context.editorComponent.editor?.fire('blur');
         context.fixture.detectChanges();
       }),
       // If the editor loses focus, it should should remain dirty but should also turn touched

@@ -29,7 +29,7 @@ UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
     fixture.componentInstance.ignoreEvents = 'onClick';
     fixture.detectChanges();
     fixture.componentInstance.onInit.subscribe(() => {
-      fixture.componentInstance.editor.on('SkinLoaded', () => {
+      fixture.componentInstance.editor?.on('SkinLoaded', () => {
         setTimeout(() => {
           next(fixture);
         }, 0);
