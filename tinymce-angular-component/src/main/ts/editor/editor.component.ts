@@ -4,8 +4,9 @@ import { AfterViewInit, Component, ElementRef, forwardRef, Inject, Input, NgZone
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { getTinymce } from '../TinyMCE';
 import { bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined } from '../utils/Utils';
-import { Events } from './Events';
+import { EventObj, Events } from './Events';
 import { ScriptLoader } from '../utils/ScriptLoader';
+import { Editor as TinyMCEEditor, EditorEvent, RawEditorSettings } from 'tinymce';
 
 export const TINYMCE_SCRIPT_SRC = new InjectionToken<string>('TINYMCE_SCRIPT_SRC');
 
@@ -25,7 +26,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   @Input() public cloudChannel = '5';
   @Input() public apiKey = 'no-api-key';
-  @Input() public init: Record<string, any> | undefined;
+  @Input() public init: RawEditorSettings | undefined;
   @Input() public id = '';
   @Input() public initialValue: string | undefined;
   @Input() public outputFormat: 'html' | 'text' | undefined;
@@ -56,9 +57,9 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   public ngZone: NgZone;
 
   private _elementRef: ElementRef;
-  private _element: Element | undefined;
+  private _element: HTMLElement | undefined;
   private _disabled: boolean | undefined;
-  private _editor: any;
+  private _editor: TinyMCEEditor | undefined;
 
   private onTouchedCallback = noop;
   private onChangeCallback: any;
@@ -139,16 +140,17 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   }
 
   public initialise() {
-    const finalInit = {
+    const finalInit: RawEditorSettings = {
       ...this.init,
+      selector: undefined,
       target: this._element,
       inline: this.inline,
       readonly: this.disabled,
-      plugins: mergePlugins(this.init && this.init.plugins, this.plugins),
+      plugins: mergePlugins((this.init && this.init.plugins) as string, this.plugins),
       toolbar: this.toolbar || (this.init && this.init.toolbar),
-      setup: (editor: any) => {
+      setup: (editor: TinyMCEEditor) => {
         this._editor = editor;
-        editor.on('init', (_e: unknown) => {
+        editor.on('init', (_e: EditorEvent<unknown>) => {
           this.initEditor(editor);
         });
         bindHandlers(this, editor);
@@ -174,23 +176,23 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       this.tinymceScriptSrc;
   }
 
-  private initEditor(editor: any) {
+  private initEditor(editor: TinyMCEEditor) {
     editor.on('blur', () => this.ngZone.run(() => this.onTouchedCallback()));
     editor.on(this.modelEvents, () => this.ngZone.run(() => this.emitOnChange(editor)));
     if (typeof this.initialValue === 'string') {
       this.ngZone.run(() => {
-        editor.setContent(this.initialValue);
+        editor.setContent(this.initialValue as string);
         if (editor.getContent() !== this.initialValue) {
           this.emitOnChange(editor);
         }
         if (this.onInitNgModel !== undefined) {
-          this.onInitNgModel.emit(editor);
+          this.onInitNgModel.emit(editor as unknown as EventObj<any>);
         }
       });
     }
   }
 
-  private emitOnChange(editor: any) {
+  private emitOnChange(editor: TinyMCEEditor) {
     if (this.onChangeCallback) {
       this.onChangeCallback(editor.getContent({ format: this.outputFormat }));
     }

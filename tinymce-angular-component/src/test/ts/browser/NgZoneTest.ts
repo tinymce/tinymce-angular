@@ -32,7 +32,7 @@ UnitTest.asynctest('NgZoneTest', (success, failure) => {
       Chain.async<ComponentFixture<EditorComponent>, ComponentFixture<EditorComponent>>((fixture, next) => {
         fixture.componentInstance.onInit.subscribe(() => {
           Assertions.assertEq('Subscribers to onInit should run within NgZone', true, NgZone.isInAngularZone());
-          fixture.componentInstance.editor.on('SkinLoaded', () => {
+          fixture.componentInstance.editor?.on('SkinLoaded', () => {
             setTimeout(() => {
               next(fixture);
             }, 0);
@@ -46,7 +46,7 @@ UnitTest.asynctest('NgZoneTest', (success, failure) => {
           Assertions.assertEq('Subscribers to onKeyUp should run within NgZone', true, NgZone.isInAngularZone());
           done(fixture);
         });
-        fixture.componentInstance.editor.fire('keyup');
+        fixture.componentInstance.editor?.fire('keyup');
       }),
 
       cTeardown

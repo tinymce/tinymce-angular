@@ -51,7 +51,6 @@
     "regenerator-runtime": "^0.13.7",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.0",
-    "tinymce": "npm:tinymce@^5.4.0",
     "tinymce-4": "npm:tinymce@^4.9.7",
     "tinymce-5": "npm:tinymce@^5.4.0",
     "to-string-loader": "^1.1.5",
@@ -60,7 +59,9 @@
     "webpack": "^4.43.0",
     "zone.js": "~0.11.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "tinymce": "^5.5.0"
+  },
   "version": "4.2.5-rc",
   "name": "@tinymce/tinymce-angular"
 }

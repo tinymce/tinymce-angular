@@ -11,10 +11,10 @@ export class ViewQueryComponent {
   public apiKey = apiKey;
 
   public undo() {
-    this.editorComponent.editor.undoManager.undo();
+    this.editorComponent.editor?.undoManager.undo();
   }
 
   public redo() {
-    this.editorComponent.editor.undoManager.redo();
+    this.editorComponent.editor?.undoManager.redo();
   }
 }
