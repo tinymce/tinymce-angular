@@ -7,14 +7,35 @@
  */
 
 import { EventEmitter } from '@angular/core';
+import { fromEvent, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { EditorComponent } from '../editor/editor.component';
 import { validEvents, Events } from '../editor/Events';
 
-const bindHandlers = (ctx: EditorComponent, editor: any): void => {
+// Caretaker note: `fromEvent` supports passing JQuery-style event targets, the editor has `on` and `off` methods which
+// will be invoked upon subscription and teardown.
+const listenTinyMCEEvent = (
+  editor: any,
+  eventName: string,
+  destroy$: Subject<void>
+) => fromEvent(editor, eventName).pipe(takeUntil(destroy$));
+
+const bindHandlers = (ctx: EditorComponent, editor: any, destroy$: Subject<void>): void => {
   const allowedEvents = getValidEvents(ctx);
   allowedEvents.forEach((eventName) => {
     const eventEmitter: EventEmitter<any> = ctx[eventName];
-    editor.on(eventName.substring(2), (event: any) => ctx.ngZone.run(() => eventEmitter.emit({ event, editor })));
+
+    listenTinyMCEEvent(editor, eventName.substring(2), destroy$).subscribe((event) => {
+      // Caretaker note: `ngZone.run()` runs change detection since it notifies the forked Angular zone that it's
+      // being re-entered. We don't want to run `ApplicationRef.tick()` if anyone listens to the specific event
+      // within the template. E.g. if the `onSelectionChange` is not listened within the template like:
+      // `<editor (onSelectionChange)="..."></editor>`
+      // then its `observers` array will be empty, and we won't run "dead" change detection.
+      if (eventEmitter.observers.length > 0) {
+        ctx.ngZone.run(() => eventEmitter.emit({ event, editor }));
+      }
+    });
   });
 };
 
@@ -66,6 +87,7 @@ const noop: (...args: any[]) => void = () => { };
 const isNullOrUndefined = (value: any): value is null | undefined => value === null || value === undefined;
 
 export {
+  listenTinyMCEEvent,
   bindHandlers,
   uuid,
   isTextarea,
