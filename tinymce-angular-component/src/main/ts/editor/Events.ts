@@ -1,4 +1,4 @@
-import { Output, EventEmitter } from '@angular/core';
+import { Output, EventEmitter, Directive } from '@angular/core';
 import { Editor as TinyMCEEditor } from 'tinymce';
 
 export interface EventObj<T> {
@@ -6,6 +6,7 @@ export interface EventObj<T> {
   editor: TinyMCEEditor;
 }
 
+@Directive()
 export class Events {
   @Output() public onBeforePaste: EventEmitter<EventObj<ClipboardEvent>> = new EventEmitter();
   @Output() public onBlur: EventEmitter<EventObj<FocusEvent>> = new EventEmitter();
