@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, forwardRef, Inject, Input, NgZone, OnDestroy, PLATFORM_ID, InjectionToken, Optional } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { getTinymce } from '../TinyMCE';
 import { listenTinyMCEEvent, bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined } from '../utils/Utils';
 import { EventObj, Events } from './Events';
@@ -76,7 +77,6 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     super();
     this._elementRef = elementRef;
     this.ngZone = ngZone;
-    this.initialise = this.initialise.bind(this);
   }
 
   public writeValue(value: string | null): void {
@@ -111,11 +111,11 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       if (getTinymce() !== null) {
         this.initialise();
       } else if (this._element && this._element.ownerDocument) {
-        ScriptLoader.load(
-          this._element.ownerDocument,
-          this.getScriptSrc(),
-          this.initialise.bind(this)
-        );
+        // Caretaker note: the component might be destroyed before the script is loaded and its code is executed.
+        // This will lead to runtime exceptions if `initialise` will be called when the component has been destroyed.
+        ScriptLoader.load(this._element.ownerDocument, this.getScriptSrc())
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(this.initialise);
       }
     }
   }
@@ -144,7 +144,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     }
   }
 
-  public initialise() {
+  public initialise = (): void => {
     const finalInit: RawEditorSettings = {
       ...this.init,
       selector: undefined,
@@ -175,7 +175,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     this.ngZone.runOutsideAngular(() => {
       getTinymce().init(finalInit);
     });
-  }
+  };
 
   private getScriptSrc() {
     return isNullOrUndefined(this.tinymceScriptSrc) ?
