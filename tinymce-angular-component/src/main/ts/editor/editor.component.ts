@@ -95,12 +95,8 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     this.onTouchedCallback = fn;
   }
 
-  public setDisabledState(isDisabled: boolean) {
-    if (this._editor) {
-      this._editor.setMode(isDisabled ? 'readonly' : 'design');
-    } else if (isDisabled) {
-      this.init = { ...this.init, readonly: true };
-    }
+  public setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 
   public ngAfterViewInit() {
