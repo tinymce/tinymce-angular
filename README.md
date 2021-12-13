@@ -11,6 +11,10 @@ This package is a thin wrapper around [TinyMCE](https://github.com/tinymce/tinym
 
 ### Support
 
+For Angular 13+, use integration version 5.x:
+
+`npm install @tinymce/tinymce-angular@^5.0.0`
+
 For Angular 9+, use integration version 4.x:
 
 `npm install @tinymce/tinymce-angular@^4.0.0`

@@ -12,7 +12,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContainerComponent, ContentProjectionComponent } from './contentprojection/ContentProjection.component';
 import { apiKey, sampleContent } from './Settings';
 
-import '@angular/material/prebuilt-themes/indigo-pink.css';
+// Caretaker note: `@angular/material@13+` has an `exports` field in its `package.json`,
+// so using non-relative path will lead to an error:
+// ModuleNotFoundError: Module not found: Error: Package path ./prebuilt-themes/indigo-pink.css is not exported from package @angular/material (see exports field in @angular/material/package.json)
+import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
 import { EventBindingComponent } from './event-binding/EventBinding.component';
 import { EventForwardingComponent } from './event-forwarding/EventForwarding.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';

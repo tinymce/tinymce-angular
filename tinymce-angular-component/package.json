@@ -6,12 +6,9 @@
   "author": "Tiny Technologies",
   "license": "Apache-2.0",
   "private": false,
-  "dependencies": {
-    "tslib": "^1.10.0"
-  },
   "peerDependencies": {
-    "@angular/core": ">=9.0.0",
-    "@angular/common": ">=9.0.0",
-    "@angular/forms": ">=9.0.0"
+    "@angular/core": ">=13.0.0",
+    "@angular/common": ">=13.0.0",
+    "@angular/forms": ">=13.0.0"
   }
 }
