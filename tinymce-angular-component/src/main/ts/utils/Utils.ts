@@ -8,6 +8,7 @@
 
 import { EventEmitter } from '@angular/core';
 import { fromEvent, Subject } from 'rxjs';
+import { HasEventTargetAddRemove } from 'rxjs/internal/observable/fromEvent';
 import { takeUntil } from 'rxjs/operators';
 
 import { EditorComponent } from '../editor/editor.component';
@@ -19,7 +20,7 @@ const listenTinyMCEEvent = (
   editor: any,
   eventName: string,
   destroy$: Subject<void>
-) => fromEvent(editor, eventName).pipe(takeUntil(destroy$));
+) => fromEvent(editor as HasEventTargetAddRemove<unknown> | ArrayLike<HasEventTargetAddRemove<unknown>>, eventName).pipe(takeUntil(destroy$));
 
 const bindHandlers = (ctx: EditorComponent, editor: any, destroy$: Subject<void>): void => {
   const allowedEvents = getValidEvents(ctx);

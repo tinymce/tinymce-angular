@@ -39,7 +39,6 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input() public modelEvents = 'change input undo redo';
   @Input() public allowedEvents: string | string[] | undefined;
   @Input() public ignoreEvents: string | string[] | undefined;
-
   @Input()
   public set disabled(val) {
     this._disabled = val;

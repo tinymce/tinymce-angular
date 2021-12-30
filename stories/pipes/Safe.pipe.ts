@@ -8,7 +8,7 @@ export class SafePipe implements PipeTransform {
   // eslint-disable-next-line @typescript-eslint/no-parameter-properties
   public constructor(protected sanitizer: DomSanitizer) {}
 
-  public transform(value: any, type: string): SafeHtml {
+  public transform(value: string, type: string): SafeHtml {
     switch (type) {
       case 'html':
         return this.sanitizer.bypassSecurityTrustHtml(value);

@@ -15,7 +15,8 @@
       },
       "rules": {
         "@tinymce/prefer-fun": "off",
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "@typescript-eslint/member-ordering": "off"
       }
     },
     {
