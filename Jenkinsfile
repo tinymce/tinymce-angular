@@ -31,11 +31,27 @@ node("primary") {
     [ os: "windows-10", browser: "chrome" ],
     [ os: "windows-10", browser: "firefox" ],
     [ os: "windows-10", browser: "MicrosoftEdge" ],
+  ]
+  bedrockBrowsers(platforms: platforms, testDirs: [ "tinymce-angular-component/src/test/ts/browser" ])
+
+  def mac = [
     [ os: "macos", browser: "chrome" ],
     [ os: "macos", browser: "firefox" ],
     [ os: "macos", browser: "safari" ]
   ]
-  bedrockBrowsers(platforms: platforms, testDirs: [ "tinymce-angular-component/src/test/ts/browser" ])
+  mac.each{ key, value ->
+    def browser = value.browser
+    def name = "${value.os}-${value.browser}"
+    //  
+    node("p-m1-bnode-01") {
+      echo("Checking out code")
+      checkout(scm)
+      echo("Prepare test")
+      prepareTests()
+      echo("Running tests")
+      bedrockTests(name: name, browser: browser, testDirs: [ "tinymce-angular-component/src/test/ts/browser" ], custom: "", bucket: 1, buckets: 1)
+    }
+  }
 
   stage("storybook") {
     def status = beehiveFlowStatus();
