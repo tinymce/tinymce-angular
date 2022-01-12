@@ -48,7 +48,7 @@ node("primary") {
       echo("Checking out code")
       checkout(scm)
       echo("Prepare test")
-      prepareTests()
+      yarnInstall()
       echo("Running tests")
       bedrockTests(name: name, browser: browser, testDirs: [ "tinymce-angular-component/src/test/ts/browser" ], custom: "", bucket: 1, buckets: 1)
     }
