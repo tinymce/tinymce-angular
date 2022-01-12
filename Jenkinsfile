@@ -36,6 +36,29 @@ node("primary") {
     [ os: "macos", browser: "safari" ]
   ]
   bedrockBrowsers(platforms: platforms, testDirs: [ "tinymce-angular-component/src/test/ts/browser" ])
+  
+  def mactests = [
+    [ os: "macos", browser: "chrome" ],
+    [ os: "macos", browser: "firefox" ],
+    [ os: "macos", browser: "safari" ]
+  ]
+
+  for (int i = 0; i < mactests.size(); i++) {
+    def value = mactests.get(i);
+    def browser = value.browser
+    def name = "${value.os}-${value.browser}"
+    //  
+    stage(name) {
+      node("p-m1-bnode-01") {
+        echo("Checking out code")
+        checkout(scm)
+        echo("Prepare test")
+        yarnInstall()
+        echo("Running tests")
+        bedrockTests(name: name, browser: browser, testDirs: [ "tinymce-angular-component/src/test/ts/browser" ], custom: "", bucket: 1, buckets: 1)
+      }
+    }
+  }
 
   stage("storybook") {
     def status = beehiveFlowStatus();
