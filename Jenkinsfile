@@ -32,14 +32,15 @@ node("primary") {
     [ os: "windows-10", browser: "firefox" ],
     [ os: "windows-10", browser: "MicrosoftEdge" ],
   ]
-  bedrockBrowsers(platforms: platforms, testDirs: [ "tinymce-angular-component/src/test/ts/browser" ])
 
-  def mac = [
+  def mactests = [
     [ os: "macos", browser: "chrome" ],
     [ os: "macos", browser: "firefox" ],
     [ os: "macos", browser: "safari" ]
   ]
-  mac.each{ key, value ->
+
+  for (int i = 0; i < mactests.size(); i++) {
+    def value = mactests.get(i);
     def browser = value.browser
     def name = "${value.os}-${value.browser}"
     //  
