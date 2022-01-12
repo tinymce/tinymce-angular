@@ -30,10 +30,7 @@ node("primary") {
   def platforms = [
     [ os: "windows-10", browser: "chrome" ],
     [ os: "windows-10", browser: "firefox" ],
-    [ os: "windows-10", browser: "MicrosoftEdge" ],
-    [ os: "macos", browser: "chrome" ],
-    [ os: "macos", browser: "firefox" ],
-    [ os: "macos", browser: "safari" ]
+    [ os: "windows-10", browser: "MicrosoftEdge" ]
   ]
   bedrockBrowsers(platforms: platforms, testDirs: [ "tinymce-angular-component/src/test/ts/browser" ])
   
