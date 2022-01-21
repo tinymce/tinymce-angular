@@ -3,5 +3,8 @@
   "dest": "../dist/tinymce-angular",
   "lib": {
     "entryFile": "./src/main/ts/public_api.ts"
-  }
+  },
+  "allowedNonPeerDependencies": [
+    "tinymce"
+  ]
 }
