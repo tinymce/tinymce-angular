@@ -62,9 +62,6 @@
     "webpack": "^5.64.1",
     "zone.js": "~0.11.4"
   },
-  "dependencies": {
-    "tinymce": "^5.5.0"
-  },
   "version": "5.0.1-rc",
   "name": "@tinymce/tinymce-angular"
 }

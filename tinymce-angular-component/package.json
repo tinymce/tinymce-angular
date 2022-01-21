@@ -10,5 +10,8 @@
     "@angular/core": ">=13.0.0",
     "@angular/common": ">=13.0.0",
     "@angular/forms": ">=13.0.0"
+  },
+  "dependencies": {
+    "tinymce": "^5.5.0"
   }
 }
