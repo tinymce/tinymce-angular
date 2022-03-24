@@ -37,7 +37,7 @@ UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
     });
   });
 
-  const sTestVersion = (version: '4' | '5') => VersionLoader.sWithVersion(
+  const sTestVersion = (version: '4' | '5' | '6') => VersionLoader.sWithVersion(
     version,
     Log.chainsAsStep('', 'Events should be bound when allowed',
       [
@@ -69,6 +69,7 @@ UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
 
   Pipeline.async({}, [
     sTestVersion('4'),
-    sTestVersion('5')
+    sTestVersion('5'),
+    sTestVersion('6')
   ], success, failure);
 });
