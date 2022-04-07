@@ -1,6 +1,6 @@
 {
   "description": "Official TinyMCE Angular Component",
-  "author": "Tiny Technologies",
+  "author": "Ephox Corporation DBA Tiny Technologies, Inc.",
   "license": "MIT",
   "scripts": {
     "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",

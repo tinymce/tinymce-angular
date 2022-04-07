@@ -3,7 +3,7 @@
   "description": "Official TinyMCE Angular Component",
   "version": "",
   "repository": "https://github.com/tinymce/tinymce-angular.git",
-  "author": "Tiny Technologies",
+  "author": "Ephox Corporation DBA Tiny Technologies, Inc.",
   "license": "MIT",
   "private": false,
   "peerDependencies": {
