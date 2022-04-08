@@ -8,7 +8,9 @@ import { getTinymce } from '../TinyMCE';
 import { listenTinyMCEEvent, bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined } from '../utils/Utils';
 import { EventObj, Events } from './Events';
 import { ScriptLoader } from '../utils/ScriptLoader';
-import { Editor as TinyMCEEditor, RawEditorSettings } from 'tinymce';
+import { Editor as TinyMCEEditor, TinyMCE } from 'tinymce';
+
+type EditorOptions = Parameters<TinyMCE['init']>[0];
 
 export const TINYMCE_SCRIPT_SRC = new InjectionToken<string>('TINYMCE_SCRIPT_SRC');
 
@@ -28,7 +30,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   @Input() public cloudChannel = '5';
   @Input() public apiKey = 'no-api-key';
-  @Input() public init: RawEditorSettings | undefined;
+  @Input() public init: EditorOptions | undefined;
   @Input() public id = '';
   @Input() public initialValue: string | undefined;
   @Input() public outputFormat: 'html' | 'text' | undefined;
@@ -140,7 +142,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   }
 
   public initialise = (): void => {
-    const finalInit: RawEditorSettings = {
+    const finalInit: EditorOptions = {
       ...this.init,
       selector: undefined,
       target: this._element,

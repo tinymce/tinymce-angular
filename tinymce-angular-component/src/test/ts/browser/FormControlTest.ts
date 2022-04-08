@@ -53,7 +53,7 @@ UnitTest.asynctest('FormControlTest', (success, failure) => {
     TestBed.resetTestingModule();
   });
 
-  const sTestVersion = (version: '4' | '5') => VersionLoader.sWithVersion(
+  const sTestVersion = (version: '4' | '5' | '6') => VersionLoader.sWithVersion(
     version,
     Log.chainsAsStep('', 'FormControl interaction ', [
       cSetupEditorWithFormControl,
@@ -88,6 +88,7 @@ UnitTest.asynctest('FormControlTest', (success, failure) => {
 
   Pipeline.async({}, [
     sTestVersion('4'),
-    sTestVersion('5')
+    sTestVersion('5'),
+    sTestVersion('6')
   ], success, failure);
 });

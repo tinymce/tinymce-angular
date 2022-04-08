@@ -65,13 +65,14 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
   });
 
   const cFakeType = (str: string) => Chain.op((context: TestContext) => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const editor = context.editorComponent.editor!;
     editor.getBody().innerHTML = '<p>' + str + '</p>';
     Keyboard.keystroke(Keys.space(), {}, SugarElement.fromDom(editor.getBody()));
     context.fixture.detectChanges();
   });
 
-  const sTestVersion = (version: '4' | '5') => VersionLoader.sWithVersion(version, GeneralSteps.sequence([
+  const sTestVersion = (version: '4' | '5' | '6') => VersionLoader.sWithVersion(version, GeneralSteps.sequence([
     Log.chainsAsStep('', 'should be pristine, untouched, and valid initially', [
       cSetupEditorWithNgModel(),
       cAssertNgModelState('valid', true),
@@ -144,6 +145,7 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
 
   Pipeline.async({}, [
     sTestVersion('4'),
-    sTestVersion('5')
+    sTestVersion('5'),
+    sTestVersion('6')
   ], success, failure);
 });

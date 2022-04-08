@@ -20,7 +20,7 @@ UnitTest.asynctest('NgZoneTest', (success, failure) => {
     TestBed.resetTestingModule();
   });
 
-  const sTestVersion = (version: '4' | '5') => VersionLoader.sWithVersion(
+  const sTestVersion = (version: '4' | '5' | '6') => VersionLoader.sWithVersion(
     version,
     Log.chainsAsStep('', 'Subscribers to events should rune within NgZone', [
       Chain.async<void, ComponentFixture<EditorComponent>>((_, next) => {
@@ -55,6 +55,7 @@ UnitTest.asynctest('NgZoneTest', (success, failure) => {
 
   Pipeline.async({}, [
     sTestVersion('4'),
-    sTestVersion('5')
+    sTestVersion('5'),
+    sTestVersion('6')
   ], success, failure);
 });
