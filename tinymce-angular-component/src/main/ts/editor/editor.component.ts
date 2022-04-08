@@ -28,7 +28,7 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR = {
 })
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
 
-  @Input() public cloudChannel = '5';
+  @Input() public cloudChannel = '6';
   @Input() public apiKey = 'no-api-key';
   @Input() public init: EditorOptions | undefined;
   @Input() public id = '';
