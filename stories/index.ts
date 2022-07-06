@@ -15,7 +15,7 @@ import { apiKey, sampleContent } from './Settings';
 // Caretaker note: `@angular/material@13+` has an `exports` field in its `package.json`,
 // so using non-relative path will lead to an error:
 // ModuleNotFoundError: Module not found: Error: Package path ./prebuilt-themes/indigo-pink.css is not exported from package @angular/material (see exports field in @angular/material/package.json)
-import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
+import '!style-loader!css-loader!../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
 import { EventBindingComponent } from './event-binding/EventBinding.component';
 import { EventForwardingComponent } from './event-forwarding/EventForwarding.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -23,10 +23,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 storiesOf('Editor', module)
   .addDecorator(
     moduleMetadata({
-      declarations: [
-        EditorComponent,
-        SafePipe
-      ]
+      imports: [EditorComponent],
+      declarations: [SafePipe]
     })
   )
   .add('Iframe editor', () => ({

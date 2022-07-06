@@ -7,9 +7,9 @@
   "license": "MIT",
   "private": false,
   "peerDependencies": {
-    "@angular/core": ">=13.0.0",
-    "@angular/common": ">=13.0.0",
-    "@angular/forms": ">=13.0.0"
+    "@angular/core": ">=14.0.0",
+    "@angular/common": ">=14.0.0",
+    "@angular/forms": ">=14.0.0"
   },
   "dependencies": {
     "tinymce": "^6.0.0 || ^5.5.0"

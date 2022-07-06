@@ -15,7 +15,7 @@ UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
 
   const cSetupEnv = () => Chain.async((_, next, die) => {
     TestBed.configureTestingModule({
-      declarations: [ EditorComponent ]
+      imports: [ EditorComponent ]
     }).compileComponents().then(next, die);
   });
 

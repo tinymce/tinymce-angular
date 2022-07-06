@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-parameter-properties */
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, forwardRef, Inject, Input, NgZone, OnDestroy, PLATFORM_ID, InjectionToken, Optional } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { getTinymce } from '../TinyMCE';
@@ -24,7 +24,9 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR = {
   selector: 'editor',
   template: '<ng-template></ng-template>',
   styles: [ ':host { display: block; }' ],
-  providers: [ EDITOR_COMPONENT_VALUE_ACCESSOR ]
+  providers: [ EDITOR_COMPONENT_VALUE_ACCESSOR ],
+  standalone: true,
+  imports: [ CommonModule, FormsModule ]
 })
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
 
