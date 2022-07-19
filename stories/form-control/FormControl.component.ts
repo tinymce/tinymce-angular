@@ -6,7 +6,7 @@ import { FormBuilder } from '@angular/forms';
   templateUrl: './FormControl.component.html'
 })
 export class FormControlComponent {
-  public formControl = this.formBuilder.control(null);
+  public formControl = this.formBuilder.control<string | null>(null);
 
   // eslint-disable-next-line @typescript-eslint/no-parameter-properties
   public constructor(private readonly formBuilder: FormBuilder) {
