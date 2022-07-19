@@ -11,7 +11,7 @@ import { EditorComponent } from '../../../main/ts/public_api';
 UnitTest.asynctest('NgZoneTest', (success, failure) => {
   const createComponent = <T>(componentType: Type<T>) => {
     TestBed.configureTestingModule({
-      declarations: [ componentType ]
+      imports: [ componentType ]
     }).compileComponents();
     return TestBed.createComponent<T>(componentType);
   };
