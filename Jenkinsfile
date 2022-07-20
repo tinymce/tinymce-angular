@@ -26,7 +26,9 @@ def withPublishCredentials(String dirPath, cl) {
 }
 
 timestamps {
-  podTemplate(yaml: '''
+  podTemplate(
+    cloud: "builds",
+    yaml: '''
     apiVersion: "v1"
     kind: "Pod"
     spec:
