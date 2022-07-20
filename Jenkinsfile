@@ -5,23 +5,18 @@ standardProperties()
 
 def withPublishCredentials(String dirPath, cl) {
   withCredentials([
-    string(credentialsId: 'npm_live_token', variable: 'NPM_LIVE_TOKEN'),
-    string(credentialsId: 'npm_tiny_premium_write_token', variable: 'NPM_TINY_PREMIUM_WRITE_TOKEN')
+    string(credentialsId: 'npm_live_token', variable: 'NPM_LIVE_TOKEN')
   ]) {
     String filePath = "${dirPath}/.npmrc"
     try {
       sh """
       cat > "${filePath}" <<EOF
       //registry.npmjs.org/:_authToken=${env.NPM_LIVE_TOKEN}
-      //npm.tiny.cloud/:_authToken=${env.NPM_TINY_PREMIUM_WRITE_TOKEN}
-      //npm.cloudsmith.io/tiny/tiny-premium/:_authToken=${env.NPM_TINY_PREMIUM_WRITE_TOKEN}
       EOF
       """.stripIndent()
       sh """
       cd "${dirPath}" && \
-      npm whoami --registry https://registry.npmjs.org/ && \
-      npm whoami --registry https://npm.tiny.cloud/ && \
-      npm whoami --registry https://npm.cloudsmith.io/tiny/tiny-premium/
+      npm whoami --registry https://registry.npmjs.org/
       """.stripIndent()
       cl()
     } finally {
@@ -47,10 +42,12 @@ timestamps {
         - "infinity"
         imagePullPolicy: "Always"
         resources:
-          limits: {}
           requests:
             memory: "256Mi"
             cpu: "500m"
+          limits:
+            memory: "256Mi"
+            cpu: "2"
     '''.stripIndent()
   ) {
     node(POD_LABEL) {
