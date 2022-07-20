@@ -43,10 +43,10 @@ timestamps {
         imagePullPolicy: "Always"
         resources:
           requests:
-            memory: "256Mi"
+            memory: "1Gi"
             cpu: "500m"
           limits:
-            memory: "256Mi"
+            memory: "1Gi"
             cpu: "2"
     '''.stripIndent()
   ) {
