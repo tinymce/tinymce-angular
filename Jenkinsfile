@@ -3,6 +3,13 @@
 
 standardProperties()
 
+def addGitHubToKnownHosts() {
+  // Ensure user SSH config directory exists
+  sh 'mkdir ~/.ssh && chmod go-rwx ~/.ssh'
+  // Populate keys
+  sh 'ssh-keyscan github.com >> ~/.ssh/known_hosts'
+}
+
 def withPublishCredentials(String dirPath, cl) {
   withCredentials([
     string(credentialsId: 'npm_live_token', variable: 'NPM_LIVE_TOKEN')
@@ -82,10 +89,13 @@ timestamps {
           def status = beehiveFlowStatus();
           if (status.branchState == 'releaseReady' && status.isLatest) {
             sshagent (credentials: ['ccde5b3d-cf13-4d70-88cf-ae1e6dfd4ef4']) {
+              // Add github.com to known_hosts for publishing
+              addGitHubToKnownHosts()
+              // Build and publish storybook
               sh 'yarn storybook-to-ghpages'
             }
           } else {
-            echo "Skipping publish as is not latest release"
+            // Build storybook without publishing
             sh 'yarn storybook-to-ghpages --dry-run'
           }
         }
