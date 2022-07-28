@@ -45,11 +45,11 @@ timestamps {
         imagePullPolicy: "Always"
         resources:
           requests:
-            memory: "1Gi"
+            memory: "4Gi"
             cpu: "500m"
           limits:
-            memory: "1Gi"
-            cpu: "2"
+            memory: "4Gi"
+            cpu: "4"
     '''.stripIndent()
   ) {
     node(POD_LABEL) {
@@ -85,7 +85,8 @@ timestamps {
               sh 'yarn storybook-to-ghpages'
             }
           } else {
-            echo "Skipping as is not latest release"
+            echo "Skipping publish as is not latest release"
+            sh 'yarn storybook-to-ghpages --dry-run'
           }
         }
 
