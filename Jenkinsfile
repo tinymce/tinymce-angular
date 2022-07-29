@@ -4,10 +4,18 @@
 standardProperties()
 
 def addGitHubToKnownHosts() {
+  // GitHub meta information:
+  // https://docs.github.com/en/rest/meta#get-github-meta-information
+  // https://github.blog/changelog/2022-01-18-githubs-ssh-host-keys-are-now-published-in-the-api/
+  String ghMetaJson = sh returnStdout: true,
+    script: "curl -s https://api.github.com/meta"
+  def ghMeta = readJSON text: ghMetaJson
   // Ensure user SSH config directory exists
   sh 'mkdir ~/.ssh && chmod go-rwx ~/.ssh'
-  // Populate keys
-  sh 'ssh-keyscan github.com >> ~/.ssh/known_hosts'
+  // Populate keys GitHub SSH host keys
+  for (hostKey in ghMeta.ssh_keys) {
+    sh "echo '$hostKey' >> ~/.ssh/known_hosts"
+  }
 }
 
 def withPublishCredentials(String dirPath, cl) {
