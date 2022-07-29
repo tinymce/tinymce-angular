@@ -66,6 +66,13 @@ timestamps {
         }
       }
       container('node') {
+        stage("environment") {
+          // Add github.com to known_hosts for publishing
+          addGitHubToKnownHosts()
+          // Check committer name / email are set
+          sh "git var GIT_COMMITTER_IDENT"
+        }
+
         stage("dependencies") {
           sh 'yarn config set registry https://registry.npmjs.org/'
           yarnInstall()
@@ -89,8 +96,6 @@ timestamps {
           def status = beehiveFlowStatus();
           if (status.branchState == 'releaseReady' && status.isLatest) {
             sshagent (credentials: ['ccde5b3d-cf13-4d70-88cf-ae1e6dfd4ef4']) {
-              // Add github.com to known_hosts for publishing
-              addGitHubToKnownHosts()
               // Build and publish storybook
               sh 'yarn storybook-to-ghpages'
             }
