@@ -2,7 +2,12 @@
 @Library('waluigi@feature/DEVOPS-449') _
 
 beehiveFlowBuild(
-    container: [ tag: '18', maxCpu: '4', minMemory: '4Gi', maxMemory: '4Gi' ],
+    container: [
+        tag: '18',
+        resourceRequestMemory: '4Gi',
+        resourceLimitCpu: '4',
+        resourceLimitMemory: '4Gi'
+    ],
     test: {
       bedrockBrowsers(testDirs: [ "tinymce-angular-component/src/test/ts/browser" ])
     },
