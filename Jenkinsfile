@@ -1,12 +1,12 @@
 #!groovy
-@Library('waluigi@feature/DEVOPS-449') _
+@Library('waluigi@feature/containers') _
 
 beehiveFlowBuild(
     container: [
-        tag: '18',
-        resourceRequestMemory: '4Gi',
-        resourceLimitCpu: '4',
-        resourceLimitMemory: '4Gi'
+      tag: '18',
+      resourceRequestMemory: '4Gi',
+      resourceLimitCpu: '4',
+      resourceLimitMemory: '4Gi'
     ],
     test: {
       bedrockBrowsers(testDirs: [ "tinymce-angular-component/src/test/ts/browser" ])
