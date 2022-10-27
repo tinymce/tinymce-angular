@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Updated CI library to latest
 
+## 7.0.0 - 2022-06-27
+### Added
+- Support for Angular 14
+
 ## 6.0.1 - 2022-04-09
 ### Fixed
 - Disabling bug
