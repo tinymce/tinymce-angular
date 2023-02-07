@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { EditorComponent } from '../editor/editor.component';
 import { validEvents, Events } from '../editor/Events';
+import { EditorDirective } from "../editor/editor.directive";
 
 // Caretaker note: `fromEvent` supports passing JQuery-style event targets, the editor has `on` and `off` methods which
 // will be invoked upon subscription and teardown.
@@ -22,7 +23,7 @@ const listenTinyMCEEvent = (
   destroy$: Subject<void>
 ) => fromEvent(editor as HasEventTargetAddRemove<unknown> | ArrayLike<HasEventTargetAddRemove<unknown>>, eventName).pipe(takeUntil(destroy$));
 
-const bindHandlers = (ctx: EditorComponent, editor: any, destroy$: Subject<void>): void => {
+const bindHandlers = (ctx: EditorDirective, editor: any, destroy$: Subject<void>): void => {
   const allowedEvents = getValidEvents(ctx);
   allowedEvents.forEach((eventName) => {
     const eventEmitter: EventEmitter<any> = ctx[eventName];
@@ -40,7 +41,7 @@ const bindHandlers = (ctx: EditorComponent, editor: any, destroy$: Subject<void>
   });
 };
 
-const getValidEvents = (ctx: EditorComponent): (keyof Events)[] => {
+const getValidEvents = (ctx: EditorDirective): (keyof Events)[] => {
   const ignoredEvents = parseStringProperty(ctx.ignoreEvents, []);
   const allowedEvents = parseStringProperty(ctx.allowedEvents, validEvents).filter(
     (event) => validEvents.includes(event as (keyof Events)) && !ignoredEvents.includes(event)) as (keyof Events)[];
