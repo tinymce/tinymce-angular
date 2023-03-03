@@ -23,8 +23,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 storiesOf('Editor', module)
   .addDecorator(
     moduleMetadata({
-      imports: [EditorComponent],
-      declarations: [SafePipe]
+      imports: [ EditorComponent ],
+      declarations: [ SafePipe ]
     })
   )
   .add('Iframe editor', () => ({
@@ -47,14 +47,23 @@ storiesOf('Editor', module)
   }))
   .add('Event binding', () => ({
     component: EventBindingComponent,
+    moduleMetadata: {
+      imports: [ ReactiveFormsModule, FormsModule ]
+    }
   }))
   .add('Event forwarding', () => ({
     component: EventForwardingComponent,
+    moduleMetadata: {
+      imports: [ ReactiveFormsModule, FormsModule ]
+    }
   }))
   .add(
     'Data Binding',
     () => ({
-      component: BindingComponent
+      component: BindingComponent,
+      moduleMetadata: {
+        imports: [ ReactiveFormsModule, FormsModule ]
+      }
     }),
     {
       notes: 'Simple example of data binding with ngModel'
@@ -65,7 +74,7 @@ storiesOf('Editor', module)
     () => ({
       component: FormControlComponent,
       moduleMetadata: {
-        imports: [ReactiveFormsModule, FormsModule]
+        imports: [ ReactiveFormsModule, FormsModule ]
       }
     }),
     {
@@ -75,7 +84,10 @@ storiesOf('Editor', module)
   .add(
     'Form Validation',
     () => ({
-      component: BlogComponent
+      component: BlogComponent,
+      moduleMetadata: {
+        imports: [ ReactiveFormsModule, FormsModule ]
+      }
     }),
     {
       notes: 'Example of form validation and data binding with ngModel'
@@ -84,7 +96,10 @@ storiesOf('Editor', module)
   .add(
     'Disabling',
     () => ({
-      component: DisablingComponent
+      component: DisablingComponent,
+      moduleMetadata: {
+        imports: [ ReactiveFormsModule, FormsModule ]
+      }
     }),
     {
       notes: 'Example of disabling/enabling the editor component'
@@ -93,7 +108,10 @@ storiesOf('Editor', module)
   .add(
     'ViewQuery',
     () => ({
-      component: ViewQueryComponent
+      component: ViewQueryComponent,
+      moduleMetadata: {
+        imports: [ ReactiveFormsModule, FormsModule ]
+      }
     }),
     {
       notes: 'Example of obtaining a reference to the editor with a view query'
@@ -104,8 +122,8 @@ storiesOf('Editor', module)
     () => ({
       component: MaterialTabs,
       moduleMetadata: {
-        declarations: [MaterialTabs],
-        imports: [BrowserAnimationsModule, MatTabsModule]
+        declarations: [ MaterialTabs ],
+        imports: [ BrowserAnimationsModule, MatTabsModule ]
       }
     })
   )
@@ -114,7 +132,7 @@ storiesOf('Editor', module)
     () => ({
       component: ContentProjectionComponent,
       moduleMetadata: {
-        declarations: [ContainerComponent]
+        declarations: [ ContainerComponent ]
       }
     }),
     {
@@ -125,6 +143,9 @@ storiesOf('Editor', module)
     'CloudChannel: 5-dev',
     () => ({
       component: EditorComponent,
+      moduleMetadata: {
+        imports: [ ReactiveFormsModule, FormsModule ]
+      },
       props: {
         apiKey,
         cloudChannel: '5-dev'
