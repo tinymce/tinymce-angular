@@ -22,7 +22,7 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR = {
 
 @Component({
   selector: 'editor',
-  template: '<ng-template></ng-template>',
+  template: '',
   styles: [ ':host { display: block; }' ],
   providers: [ EDITOR_COMPONENT_VALUE_ACCESSOR ],
   standalone: true,
