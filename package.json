@@ -3,6 +3,7 @@
   "author": "Ephox Corporation DBA Tiny Technologies, Inc.",
   "license": "MIT",
   "scripts": {
+    "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
     "storybook": "ng run angular:storybook --port 9001",
     "test": "yarn bedrock-auto -b chrome-headless -f tinymce-angular-component/src/test/ts/**/*Test.ts",
     "test-manual": "bedrock -f tinymce-angular-component/src/test/ts/**/*Test.ts",
