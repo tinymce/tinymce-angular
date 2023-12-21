@@ -1,10 +1,11 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    // Caretaker note: this is set to skip type-checking in third-party libraries, e.g. in `@ephox/sugar`.
-    // Since it throws an error:
-    // ERROR TS2536: Type 'K' cannot be used to index type 'HTMLElementTagNameMap'.
-    // ERROR in @ephox/sugar/lib/main/ts/ephox/sugar/api/dom/Replication.d.ts
+    "types": ["node"],
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true
-  }
+  },
+  "exclude": ["../src/test.ts", "../src/**/*.spec.ts"],
+  "include": ["../src/**/*", "./preview.ts", "../stories/**/*", "../tinymce-angular-component/src/**/*"]
 }

@@ -35,13 +35,37 @@
         "sourceType": "module"
       },
       "rules": {
-        "indent": [ "error", 2, { "SwitchCase": 1 } ],
+        "indent": [
+          "error",
+          2,
+          {
+            "SwitchCase": 1
+          }
+        ],
         "no-shadow": "error",
-        "no-unused-vars": [ "error", { "argsIgnorePattern": "^_" } ],
-        "object-curly-spacing": [ "error", "always", { "arraysInObjects": false, "objectsInObjects": false } ],
-        "quotes": [ "error", "single" ],
+        "no-unused-vars": [
+          "error",
+          {
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "object-curly-spacing": [
+          "error",
+          "always",
+          {
+            "arraysInObjects": false,
+            "objectsInObjects": false
+          }
+        ],
+        "quotes": [
+          "error",
+          "single"
+        ],
         "semi": "error"
       }
     }
+  ],
+  "extends": [
+    "plugin:storybook/recommended"
   ]
 }

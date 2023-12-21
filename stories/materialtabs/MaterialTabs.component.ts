@@ -3,6 +3,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { apiKey } from '../Settings';
 
 @Component({
+  selector: 'material-tabs',
   templateUrl: './MaterialTabs.component.html'
 })
 export class MaterialTabs implements AfterViewInit {
