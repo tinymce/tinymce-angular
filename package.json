@@ -4,13 +4,14 @@
   "license": "MIT",
   "scripts": {
     "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
-    "storybook": "ng run angular:storybook --port 9001",
     "test": "yarn bedrock-auto -b chrome-headless -f tinymce-angular-component/src/test/ts/**/*Test.ts",
     "test-manual": "bedrock -f tinymce-angular-component/src/test/ts/**/*Test.ts",
     "clean": "yarn rimraf dist",
     "lint": "eslint tinymce-angular-component/src/**/*.ts stories/**/*.ts",
     "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && json -I -f dist/tinymce-angular/package.json -e 'this.version=process.env.npm_package_version' && copyfiles README.md dist/tinymce-angular/",
-    "build-storybook": "ng run angular:build-storybook"
+    "storybook": "ng run angular:storybook",
+    "build-storybook": "ng run angular:build-storybook",
+    "deploy-storybook": "yarn build-storybook && gh-pages -d ./storybook-static -u 'tiny-bot <no-reply@tiny.cloud>'"
   },
   "private": true,
   "devDependencies": {
@@ -49,6 +50,7 @@
     "copyfiles": "^2.4.1",
     "core-js": "^3.34.0",
     "eslint-plugin-storybook": "^0.6.15",
+    "gh-pages": "^6.1.0",
     "json": "11.0.0",
     "ng-packagr": "^17.0.3",
     "react": "^18.2.0",
