@@ -85,7 +85,7 @@ UnitTest.asynctest('LoadTinyTest', (success, failure) => {
     ]),
     Log.chainsAsStep('Should be able to load TinyMCE from Cloud', '', [
       cSetupEditor([ 'apiKey="a-fake-api-key"', 'cloudChannel="6-dev"' ], []),
-      cAssertTinymceVersion('7'), // Version 7 is nearing release
+      cAssertTinymceVersion('7'), // 6-dev points to 7 now
       Chain.op(() => {
         Assertions.assertEq(
           'TinyMCE should have been loaded from Cloud',
