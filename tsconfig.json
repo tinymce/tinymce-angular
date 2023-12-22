@@ -9,8 +9,9 @@
     "strict": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
-    "module": "es2015",
+    "useDefineForClassFields": false,
+    "target": "es2022",
+    "module": "es2022",
     "typeRoots": [
       "node_modules/@types"
     ],
