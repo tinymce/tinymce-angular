@@ -10,8 +10,8 @@ export class MaterialTabs implements AfterViewInit {
   @ViewChild('tabGroup', { static: false }) public tabGroup: any;
   public apiKey = apiKey;
   public activeTabIndex: number | undefined = undefined;
-  public firstEditorValue = '';
-  public secondEditorValue = '';
+  public firstEditorValue = 'First editor initial value';
+  public secondEditorValue = 'Second editor initial value';
 
   public handleTabChange(e: MatTabChangeEvent) {
     this.activeTabIndex = e.index;

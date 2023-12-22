@@ -143,7 +143,7 @@ export const MaterialTabsStory: StoryObj<EditorComponent> = {
   name: 'Material Tabs',
   render: () => ({
     moduleMetadata: {
-      imports: [ BrowserAnimationsModule, MatTabsModule ], // TODO: integrate fix for reactive modal PR
+      imports: [ ReactiveFormsModule, FormsModule, BrowserAnimationsModule, MatTabsModule ],
       declarations: [ MaterialTabs ],
     },
     template: `<material-tabs/>`
