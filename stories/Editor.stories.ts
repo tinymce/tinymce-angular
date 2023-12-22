@@ -49,8 +49,8 @@ export const EventBindingStory: StoryObj<EditorComponent> = {
   name: 'Event Binding',
   render: () => ({
     moduleMetadata: {
-      imports: [ReactiveFormsModule, FormsModule],
-      declarations: [EventBindingComponent],
+      imports: [ ReactiveFormsModule, FormsModule ],
+      declarations: [ EventBindingComponent ],
     },
     template: `<event-binding/>`
   }),
@@ -61,8 +61,8 @@ export const EventForwardingStory: StoryObj<EditorComponent> = {
   name: 'Event Forwarding',
   render: () => ({
     moduleMetadata: {
-      imports: [ReactiveFormsModule, FormsModule],
-      declarations: [EventForwardingComponent],
+      imports: [ ReactiveFormsModule, FormsModule ],
+      declarations: [ EventForwardingComponent ],
     },
     template: `<event-forwarding/>`
   }),
@@ -72,8 +72,8 @@ export const DataBindingStory: StoryObj<EditorComponent> = {
   name: 'Data Binding',
   render: () => ({
     moduleMetadata: {
-      imports: [ReactiveFormsModule, FormsModule],
-      declarations: [BindingComponent],
+      imports: [ ReactiveFormsModule, FormsModule ],
+      declarations: [ BindingComponent ],
     },
     template: `<binding/>`
   }),
@@ -87,8 +87,8 @@ export const FormControlStory: StoryObj<EditorComponent> = {
   name: 'Form Control',
   render: () => ({
     moduleMetadata: {
-      imports: [ReactiveFormsModule, FormsModule],
-      declarations: [FormControlComponent],
+      imports: [ ReactiveFormsModule, FormsModule ],
+      declarations: [ FormControlComponent ],
     },
     template: `<form-control/>`
   }),
@@ -101,8 +101,8 @@ export const FormValidationStory: StoryObj<EditorComponent> = {
   name: 'Form Validation',
   render: () => ({
     moduleMetadata: {
-      imports: [ReactiveFormsModule, FormsModule],
-      declarations: [BlogComponent, SafePipe],
+      imports: [ ReactiveFormsModule, FormsModule ],
+      declarations: [ BlogComponent, SafePipe ],
     },
     template: `<blog/>`
   }),
@@ -115,8 +115,8 @@ export const DisablingStory: StoryObj<EditorComponent> = {
   name: 'Disabling',
   render: () => ({
     moduleMetadata: {
-      imports: [ReactiveFormsModule, FormsModule],
-      declarations: [DisablingComponent],
+      imports: [ ReactiveFormsModule, FormsModule ],
+      declarations: [ DisablingComponent ],
     },
     template: `<disabling/>`
   }),
@@ -129,8 +129,8 @@ export const ViewQueryStory: StoryObj<EditorComponent> = {
   name: 'View Query',
   render: () => ({
     moduleMetadata: {
-      imports: [ReactiveFormsModule, FormsModule],
-      declarations: [ViewQueryComponent],
+      imports: [ ReactiveFormsModule, FormsModule ],
+      declarations: [ ViewQueryComponent ],
     },
     template: `<view-query/>`
   }),
@@ -143,8 +143,8 @@ export const MaterialTabsStory: StoryObj<EditorComponent> = {
   name: 'Material Tabs',
   render: () => ({
     moduleMetadata: {
-      imports: [BrowserAnimationsModule, MatTabsModule],
-      declarations: [MaterialTabs],
+      imports: [ BrowserAnimationsModule, MatTabsModule ], // TODO: integrate fix for reactive modal PR
+      declarations: [ MaterialTabs ],
     },
     template: `<material-tabs/>`
   }),
@@ -154,7 +154,7 @@ export const ContentProjectionStory: StoryObj<EditorComponent> = {
   name: 'Content Projection',
   render: () => ({
     moduleMetadata: {
-      declarations: [ContentProjectionComponent, ContainerComponent],
+      declarations: [ ContentProjectionComponent, ContainerComponent ],
     },
     template: `<content-projection/>`
   }),
