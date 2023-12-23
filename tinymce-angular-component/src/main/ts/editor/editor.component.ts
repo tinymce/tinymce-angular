@@ -40,7 +40,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input() public tagName: string | undefined;
   @Input() public plugins: string | undefined;
   @Input() public toolbar: string | string[] | undefined;
-  @Input() public modelEvents = 'change input undo redo';
+  @Input() public modelEvents = 'change input undo redo paste';
   @Input() public allowedEvents: string | string[] | undefined;
   @Input() public ignoreEvents: string | string[] | undefined;
   @Input()
