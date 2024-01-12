@@ -1,6 +1,20 @@
 /* eslint-disable @typescript-eslint/no-parameter-properties */
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, forwardRef, Inject, Input, NgZone, OnDestroy, PLATFORM_ID, InjectionToken, Optional } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  forwardRef,
+  Inject,
+  Input,
+  NgZone,
+  OnDestroy,
+  PLATFORM_ID,
+  InjectionToken,
+  Optional,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { getTinymce } from '../TinyMCE';
@@ -25,7 +39,8 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR = {
   styles: [ ':host { display: block; }' ],
   providers: [ EDITOR_COMPONENT_VALUE_ACCESSOR ],
   standalone: true,
-  imports: [ CommonModule, FormsModule ]
+  imports: [ CommonModule, FormsModule ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
 
@@ -77,6 +92,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   public constructor(
     elementRef: ElementRef,
     ngZone: NgZone,
+    private cdRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
     @Optional() @Inject(TINYMCE_SCRIPT_SRC) private tinymceScriptSrc?: string
   ) {
@@ -187,10 +203,12 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   private initEditor(editor: TinyMCEEditor) {
     listenTinyMCEEvent(editor, 'blur', this.destroy$).subscribe(() => {
+      this.cdRef.markForCheck();
       this.ngZone.run(() => this.onTouchedCallback());
     });
 
     listenTinyMCEEvent(editor, this.modelEvents, this.destroy$).subscribe(() => {
+      this.cdRef.markForCheck();
       this.ngZone.run(() => this.emitOnChange(editor));
     });
 
