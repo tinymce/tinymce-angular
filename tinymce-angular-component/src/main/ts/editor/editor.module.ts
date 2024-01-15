@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 
 import { EditorComponent } from './editor.component';
+import { EditorDirective } from "./editor.directive";
 
 @NgModule({
-  imports: [ EditorComponent ],
-  exports: [ EditorComponent ]
+  imports: [ EditorDirective, EditorComponent ],
+  exports: [ EditorDirective, EditorComponent ]
 })
 export class EditorModule {}
