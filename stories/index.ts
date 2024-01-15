@@ -123,7 +123,7 @@ storiesOf('Editor', module)
       component: MaterialTabs,
       moduleMetadata: {
         declarations: [ MaterialTabs ],
-        imports: [ BrowserAnimationsModule, MatTabsModule ]
+        imports: [ ReactiveFormsModule, FormsModule, BrowserAnimationsModule, MatTabsModule ]
       }
     })
   )
