@@ -88,7 +88,9 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   public writeValue(value: string | null): void {
     if (this._editor && this._editor.initialized) {
+      const cursor = this._editor.selection.getBookmark(3);
       this._editor.setContent(isNullOrUndefined(value) ? '' : value);
+      this._editor.selection.moveToBookmark(cursor);
     } else {
       this.initialValue = value === null ? undefined : value;
     }
