@@ -53,6 +53,8 @@
     "gh-pages": "^6.1.0",
     "json": "11.0.0",
     "ng-packagr": "^17.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "regenerator-runtime": "^0.14.1",
     "rimraf": "^5.0.5",
     "rxjs": "^7.8.1",
