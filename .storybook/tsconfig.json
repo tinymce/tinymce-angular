@@ -11,6 +11,5 @@
     "resolveJsonModule": true,
     "target": "ES2022"
   },
-  "exclude": ["../src/test.ts", "../src/**/*.spec.ts"],
-  "include": ["../src/**/*", "./preview.ts", "../stories/**/*", "../tinymce-angular-component/src/**/*"]
+  "include": ["../stories/**/*.ts", "./preview.ts"]
 }
