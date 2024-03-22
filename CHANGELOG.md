@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Fixed
 - Updated CI library to latest
+- Updated dependencies. #INT-3274
+- Usage of RxJS deprecated operators. #INT-3274
+### Added
+- Support for Angular 15, 16 & 17. #INT-3274
+### Improved
+- Updated Storybook to v8, as well as now using CSFv3 components. #INT-3274
 
 ## 7.0.0 - 2022-06-27
 ### Added
