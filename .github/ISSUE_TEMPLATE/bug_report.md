@@ -9,7 +9,7 @@ assignees: ''
 
 **What is the current behavior?**
 
-**Please provide the steps to reproduce and if possible a minimal demo of the problem via [codesandbox.io](https://codesandbox.io/p/devbox/tinymce-angular-v17-mppwf9) or similar.**
+**Please provide the steps to reproduce and if possible a minimal demo of the problem via [codesandbox.io](https://codesandbox.io/p/sandbox/elegant-pare-6sxwqz?file=src/app/app.component.ts) or similar.**
 
 **What is the expected behavior?**
 
