@@ -13,8 +13,6 @@ import { SugarElement } from '@ephox/sugar';
 import { EditorModule, EditorComponent } from '../../../main/ts/public_api';
 
 UnitTest.asynctest('NgModelTest', (success, failure) => {
-  // tslint:disable:max-classes-per-file
-
   class Base {
     public content: string | undefined;
   }

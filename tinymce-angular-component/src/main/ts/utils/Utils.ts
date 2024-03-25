@@ -7,9 +7,8 @@
  */
 
 import { EventEmitter } from '@angular/core';
-import { fromEvent, Subject } from 'rxjs';
+import { fromEvent, Subject, takeUntil } from 'rxjs';
 import { HasEventTargetAddRemove } from 'rxjs/internal/observable/fromEvent';
-import { takeUntil } from 'rxjs/operators';
 
 import { EditorComponent } from '../editor/editor.component';
 import { validEvents, Events } from '../editor/Events';
@@ -33,7 +32,7 @@ const bindHandlers = (ctx: EditorComponent, editor: any, destroy$: Subject<void>
       // within the template. E.g. if the `onSelectionChange` is not listened within the template like:
       // `<editor (onSelectionChange)="..."></editor>`
       // then its `observers` array will be empty, and we won't run "dead" change detection.
-      if (eventEmitter.observers.length > 0) {
+      if (eventEmitter.observed || eventEmitter.observers?.length > 0) {
         ctx.ngZone.run(() => eventEmitter.emit({ event, editor }));
       }
     });

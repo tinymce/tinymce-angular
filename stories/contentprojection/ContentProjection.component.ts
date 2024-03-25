@@ -45,6 +45,7 @@ export class ContainerComponent {
 }
 
 @Component({
+  selector: 'content-projection',
   template: `
     <ng-template #editorTemplate>
       <editor [apiKey]="apiKey" [(ngModel)]="editorValue"></editor>

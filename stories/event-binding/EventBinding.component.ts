@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { apiKey } from '../Settings';
 
 @Component({
-  templateUrl: './EventBinding.component.html'
+  selector: 'event-binding',
+  templateUrl: './EventBinding.component.html',
 })
 export class EventBindingComponent {
   public apiKey = apiKey;
