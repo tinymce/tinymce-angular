@@ -9,7 +9,7 @@ assignees: ''
 
 **What is the current behavior?**
 
-**Please provide the steps to reproduce and if possible a minimal demo of the problem via [codesandbox.io](https://codesandbox.io/s/6zlmmkkk1n?fontsize=14) or similar.**
+**Please provide the steps to reproduce and if possible a minimal demo of the problem via [codesandbox.io](https://codesandbox.io/p/sandbox/elegant-pare-6sxwqz?file=src/app/app.component.ts) or similar.**
 
 **What is the expected behavior?**
 

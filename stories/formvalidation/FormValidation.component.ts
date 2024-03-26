@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { apiKey } from '../Settings';
 
 @Component({
+  selector: 'blog',
   templateUrl: './FormValidation.component.html',
   styles: [ `
     .valid {

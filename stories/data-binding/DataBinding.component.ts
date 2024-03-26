@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { apiKey, modelEvents, sampleContent } from '../Settings';
 
 @Component({
+  selector: 'binding',
   templateUrl: './DataBinding.component.html'
 })
 export class BindingComponent {

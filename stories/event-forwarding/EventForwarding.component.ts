@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { apiKey } from '../Settings';
 
 @Component({
-  templateUrl: './EventForwarding.component.html'
+  selector: 'event-forwarding',
+  templateUrl: './EventForwarding.component.html',
 })
 export class EventForwardingComponent {
   public apiKey = apiKey;
