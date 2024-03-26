@@ -66,8 +66,7 @@
     "tslib": "^2.6.2",
     "typescript": "~5.4.3",
     "webpack": "^5.91.0",
-    "zone.js": "~0.14.4",
-    "zone.js-11": "npm:zone.js@~0.11"
+    "zone.js": "~0.14.4"
   },
   "dependencies": {
     "tinymce": "^5.10.7"
