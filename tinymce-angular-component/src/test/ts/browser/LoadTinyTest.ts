@@ -60,7 +60,7 @@ UnitTest.asynctest('LoadTinyTest', (success, failure) => {
     TestBed.resetTestingModule();
   });
 
-  const cAssertTinymceVersion = (version: '4' | '5' | '6') => Chain.op(() => {
+  const cAssertTinymceVersion = (version: '4' | '5' | '6' | '7') => Chain.op(() => {
     Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, Global.tinymce.majorVersion);
   });
 
@@ -85,7 +85,7 @@ UnitTest.asynctest('LoadTinyTest', (success, failure) => {
     ]),
     Log.chainsAsStep('Should be able to load TinyMCE from Cloud', '', [
       cSetupEditor([ 'apiKey="a-fake-api-key"', 'cloudChannel="6-dev"' ], []),
-      cAssertTinymceVersion('6'),
+      cAssertTinymceVersion('7'),
       Chain.op(() => {
         Assertions.assertEq(
           'TinyMCE should have been loaded from Cloud',
