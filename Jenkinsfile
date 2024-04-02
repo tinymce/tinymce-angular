@@ -1,5 +1,5 @@
 #!groovy
-@Library('waluigi@feature/TINY-10569') _
+@Library('waluigi@release/7') _
 
 mixedBeehiveFlow(
   testPrefix: 'Tiny-Angular',
