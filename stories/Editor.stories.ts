@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventBindingComponent } from './event-binding/EventBinding.component';
 import { EventForwardingComponent } from './event-forwarding/EventForwarding.component';
 import { FormControlComponent } from './form-control/FormControl.component';
+import { FormWithOnPushComponent } from './form-with-on-push/form-with-on-push.component';
 import { BlogComponent } from './formvalidation/FormValidation.component';
 import { DisablingComponent } from './disable/Disable.component';
 import { ViewQueryComponent } from './viewquery/Viewquery.component';
@@ -95,6 +96,17 @@ export const FormControlStory: StoryObj<EditorComponent> = {
   parameters: {
     notes: 'Simple example of subscribing to valueChanges'
   }
+};
+
+export const FormStateStory: StoryObj<EditorComponent> = {
+  name: 'Form with on-push change detection',
+  render: () => ({
+    moduleMetadata: {
+      imports: [ ReactiveFormsModule, FormsModule ],
+      declarations: [ FormWithOnPushComponent ],
+    },
+    template: `<form-with-on-push apiKey="${apiKey}"/>`
+  }),
 };
 
 export const FormValidationStory: StoryObj<EditorComponent> = {

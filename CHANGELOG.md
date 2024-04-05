@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Usage of RxJS deprecated operators. #INT-3274
 ### Added
 - Support for Angular 15, 16 & 17. #INT-3274
+- Support for the OnPush change detection strategy. #INT-2974
 ### Improved
 - Updated Storybook to v8, as well as now using CSFv3 components. #INT-3274
 
