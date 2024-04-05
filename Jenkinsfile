@@ -28,6 +28,7 @@ mixedBeehiveFlow(
     }
   },
   publish: {
+    sh "yarn build"
     tinyNpm.withNpmPublishCredentials('dist/tinymce-angular') {
       sh "yarn beehive-flow publish --working-dir dist/tinymce-angular"
     }
