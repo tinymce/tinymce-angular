@@ -9,6 +9,12 @@ mixedBeehiveFlow(
     [ browser: 'firefox', provider: 'aws', buckets: 1 ],
     [ browser: 'safari', provider: 'lambdatest', os: 'macOS Sonoma', buckets: 1 ]
   ],
+  testContainer: [
+    tag: '20',
+    resourceRequestMemory: '4Gi',
+    resourceLimitCpu: '4',
+    resourceLimitMemory: '4Gi'
+  ],
   customSteps: {
     stage("storybook") {
       def status = beehiveFlowStatus()
