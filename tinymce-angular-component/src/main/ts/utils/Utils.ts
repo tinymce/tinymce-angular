@@ -31,8 +31,8 @@ const bindHandlers = (ctx: EditorComponent, editor: any, destroy$: Subject<void>
       // being re-entered. We don't want to run `ApplicationRef.tick()` if anyone listens to the specific event
       // within the template. E.g. if the `onSelectionChange` is not listened within the template like:
       // `<editor (onSelectionChange)="..."></editor>`
-      // then its `observers` array will be empty, and we won't run "dead" change detection.
-      if (eventEmitter.observed || eventEmitter.observers?.length > 0) {
+      // then it won't be "observed", and we won't run "dead" change detection.
+      if (isObserved(eventEmitter)) {
         ctx.ngZone.run(() => eventEmitter.emit({ event, editor }));
       }
     });
@@ -85,6 +85,11 @@ const mergePlugins = (initPlugins: string | string[], inputPlugins?: string | st
 const noop: (...args: any[]) => void = () => { };
 
 const isNullOrUndefined = (value: any): value is null | undefined => value === null || value === undefined;
+
+const isObserved = (o: Subject<unknown>): boolean =>
+  // RXJS is making the `observers` property internal in v8. So this is intended as a backwards compatible way of
+  // checking if a subject has observers.
+  o.observed || o.observers?.length > 0;
 
 export {
   listenTinyMCEEvent,
