@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated dependencies. #INT-3274
 - Usage of RxJS deprecated operators. #INT-3274
 ### Added
-- Support for Angular 15, 16 & 17. #INT-3274
+- Support for Angular 16 & 17. Angular 15 is still supported via ^7.0.0 #INT-3274
 - Support for the OnPush change detection strategy. #INT-2974
 - Support for TinyMCE version 7. #INT-3292
 - Added `licenseKey` prop. #INT-3292

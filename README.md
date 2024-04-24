@@ -11,7 +11,7 @@ This package is a thin wrapper around [TinyMCE](https://github.com/tinymce/tinym
 
 ### Support
 
-For Angular 15+, use integration version 8.x:
+For Angular 16+, use integration version 8.x:
 
 `npm install @tinymce/tinymce-angular@^8`
 
