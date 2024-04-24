@@ -33,6 +33,8 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR = {
   multi: true
 };
 
+export type Version = `${'4' | '5' | '6' | '7'}${'' | '-dev' | '-testing' | `.${number}` | `.${number}.${number}`}`;
+
 @Component({
   selector: 'editor',
   template: '',
@@ -44,7 +46,7 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR = {
 })
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
 
-  @Input() public cloudChannel = '6';
+  @Input() public cloudChannel: Version = '7';
   @Input() public apiKey = 'no-api-key';
   @Input() public init: EditorOptions | undefined;
   @Input() public id = '';
