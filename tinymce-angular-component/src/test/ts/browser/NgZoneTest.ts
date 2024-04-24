@@ -7,6 +7,7 @@ import { UnitTest } from '@ephox/bedrock-client';
 import { VersionLoader } from '@tinymce/miniature';
 
 import { EditorComponent } from '../../../main/ts/public_api';
+import { Version } from '../../../main/ts/editor/editor.component';
 
 UnitTest.asynctest('NgZoneTest', (success, failure) => {
   const createComponent = <T>(componentType: Type<T>) => {
@@ -20,7 +21,7 @@ UnitTest.asynctest('NgZoneTest', (success, failure) => {
     TestBed.resetTestingModule();
   });
 
-  const sTestVersion = (version: '4' | '5' | '6') => VersionLoader.sWithVersion(
+  const sTestVersion = (version: Version) => VersionLoader.sWithVersion(
     version,
     Log.chainsAsStep('', 'Subscribers to events should rune within NgZone', [
       Chain.async<void, ComponentFixture<EditorComponent>>((_, next) => {
@@ -56,6 +57,7 @@ UnitTest.asynctest('NgZoneTest', (success, failure) => {
   Pipeline.async({}, [
     sTestVersion('4'),
     sTestVersion('5'),
-    sTestVersion('6')
+    sTestVersion('6'),
+    sTestVersion('7')
   ], success, failure);
 });
