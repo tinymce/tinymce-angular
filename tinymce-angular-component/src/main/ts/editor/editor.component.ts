@@ -44,6 +44,10 @@ export type Version = `${'4' | '5' | '6' | '7'}${'' | '-dev' | '-testing' | `.${
   imports: [ CommonModule, FormsModule ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
+/**
+ * @see {@link https://www.tiny.cloud/docs/tinymce/7/angular-ref/} for the TinyMCE Angular Technical Reference
+ */
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
 
   @Input() public cloudChannel: Version = '7';
