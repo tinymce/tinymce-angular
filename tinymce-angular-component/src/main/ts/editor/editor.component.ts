@@ -48,17 +48,17 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   @Input() public cloudChannel: Version = '7';
   @Input() public apiKey = 'no-api-key';
-  @Input() public init: EditorOptions | undefined;
+  @Input() public init?: EditorOptions;
   @Input() public id = '';
-  @Input() public initialValue: string | undefined;
-  @Input() public outputFormat: 'html' | 'text' | undefined;
-  @Input() public inline: boolean | undefined;
-  @Input() public tagName: string | undefined;
-  @Input() public plugins: string | undefined;
-  @Input() public toolbar: string | string[] | undefined;
+  @Input() public initialValue?: string;
+  @Input() public outputFormat?: 'html' | 'text';
+  @Input() public inline?: boolean;
+  @Input() public tagName?: string;
+  @Input() public plugins?: string;
+  @Input() public toolbar?: string | string[];
   @Input() public modelEvents = 'change input undo redo';
-  @Input() public allowedEvents: string | string[] | undefined;
-  @Input() public ignoreEvents: string | string[] | undefined;
+  @Input() public allowedEvents?: string | string[];
+  @Input() public ignoreEvents?: string | string[];
   @Input()
   public set disabled(val) {
     this._disabled = val;
@@ -82,9 +82,9 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   public ngZone: NgZone;
 
   private _elementRef: ElementRef;
-  private _element: HTMLElement | undefined;
-  private _disabled: boolean | undefined;
-  private _editor: TinyMCEEditor | undefined;
+  private _element?: HTMLElement;
+  private _disabled?: boolean;
+  private _editor?: TinyMCEEditor;
 
   private onTouchedCallback = noop;
   private onChangeCallback: any;
