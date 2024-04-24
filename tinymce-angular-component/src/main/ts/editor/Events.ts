@@ -11,6 +11,9 @@ export class Events {
   @Output() public onBeforePaste: EventEmitter<EventObj<ClipboardEvent>> = new EventEmitter();
   @Output() public onBlur: EventEmitter<EventObj<FocusEvent>> = new EventEmitter();
   @Output() public onClick: EventEmitter<EventObj<MouseEvent>> = new EventEmitter();
+  @Output() public onCompositionEnd: EventEmitter<EventObj<CompositionEvent>> = new EventEmitter();
+  @Output() public onCompositionStart: EventEmitter<EventObj<CompositionEvent>> = new EventEmitter();
+  @Output() public onCompositionUpdate: EventEmitter<EventObj<CompositionEvent>> = new EventEmitter();
   @Output() public onContextMenu: EventEmitter<EventObj<MouseEvent>> = new EventEmitter();
   @Output() public onCopy: EventEmitter<EventObj<ClipboardEvent>> = new EventEmitter();
   @Output() public onCut: EventEmitter<EventObj<ClipboardEvent>> = new EventEmitter();
@@ -51,6 +54,7 @@ export class Events {
   @Output() public onGetContent: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onHide: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onInit: EventEmitter<EventObj<any>> = new EventEmitter();
+  @Output() public onInput: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onInitNgModel: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onLoadContent: EventEmitter<EventObj<any>> = new EventEmitter();
   @Output() public onNodeChange: EventEmitter<EventObj<any>> = new EventEmitter();
@@ -88,6 +92,9 @@ export const validEvents: (keyof Events)[] = [
   'onChange',
   'onClearUndos',
   'onClick',
+  'onCompositionEnd',
+  'onCompositionStart',
+  'onCompositionUpdate',
   'onContextMenu',
   'onCopy',
   'onCut',
@@ -107,6 +114,7 @@ export const validEvents: (keyof Events)[] = [
   'onGetContent',
   'onHide',
   'onInit',
+  'onInput',
   'onKeyDown',
   'onKeyPress',
   'onKeyUp',

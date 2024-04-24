@@ -11,6 +11,7 @@ import { SelectorFilter, Attribute, SugarElement, Remove } from '@ephox/sugar';
 
 import { EditorModule, EditorComponent, TINYMCE_SCRIPT_SRC } from '../../../main/ts/public_api';
 import { ScriptLoader } from '../../../main/ts/utils/ScriptLoader';
+import { Version } from '../../../main/ts/editor/editor.component';
 
 UnitTest.asynctest('LoadTinyTest', (success, failure) => {
   const cSetupEditor = (attributes: string[], providers: any[]) => Chain.async<void, void>((_, next) => {
@@ -60,12 +61,17 @@ UnitTest.asynctest('LoadTinyTest', (success, failure) => {
     TestBed.resetTestingModule();
   });
 
-  const cAssertTinymceVersion = (version: '4' | '5' | '6' | '7') => Chain.op(() => {
+  const cAssertTinymceVersion = (version: Version) => Chain.op(() => {
     Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, Global.tinymce.majorVersion);
   });
 
   Pipeline.async({}, [
     Log.chainsAsStep('Should be able to load local version of TinyMCE specified via depdendency injection', '', [
+      cDeleteTinymce,
+
+      cSetupEditor([], [{ provide: TINYMCE_SCRIPT_SRC, useValue: '/project/node_modules/tinymce-7/tinymce.min.js' }]),
+      cAssertTinymceVersion('7'),
+      cTeardown,
       cDeleteTinymce,
 
       cSetupEditor([], [{ provide: TINYMCE_SCRIPT_SRC, useValue: '/project/node_modules/tinymce-6/tinymce.min.js' }]),
@@ -83,7 +89,20 @@ UnitTest.asynctest('LoadTinyTest', (success, failure) => {
       cTeardown,
       cDeleteTinymce,
     ]),
-    Log.chainsAsStep('Should be able to load TinyMCE from Cloud', '', [
+    Log.chainsAsStep('Should be able to load TinyMCE 7 from Cloud', '', [
+      cSetupEditor([ 'apiKey="a-fake-api-key"', 'cloudChannel="7"' ], []),
+      cAssertTinymceVersion('7'),
+      Chain.op(() => {
+        Assertions.assertEq(
+          'TinyMCE should have been loaded from Cloud',
+          'https://cdn.tiny.cloud/1/a-fake-api-key/tinymce/7',
+          Global.tinymce.baseURI.source
+        );
+      }),
+      cTeardown,
+      cDeleteTinymce
+    ]),
+    Log.chainsAsStep('Should be able to load TinyMCE 6 from Cloud', '', [
       cSetupEditor([ 'apiKey="a-fake-api-key"', 'cloudChannel="6"' ], []),
       cAssertTinymceVersion('6'),
       Chain.op(() => {

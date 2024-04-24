@@ -9,6 +9,7 @@ import { UnitTest } from '@ephox/bedrock-client';
 import { VersionLoader } from '@tinymce/miniature';
 
 import { EditorComponent, EditorModule } from '../../../main/ts/public_api';
+import { Version } from '../../../main/ts/editor/editor.component';
 
 UnitTest.asynctest('FormControlTest', (success, failure) => {
   @Component({
@@ -53,7 +54,7 @@ UnitTest.asynctest('FormControlTest', (success, failure) => {
     TestBed.resetTestingModule();
   });
 
-  const sTestVersion = (version: '4' | '5' | '6') => VersionLoader.sWithVersion(
+  const sTestVersion = (version: Version) => VersionLoader.sWithVersion(
     version,
     Log.chainsAsStep('', 'FormControl interaction ', [
       cSetupEditorWithFormControl,
@@ -89,6 +90,7 @@ UnitTest.asynctest('FormControlTest', (success, failure) => {
   Pipeline.async({}, [
     sTestVersion('4'),
     sTestVersion('5'),
-    sTestVersion('6')
+    sTestVersion('6'),
+    sTestVersion('7')
   ], success, failure);
 });

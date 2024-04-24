@@ -8,6 +8,7 @@ import { VersionLoader } from '@tinymce/miniature';
 
 import { EditorComponent } from '../../../main/ts/public_api';
 import { TestStore } from '../alien/TestStore';
+import { Version } from '../../../main/ts/editor/editor.component';
 
 UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
 
@@ -37,7 +38,7 @@ UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
     });
   });
 
-  const sTestVersion = (version: '4' | '5' | '6') => VersionLoader.sWithVersion(
+  const sTestVersion = (version: Version) => VersionLoader.sWithVersion(
     version,
     Log.chainsAsStep('', 'Events should be bound when allowed',
       [
@@ -70,6 +71,7 @@ UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
   Pipeline.async({}, [
     sTestVersion('4'),
     sTestVersion('5'),
-    sTestVersion('6')
+    sTestVersion('6'),
+    sTestVersion('7')
   ], success, failure);
 });

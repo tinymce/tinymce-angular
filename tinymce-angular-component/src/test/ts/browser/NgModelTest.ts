@@ -11,6 +11,7 @@ import { VersionLoader } from '@tinymce/miniature';
 import { SugarElement } from '@ephox/sugar';
 
 import { EditorModule, EditorComponent } from '../../../main/ts/public_api';
+import { Version } from '../../../main/ts/editor/editor.component';
 
 UnitTest.asynctest('NgModelTest', (success, failure) => {
   class Base {
@@ -70,7 +71,7 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
     context.fixture.detectChanges();
   });
 
-  const sTestVersion = (version: '4' | '5' | '6') => VersionLoader.sWithVersion(version, GeneralSteps.sequence([
+  const sTestVersion = (version: Version) => VersionLoader.sWithVersion(version, GeneralSteps.sequence([
     Log.chainsAsStep('', 'should be pristine, untouched, and valid initially', [
       cSetupEditorWithNgModel(),
       cAssertNgModelState('valid', true),
@@ -144,6 +145,7 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
   Pipeline.async({}, [
     sTestVersion('4'),
     sTestVersion('5'),
-    sTestVersion('6')
+    sTestVersion('6'),
+    sTestVersion('7')
   ], success, failure);
 });
