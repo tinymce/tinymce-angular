@@ -43,5 +43,8 @@
         "semi": "error"
       }
     }
+  ],
+  "extends": [
+    "plugin:storybook/recommended"
   ]
 }

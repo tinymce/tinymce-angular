@@ -3,7 +3,7 @@ import { EditorComponent } from '../../tinymce-angular-component/src/main/ts/edi
 import { apiKey } from '../Settings';
 
 @Component({
-  selector: 'viewquery',
+  selector: 'view-query',
   templateUrl: './Viewquery.component.html'
 })
 export class ViewQueryComponent {
