@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## 7.1.1 - 2024-04-04
+## 8.0.0 - 2024-04-24
 ### Fixed
 - Updated CI library to latest
 - Updated dependencies. #INT-3274
@@ -14,8 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Support for Angular 15, 16 & 17. #INT-3274
 - Support for the OnPush change detection strategy. #INT-2974
+- Support for TinyMCE version 7. #INT-3292
+- Added `licenseKey` prop. #INT-3292
+- Added events `onInput`, `onCompositionEnd`, `onCompositionStart` & `onCompositionUpdate`. #INT-3292
+- Added a JSDoc link to the TinyMCE 7 Angular Technical Reference docs page. #INT-3292
 ### Improved
 - Updated Storybook to v8, as well as now using CSFv3 components. #INT-3274
+- Improved `cloudChannel` type. #INT-3292
 
 ## 7.0.0 - 2022-06-27
 ### Added
