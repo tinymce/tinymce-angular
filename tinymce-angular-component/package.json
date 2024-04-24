@@ -12,6 +12,6 @@
     "@angular/forms": ">=14.0.0"
   },
   "dependencies": {
-    "tinymce": "^6.0.0 || ^5.5.0"
+    "tinymce": "^7.0.0 || ^6.0.0 || ^5.5.0"
   }
 }
