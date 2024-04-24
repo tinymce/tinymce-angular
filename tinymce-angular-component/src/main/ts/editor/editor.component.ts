@@ -48,6 +48,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   @Input() public cloudChannel: Version = '7';
   @Input() public apiKey = 'no-api-key';
+  @Input() public licenseKey?: string;
   @Input() public init?: EditorOptions;
   @Input() public id = '';
   @Input() public initialValue?: string;
@@ -171,6 +172,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       target: this._element,
       inline: this.inline,
       readonly: this.disabled,
+      license_key: this.licenseKey,
       plugins: mergePlugins((this.init && this.init.plugins) as string, this.plugins),
       toolbar: this.toolbar || (this.init && this.init.toolbar),
       setup: (editor: TinyMCEEditor) => {
