@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## 8.0.0 - 2024-04-24
+## 8.0.0 - 2024-04-29
 
 ### Added
 - Support for Angular 16 & 17. Angular 15 is still supported via ^7.0.0 #INT-3274
