@@ -20,10 +20,10 @@ mixedBeehiveFlow(
     resourceLimitMemory: '4Gi'
   ],
   customSteps: {
-    stage("storybook") {
+    stage("update storybook") {
       def status = beehiveFlowStatus()
       if (status.branchState == 'releaseReady' && status.isLatest) {
-        sshagent (credentials: ['3e856116-029e-4c8d-b57d-593b2fba3cb2']) {
+        tinyGit.withGitHubSSHCredentials {
           exec('yarn deploy-storybook')
         }
       } else {
