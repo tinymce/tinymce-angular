@@ -20,7 +20,7 @@ mixedBeehiveFlow(
     resourceLimitMemory: '4Gi'
   ],
   customSteps: {
-    stage("storybook") {
+    stage("update storybook") {
       def status = beehiveFlowStatus()
       if (status.branchState == 'releaseReady' && status.isLatest) {
         tinyGit.withGitHubSSHCredentials {
