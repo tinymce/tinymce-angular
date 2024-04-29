@@ -15,6 +15,10 @@ mixedBeehiveFlow(
     resourceLimitCpu: '4',
     resourceLimitMemory: '4Gi'
   ],
+  publishContainer: [
+    resourceRequestMemory: '4Gi',
+    resourceLimitMemory: '4Gi'
+  ],
   customSteps: {
     stage("storybook") {
       def status = beehiveFlowStatus()
