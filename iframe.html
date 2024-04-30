@@ -1,5 +1,5 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Webpack App</title><meta name="viewport" content="width=device-width,initial-scale=1"><base target="_parent"><style>/* While we aren't showing the main block yet, but still preparing, we want everything the user
-     has rendered, which may or may not be in #root, to be display none */
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Webpack App</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="prefetch" href="./sb-common-assets/nunito-sans-regular.woff2" as="font" type="font/woff2" crossorigin><link rel="prefetch" href="./sb-common-assets/nunito-sans-italic.woff2" as="font" type="font/woff2" crossorigin><link rel="prefetch" href="./sb-common-assets/nunito-sans-bold.woff2" as="font" type="font/woff2" crossorigin><link rel="prefetch" href="./sb-common-assets/nunito-sans-bold-italic.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="./sb-common-assets/fonts.css"><base target="_parent"><style>/* While we aren't showing the main block yet, but still preparing, we want everything the user
+     has rendered, which may or may not be in #storybook-root, to be display none */
   .sb-show-preparing-story:not(.sb-show-main) > :not(.sb-preparing-story) {
     display: none;
   }
@@ -23,7 +23,7 @@
     min-height: 100vh;
   }
 
-  .sb-show-main.sb-main-centered #root {
+  .sb-show-main.sb-main-centered #storybook-root {
     box-sizing: border-box;
     margin: auto;
     padding: 1rem;
@@ -59,8 +59,17 @@
     left: 0;
     right: 0;
     padding: 20px;
-    font-family: 'Nunito Sans', -apple-system, '.SFNSText-Regular', 'San Francisco',
-      BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family:
+      'Nunito Sans',
+      -apple-system,
+      '.SFNSText-Regular',
+      'San Francisco',
+      BlinkMacSystemFont,
+      'Segoe UI',
+      'Helvetica Neue',
+      Helvetica,
+      Arial,
+      sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow: auto;
   }
@@ -234,8 +243,8 @@
   .sb-argstableBlock td:nth-of-type(3) {
     width: 15%;
   }
-  .sb-argstableBlock th:laste-of-type,
-  .sb-argstableBlock td:laste-of-type {
+  .sb-argstableBlock th:last-of-type,
+  .sb-argstableBlock td:last-of-type {
     width: 25%;
     padding-right: 20px;
   }
@@ -254,7 +263,9 @@
 
   .sb-argstableBlock-body {
     border-radius: 4px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0 1px 3px 1px, rgba(0, 0, 0, 0.065) 0 0 0 1px;
+    box-shadow:
+      rgba(0, 0, 0, 0.1) 0 1px 3px 1px,
+      rgba(0, 0, 0, 0.065) 0 0 0 1px;
   }
   .sb-argstableBlock-body tr {
     background: transparent;
@@ -318,30 +329,10 @@
   } catch (e) {
     // eslint-disable-next-line no-console
     console.warn('unable to connect to top frame for connecting dev tools');
-  }
-
-  window.onerror = function onerror(message, source, line, column, err) {
-    if (window.CONFIG_TYPE !== 'DEVELOPMENT') return;
-    // eslint-disable-next-line no-var, vars-on-top
-    var xhr = new window.XMLHttpRequest();
-    xhr.open('POST', '/runtime-error');
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    xhr.send(
-      JSON.stringify({
-        /* eslint-disable object-shorthand */
-        message: message,
-        source: source,
-        line: line,
-        column: column,
-        error: err && { message: err.message, name: err.name, stack: err.stack },
-        origin: 'preview',
-        /* eslint-enable object-shorthand */
-      })
-    );
-  };</script><style>#root[hidden],
-      #docs-root[hidden] {
+  }</script><style>#storybook-root[hidden],
+      #storybook-docs[hidden] {
         display: none !important;
-      }</style></head><body><div class="sb-preparing-story sb-wrapper"><div class="sb-loader"></div></div><div class="sb-preparing-docs sb-wrapper"><div class="sb-previewBlock"><div class="sb-previewBlock_header"><div class="sb-previewBlock_icon"></div><div class="sb-previewBlock_icon"></div><div class="sb-previewBlock_icon"></div><div class="sb-previewBlock_icon"></div></div><div class="sb-previewBlock_body"><div class="sb-loader"></div></div></div><table aria-hidden="true" class="sb-argstableBlock"><thead class="sb-argstableBlock-head"><tr><th><span>Name</span></th><th><span>Description</span></th><th><span>Default</span></th><th><span>Control</span></th></tr></thead><tbody class="sb-argstableBlock-body"><tr><td><span>propertyName</span><span title="Required">*</span></td><td><div><span>This is a short description</span></div><div class="sb-argstableBlock-summary"><div><span class="sb-argstableBlock-code">summary</span></div></div></td><td><div><span class="sb-argstableBlock-code">defaultValue</span></div></td><td><button>Set string</button></td></tr><tr><td><span>propertyName</span><span>*</span></td><td><div><span>This is a short description</span></div><div class="sb-argstableBlock-summary"><div><span class="sb-argstableBlock-code">summary</span></div></div></td><td><div><span class="sb-argstableBlock-code">defaultValue</span></div></td><td><button>Set string</button></td></tr><tr><td><span>propertyName</span><span>*</span></td><td><div><span>This is a short description</span></div><div class="sb-argstableBlock-summary"><div><span class="sb-argstableBlock-code">summary</span></div></div></td><td><div><span class="sb-argstableBlock-code">defaultValue</span></div></td><td><button>Set string</button></td></tr></tbody></table></div><div class="sb-nopreview sb-wrapper"><div class="sb-nopreview_main"><h1 class="sb-nopreview_heading sb-heading">No Preview</h1><p>Sorry, but you either have no stories or none are selected somehow.</p><ul><li>Please check the Storybook config.</li><li>Try reloading the page.</li></ul><p>If the problem persists, check the browser console, or the terminal you've run Storybook from.</p></div></div><div class="sb-errordisplay sb-wrapper"><pre id="error-message" class="sb-heading"></pre><pre class="sb-errordisplay_code"><code id="error-stack"></code></pre></div><div id="root"></div><div id="docs-root"></div><script>window['CONFIG_TYPE'] = "PRODUCTION";
+      }</style></head><body><div class="sb-preparing-story sb-wrapper"><div class="sb-loader"></div></div><div class="sb-preparing-docs sb-wrapper"><div class="sb-previewBlock"><div class="sb-previewBlock_header"><div class="sb-previewBlock_icon"></div><div class="sb-previewBlock_icon"></div><div class="sb-previewBlock_icon"></div><div class="sb-previewBlock_icon"></div></div><div class="sb-previewBlock_body"><div class="sb-loader"></div></div></div><table aria-hidden="true" class="sb-argstableBlock"><thead class="sb-argstableBlock-head"><tr><th><span>Name</span></th><th><span>Description</span></th><th><span>Default</span></th><th><span>Control</span></th></tr></thead><tbody class="sb-argstableBlock-body"><tr><td><span>propertyName</span><span title="Required">*</span></td><td><div><span>This is a short description</span></div><div class="sb-argstableBlock-summary"><div><span class="sb-argstableBlock-code">summary</span></div></div></td><td><div><span class="sb-argstableBlock-code">defaultValue</span></div></td><td><button>Set string</button></td></tr><tr><td><span>propertyName</span><span>*</span></td><td><div><span>This is a short description</span></div><div class="sb-argstableBlock-summary"><div><span class="sb-argstableBlock-code">summary</span></div></div></td><td><div><span class="sb-argstableBlock-code">defaultValue</span></div></td><td><button>Set string</button></td></tr><tr><td><span>propertyName</span><span>*</span></td><td><div><span>This is a short description</span></div><div class="sb-argstableBlock-summary"><div><span class="sb-argstableBlock-code">summary</span></div></div></td><td><div><span class="sb-argstableBlock-code">defaultValue</span></div></td><td><button>Set string</button></td></tr></tbody></table></div><div class="sb-nopreview sb-wrapper"><div class="sb-nopreview_main"><h1 class="sb-nopreview_heading sb-heading">No Preview</h1><p>Sorry, but you either have no stories or none are selected somehow.</p><ul><li>Please check the Storybook config.</li><li>Try reloading the page.</li></ul><p>If the problem persists, check the browser console, or the terminal you've run Storybook from.</p></div></div><div class="sb-errordisplay sb-wrapper"><pre id="error-message" class="sb-heading"></pre><pre class="sb-errordisplay_code"><code id="error-stack"></code></pre></div><div id="storybook-root"></div><div id="storybook-docs"></div><script>window['CONFIG_TYPE'] = "PRODUCTION";
           
       
           
@@ -355,10 +346,25 @@
           
       
           
-            window['FEATURES'] = {"postcss":true,"emotionAlias":false,"warnOnLegacyHierarchySeparator":true,"buildStoriesJson":false,"storyStoreV7":false,"modernInlineRender":false,"breakingChangesV7":false,"interactionsDebugger":false,"babelModeV7":false,"argTypeTargetsV7":false,"previewMdx2":false};
+            window['FEATURES'] = {"argTypeTargetsV7":true,"legacyDecoratorFileOrder":false,"disallowImplicitActionsInRenderV8":true};
           
       
           
       
           
-            window['STORIES'] = [{"titlePrefix":"","directory":"./stories","files":"index.ts","importPathMatcher":"^\\.[\\\\/](?:stories\\/index\\.ts)$"}];</script><script src="runtime~main.2e48ead1.iframe.bundle.js"></script><script src="741.e3f9ad93.iframe.bundle.js"></script><script src="main.8eced383.iframe.bundle.js"></script></body></html>
+            window['STORIES'] = [{"titlePrefix":"","directory":"./stories","files":"**/*.stories.@(js|jsx|mjs|ts|tsx)","importPathMatcher":"^\\.[\\\\/](?:stories(?:\\/(?!\\.)(?:(?:(?!(?:^|\\/)\\.).)*?)\\/|\\/|$)(?!\\.)(?=.)[^/]*?\\.stories\\.(js|jsx|mjs|ts|tsx))$"}];
+          
+      
+          
+            window['DOCS_OPTIONS'] = {"defaultName":"Docs","autodocs":"tag"};
+          
+      
+          
+            window['TAGS_OPTIONS'] = {"dev-only":{"excludeFromDocsStories":true},"docs-only":{"excludeFromSidebar":true},"test-only":{"excludeFromSidebar":true,"excludeFromDocsStories":true}};</script><script type="module">import './sb-preview/runtime.js';
+
+      
+      import './runtime~main.c6e340e5.iframe.bundle.js';
+      
+      import './690.28b8b5cd.iframe.bundle.js';
+      
+      import './main.d626060a.iframe.bundle.js';</script></body></html>
