@@ -209,9 +209,9 @@
   integrity sha512-6Pxgsrf0qF9iFFqmIcWmjJGkkCaCm6V5QNnxMy2KloO3SDq6QuMVRbN9RtC8Urmo25LP+eZ6ZgYqFYpdD8Hd9w==
 
 "@angular/core@^17.3.1":
-  version "17.3.1"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-17.3.1.tgz#3f143c27ab50b7bdf829b0c2086af60c16e194ae"
-  integrity sha512-Qf3/sgkXS1LHwOTtqAVYprySrn0YpPIZqerPc0tK+hyQfwAz5BQlpcBhbH8RWKlfCY8eO0cqo/j0+e8DQOgYfg==
+  version "17.3.6"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-17.3.6.tgz#279c84ac96e7b28295903290ad68cf67fbfd1beb"
+  integrity sha512-8IoeZVNqyeHA+H2dR3VFfz76/TFN1BpXP0aABs2aIUNVQRYlKxALSm1UlavijX8IT0uvd/6GXwE3WgymTcg0wg==
   dependencies:
     tslib "^2.3.0"
 
