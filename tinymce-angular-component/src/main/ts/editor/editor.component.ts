@@ -1,9 +1,22 @@
 /* eslint-disable @typescript-eslint/no-parameter-properties */
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, forwardRef, Inject, Input, NgZone, OnDestroy, PLATFORM_ID, InjectionToken, Optional } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  forwardRef,
+  Inject,
+  Input,
+  NgZone,
+  OnDestroy,
+  PLATFORM_ID,
+  InjectionToken,
+  Optional,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, takeUntil } from 'rxjs';
 import { getTinymce } from '../TinyMCE';
 import { listenTinyMCEEvent, bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined } from '../utils/Utils';
 import { EventObj, Events } from './Events';
@@ -20,29 +33,37 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR = {
   multi: true
 };
 
+export type Version = `${'4' | '5' | '6' | '7'}${'' | '-dev' | '-testing' | `.${number}` | `.${number}.${number}`}`;
+
 @Component({
   selector: 'editor',
-  template: '<ng-template></ng-template>',
+  template: '',
   styles: [ ':host { display: block; }' ],
   providers: [ EDITOR_COMPONENT_VALUE_ACCESSOR ],
   standalone: true,
-  imports: [ CommonModule, FormsModule ]
+  imports: [ CommonModule, FormsModule ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
+/**
+ * @see {@link https://www.tiny.cloud/docs/tinymce/7/angular-ref/} for the TinyMCE Angular Technical Reference
+ */
 export class EditorComponent extends Events implements AfterViewInit, ControlValueAccessor, OnDestroy {
 
-  @Input() public cloudChannel = '6';
+  @Input() public cloudChannel: Version = '7';
   @Input() public apiKey = 'no-api-key';
-  @Input() public init: EditorOptions | undefined;
+  @Input() public licenseKey?: string;
+  @Input() public init?: EditorOptions;
   @Input() public id = '';
-  @Input() public initialValue: string | undefined;
-  @Input() public outputFormat: 'html' | 'text' | undefined;
-  @Input() public inline: boolean | undefined;
-  @Input() public tagName: string | undefined;
-  @Input() public plugins: string | undefined;
-  @Input() public toolbar: string | string[] | undefined;
+  @Input() public initialValue?: string;
+  @Input() public outputFormat?: 'html' | 'text';
+  @Input() public inline?: boolean;
+  @Input() public tagName?: string;
+  @Input() public plugins?: string;
+  @Input() public toolbar?: string | string[];
   @Input() public modelEvents = 'change input undo redo';
-  @Input() public allowedEvents: string | string[] | undefined;
-  @Input() public ignoreEvents: string | string[] | undefined;
+  @Input() public allowedEvents?: string | string[];
+  @Input() public ignoreEvents?: string | string[];
   @Input()
   public set disabled(val) {
     this._disabled = val;
@@ -66,9 +87,9 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   public ngZone: NgZone;
 
   private _elementRef: ElementRef;
-  private _element: HTMLElement | undefined;
-  private _disabled: boolean | undefined;
-  private _editor: TinyMCEEditor | undefined;
+  private _element?: HTMLElement;
+  private _disabled?: boolean;
+  private _editor?: TinyMCEEditor;
 
   private onTouchedCallback = noop;
   private onChangeCallback: any;
@@ -78,6 +99,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   public constructor(
     elementRef: ElementRef,
     ngZone: NgZone,
+    private cdRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
     @Optional() @Inject(TINYMCE_SCRIPT_SRC) private tinymceScriptSrc?: string
   ) {
@@ -160,6 +182,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       target: this._element,
       inline: this.inline,
       readonly: this.disabled,
+      license_key: this.licenseKey,
       plugins: mergePlugins((this.init && this.init.plugins) as string, this.plugins),
       toolbar: this.toolbar || (this.init && this.init.toolbar),
       setup: (editor: TinyMCEEditor) => {
@@ -194,10 +217,12 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   private initEditor(editor: TinyMCEEditor) {
     listenTinyMCEEvent(editor, 'blur', this.destroy$).subscribe(() => {
+      this.cdRef.markForCheck();
       this.ngZone.run(() => this.onTouchedCallback());
     });
 
     listenTinyMCEEvent(editor, this.modelEvents, this.destroy$).subscribe(() => {
+      this.cdRef.markForCheck();
       this.ngZone.run(() => this.emitOnChange(editor));
     });
 

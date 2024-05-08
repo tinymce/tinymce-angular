@@ -6,48 +6,44 @@
  *
  */
 
-import { defer, fromEvent, Observable, OperatorFunction } from 'rxjs';
-import { mapTo, shareReplay, take } from 'rxjs/operators';
-
-export interface IStateObj {
-  script$: Observable<void> | null;
-}
-
-const createState = (): IStateObj => ({
-  script$: null,
-});
+import { fromEvent, Observable, shareReplay, switchMap, BehaviorSubject, first, filter, map } from 'rxjs';
 
 interface ScriptLoader {
   load: (doc: Document, url: string) => Observable<void>;
+  /** Intended to only to be used by tests. */
   reinitialize: () => void;
 }
 
-const CreateScriptLoader = (): ScriptLoader => {
-  let state = createState();
+const firstEmission = () => (source: Observable<unknown>): Observable<void> => source.pipe(first(), map(() => undefined));
 
-  const load = (doc: Document, url: string) => (
-    state.script$ ||
-    // Caretaker note: the `script$` is a multicast observable since it's piped with `shareReplay`,
-    // so if there're multiple editor components simultaneously on the page, they'll subscribe to the internal
-    // `ReplaySubject`. The script will be loaded only once, and `ReplaySubject` will cache the result.
-    (state.script$ = defer(() => {
+const CreateScriptLoader = (): ScriptLoader => {
+  const params$ = new BehaviorSubject<Parameters<ScriptLoader['load']> | null>(null);
+  const loaded$: Observable<void> = params$.pipe(
+    filter(Boolean),
+    switchMap(([ doc, url ]) => {
       const scriptTag = doc.createElement('script');
       scriptTag.referrerPolicy = 'origin';
       scriptTag.type = 'application/javascript';
       scriptTag.src = url;
       doc.head.appendChild(scriptTag);
-      return fromEvent(scriptTag, 'load').pipe(take(1), mapTo(undefined) as OperatorFunction<Event, undefined>);
-    }).pipe(shareReplay({ bufferSize: 1, refCount: true })))
+      return fromEvent(scriptTag, 'load').pipe(firstEmission());
+    }),
+    // Caretaker note: `loaded$` is a multicast observable since it's piped with `shareReplay`,
+    // so if there're multiple editor components simultaneously on the page, they'll subscribe to the internal
+    // `ReplaySubject`. The script will be loaded only once, and `ReplaySubject` will cache the result.
+    shareReplay({ bufferSize: 1, refCount: true })
   );
 
-  // Only to be used by tests.
-  const reinitialize = () => {
-    state = createState();
-  };
-
   return {
-    load,
-    reinitialize,
+    load: (...args) => {
+      if (!params$.getValue()) {
+        params$.next(args);
+      }
+      return loaded$;
+    },
+    reinitialize: () => {
+      params$.next(null);
+    },
   };
 };
 

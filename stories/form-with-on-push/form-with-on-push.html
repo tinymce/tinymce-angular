@@ -1,0 +1,25 @@
+<form [formGroup]="form" style="display: flex; gap: 0.2em; flex-direction: column;">
+  <editor
+    [apiKey]="apiKey"
+    formControlName="tiny"
+    plugins="table"
+    init="{ width: '200px', }"
+  />
+  <br />
+  <label>
+    <span>Regular input</span>
+    <br />
+    <input type="text" formControlName="regular" />
+  </label>
+  <br />
+  <button type="reset" style="width: 200px">Reset form</button>
+  <button [disabled]="form.invalid" type="submit" style="width: 200px">Submit form</button>
+</form>
+<br />
+<pre>
+Pristine: {{ form.pristine }}
+Touched: {{ form.touched }}
+Dirty: {{ form.dirty }}
+Valid: {{ form.valid }}
+Data: {{ form.value | json }}
+</pre>

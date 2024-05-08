@@ -10,6 +10,7 @@ import { VersionLoader } from '@tinymce/miniature';
 
 import { Editor } from 'tinymce';
 import { EditorComponent, EditorModule } from '../../../main/ts/public_api';
+import { Version } from '../../../main/ts/editor/editor.component';
 
 UnitTest.asynctest('FormControlTest', (success, failure) => {
   @Component({
@@ -105,7 +106,7 @@ UnitTest.asynctest('FormControlTest', (success, failure) => {
     );
   });
 
-  const sTestVersion = (version: '4' | '5' | '6') =>
+  const sTestVersion = (version: Version) =>
     VersionLoader.sWithVersion(
       version,
       Log.chainsAsStep('', 'FormControl interaction ', [
@@ -123,6 +124,7 @@ UnitTest.asynctest('FormControlTest', (success, failure) => {
       sTestVersion('4'),
       sTestVersion('5'),
       sTestVersion('6'),
+      sTestVersion('7'),
     ],
     success,
     failure
