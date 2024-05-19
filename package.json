@@ -70,7 +70,7 @@
     "zone.js": "~0.14.4"
   },
   "dependencies": {
-    "tinymce": "^5.10.7"
+    "tinymce": "^7.0.0"
   },
   "version": "8.0.1-rc",
   "name": "@tinymce/tinymce-angular"
