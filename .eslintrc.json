@@ -42,6 +42,15 @@
         "quotes": [ "error", "single" ],
         "semi": "error"
       }
+    },
+    {
+      "files": [
+        "**/*Test.ts"
+      ],
+      "rules": {
+        "max-classes-per-file": "off",
+        "@typescript-eslint/no-non-null-assertion": "off"
+      }
     }
   ],
   "extends": [
