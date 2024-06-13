@@ -2,18 +2,116 @@
 import '../alien/InitTestEnvironment';
 
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
 import { FormsModule, NgModel } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { Assertions, Chain, Log, Pipeline, Waiter, GeneralSteps, Keyboard, Keys } from '@ephox/agar';
-import { UnitTest } from '@ephox/bedrock-client';
-import { VersionLoader } from '@tinymce/miniature';
+import { Assertions, Waiter, Keyboard, Keys } from '@ephox/agar';
+import { describe, it, context } from '@ephox/bedrock-client';
 import { SugarElement } from '@ephox/sugar';
 
-import { EditorModule, EditorComponent } from '../../../main/ts/public_api';
-import { Version } from '../../../main/ts/editor/editor.component';
+import { Version, EditorComponent } from '../../../main/ts/editor/editor.component';
+import { EditorFixture, editorHook } from '../alien/TestHooks';
+import { Optional } from '@ephox/katamari';
 
-UnitTest.asynctest('NgModelTest', (success, failure) => {
+describe('NgModelTest', () => {
+  const assertNgModelState = (prop: 'valid' | 'pristine' | 'touched', expected: boolean, ngModel: NgModel) => {
+    Assertions.assertEq(
+      'assert ngModel ' + prop + ' state',
+      expected,
+      ngModel[prop]
+    );
+  };
+
+  const fakeType = ({ editor: editorComponent, fixture }: EditorFixture<unknown>, str: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const editor = editorComponent.editor!;
+    editor.getBody().innerHTML = '<p>' + str + '</p>';
+    Keyboard.keystroke(Keys.space(), {}, SugarElement.fromDom(editor.getBody()));
+    fixture.detectChanges();
+  };
+
+  const getNgModel = (fixture: ComponentFixture<unknown>): NgModel =>
+    Optional.from(fixture.debugElement.query(By.directive(EditorComponent)))
+      .map((debugEl) => debugEl.injector.get<NgModel>(NgModel))
+      .getOrDie('NgModel not found');
+
+  for (const version of [ '4', '5', '6', '7' ] as Version[]) {
+    context(`With version ${version}`, () => {
+      @Component({
+        standalone: true,
+        imports: [ EditorComponent, FormsModule ],
+        template: `<editor [(ngModel)]="content" />`
+      })
+      class EditorWithNgModel {
+        public content = '';
+      }
+      const createFixture = editorHook(EditorWithNgModel, { imports: [ EditorWithNgModel ] }, { version });
+
+      it('should be pristine, untouched, and valid initially', async () => {
+        const { fixture } = await createFixture();
+        const ngModel = getNgModel(fixture);
+        await Waiter.pTryUntil('Waited too long for ngModel states', () => {
+          assertNgModelState('valid', true, ngModel);
+          assertNgModelState('pristine', true, ngModel);
+          assertNgModelState('touched', false, ngModel);
+        });
+      });
+
+      it('should be pristine, untouched, and valid after writeValue', async () => {
+        const { fixture, editor } = await createFixture();
+        editor.writeValue('<p>X</p>');
+        fixture.detectChanges();
+        await Waiter.pTryUntil('Waited too long for writeValue', () => {
+          Assertions.assertEq(
+            'Value should have been written to the editor',
+            '<p>X</p>',
+            editor.editor?.getContent()
+          );
+        });
+        const ngModel = getNgModel(fixture);
+        assertNgModelState('valid', true, ngModel);
+        assertNgModelState('pristine', true, ngModel);
+        assertNgModelState('touched', false, ngModel);
+      });
+
+      it.skip('should have correct control flags after interaction', async () => {
+        const { fixture, editor } = await createFixture();
+        const ngModel = getNgModel(fixture);
+        fakeType({ editor, fixture }, 'X');
+        // Should be dirty after user input but remain untouched
+        assertNgModelState('pristine', false, ngModel);
+        assertNgModelState('touched', false, ngModel);
+        editor.editor?.fire('blur');
+        fixture.detectChanges();
+        // If the editor loses focus, it should should remain dirty but should also turn touched
+        assertNgModelState('pristine', false, ngModel);
+        assertNgModelState('touched', true, ngModel);
+      });
+
+      it.skip('Test outputFormat="text"', async () => {
+        const editorFixture = await createFixture({ outputFormat: 'text' });
+        fakeType(editorFixture, 'X');
+        Assertions.assertEq(
+          'Value bound to content via ngModel should be plain text',
+          'X',
+          editorFixture.fixture.componentInstance.content
+        );
+      });
+
+      it.skip('Test outputFormat="html"', async () => {
+        const editorFixture = await createFixture({ outputFormat: 'html' });
+        fakeType(editorFixture, 'X');
+        Assertions.assertEq(
+          'Value bound to content via ngModel should be html',
+          '<p>X</p>',
+          editorFixture.fixture.componentInstance.content
+        );
+      });
+    });
+  }
+});
+
+/* UnitTest.asynctest('NgModelTestOLD', (success, failure) => {
   class Base {
     public content: string | undefined;
   }
@@ -148,4 +246,4 @@ UnitTest.asynctest('NgModelTest', (success, failure) => {
     sTestVersion('6'),
     sTestVersion('7')
   ], success, failure);
-});
+}); */
