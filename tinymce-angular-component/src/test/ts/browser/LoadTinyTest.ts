@@ -11,8 +11,8 @@ import { Editor } from 'tinymce';
 import { deleteTinymce } from '../alien/TestHelpers';
 
 describe('LoadTinyTest', () => {
-  const assertTinymceVersion = (version: Version, editor: Editor | undefined) => {
-    Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, editor?.editorManager.majorVersion);
+  const assertTinymceVersion = (version: Version, editor: Editor) => {
+    Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, editor.editorManager.majorVersion);
     Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, Global.tinymce.majorVersion);
   };
 
@@ -28,7 +28,7 @@ describe('LoadTinyTest', () => {
 
       it('Should be able to load local version of TinyMCE specified via depdendency injection', async () => {
         const { editor } = await createFixture();
-        assertTinymceVersion(version, editor.editor);
+        assertTinymceVersion(version, editor);
       });
     });
 
@@ -37,7 +37,7 @@ describe('LoadTinyTest', () => {
 
       it('Should be able to load with miniature', async () => {
         const { editor } = await createFixture();
-        assertTinymceVersion(version, editor.editor);
+        assertTinymceVersion(version, editor);
       });
     });
   }
@@ -51,7 +51,7 @@ describe('LoadTinyTest', () => {
       it(`Should be able to load TinyMCE ${version} from Cloud`, async () => {
         const apiKey = 'fake-api-key';
         const { editor } = await createFixture({ cloudChannel: version, apiKey });
-        assertTinymceVersion(version, editor.editor);
+        assertTinymceVersion(version, editor);
         Assertions.assertEq(
           'TinyMCE should have been loaded from Cloud',
           `https://cdn.tiny.cloud/1/${apiKey}/tinymce/${version}`,

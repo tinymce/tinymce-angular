@@ -16,13 +16,14 @@ import {
   map,
   merge,
   switchMap,
-  tap
+  tap,
 } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { Optional } from '@ephox/katamari';
 import { VersionLoader } from '@tinymce/miniature';
 import { deleteTinymce, throwTimeout } from './TestHelpers';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, NgModel } from '@angular/forms';
+import { Editor } from 'tinymce';
 
 export type CreateFixture<T> = () => ComponentFixture<T>;
 
@@ -49,9 +50,10 @@ export const tinymceVersionHook = (version: Version) => {
   });
 };
 
-export interface EditorFixture<T> {
-  fixture: ComponentFixture<T>;
-  editor: EditorComponent;
+export interface EditorFixture<T> extends ComponentFixture<T> {
+  editorComponent: EditorComponent;
+  editor: Editor;
+  ngModel: Optional<NgModel>;
 }
 
 export type CreateEditorFixture<T> = (
@@ -76,7 +78,7 @@ export const editorHook = <T = unknown>(
   { timeout = 5000, version }: EditorHookOptions = {},
 ): CreateEditorFixture<T> => {
   const createFixture = fixtureHook(component, moduleDef);
-  const hasLoaded$ = new BehaviorSubject<boolean>(false);
+  const loadedEditor$ = new BehaviorSubject<Editor | null>(null);
 
   if (version) {
     tinymceVersionHook(version);
@@ -103,16 +105,27 @@ export const editorHook = <T = unknown>(
       merge(
         editorComponent.onInit.pipe(
           switchMap(
-            (ed) =>
-              new Promise((resolve) => ed.editor.once('SkinLoaded', resolve)),
+            ({ editor }) =>
+              new Promise<Editor>((resolve) => editor.once('SkinLoaded', () => resolve(editor))),
           ),
-          switchMap(() => fixture.whenRenderingDone()),
-          tap(() => hasLoaded$.next(true)),
+          // switchMap(() => fixture.whenRenderingDone()),
+          tap((editor) => loadedEditor$.next(editor)),
         ),
-        hasLoaded$.pipe(filter(Boolean)),
+        loadedEditor$.pipe(filter(Boolean)),
       ).pipe(
-        throwTimeout(timeout, `Timed out waiting for editor to load (${timeout}ms)`),
-        map((): EditorFixture<T> => ({ fixture, editor: editorComponent })),
+        throwTimeout(
+          timeout,
+          `Timed out waiting for editor to load (${timeout}ms)`,
+        ),
+        map(
+          (editor): EditorFixture<T> =>
+            Object.assign(fixture, {
+              editorComponent,
+              editor,
+              ngModel: Optional.from(fixture.debugElement.query(By.directive(EditorComponent)))
+                .map((debugEl) => debugEl.injector.get<NgModel>(NgModel, undefined))
+            }),
+        ),
       ),
     );
   };
