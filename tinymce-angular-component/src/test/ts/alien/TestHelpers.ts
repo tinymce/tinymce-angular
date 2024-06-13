@@ -8,12 +8,12 @@ export const apiKey = Fun.constant(
 );
 
 export const throwTimeout =
-  (timeoutMs: number, message: string) =>
+  (timeoutMs: number, message: string = `Timeout ${timeoutMs}ms`) =>
     <T>(source: Observable<T>) =>
       source.pipe(
         timeout({
           first: timeoutMs,
-          with: () => throwError(() => new Error(message))
+          with: () => throwError(() => new Error(message)),
         }),
       );
 
