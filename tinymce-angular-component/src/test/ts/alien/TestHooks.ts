@@ -79,6 +79,9 @@ export const editorHook = <T = unknown>(
 ): CreateEditorFixture<T> => {
   const createFixture = fixtureHook(component, moduleDef);
   const loadedEditor$ = new BehaviorSubject<Editor | null>(null);
+  beforeEach(() => {
+    loadedEditor$.next(null);
+  });
 
   if (version) {
     tinymceVersionHook(version);
