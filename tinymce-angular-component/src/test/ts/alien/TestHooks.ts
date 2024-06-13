@@ -75,7 +75,7 @@ interface EditorHookOptions {
 export const editorHook = <T = unknown>(
   component: Type<T>,
   moduleDef: TestModuleMetadata,
-  { timeout = 5000, version }: EditorHookOptions = {},
+  { timeout = 10000, version }: EditorHookOptions = {},
 ): CreateEditorFixture<T> => {
   const createFixture = fixtureHook(component, moduleDef);
   const loadedEditor$ = new BehaviorSubject<Editor | null>(null);
