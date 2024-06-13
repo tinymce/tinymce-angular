@@ -1,4 +1,4 @@
-import { afterEach, before, beforeEach } from '@ephox/bedrock-client';
+import { after, afterEach, before, beforeEach } from '@ephox/bedrock-client';
 import {
   ComponentFixture,
   TestBed,
@@ -16,13 +16,13 @@ import {
   map,
   merge,
   switchMap,
-  tap,
-  throwError,
-  timer,
+  tap
 } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { Optional } from '@ephox/katamari';
 import { VersionLoader } from '@tinymce/miniature';
+import { deleteTinymce, throwTimeout } from './TestHelpers';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 export type CreateFixture<T> = () => ComponentFixture<T>;
 
@@ -38,6 +38,15 @@ export const fixtureHook = <T = unknown>(
   });
 
   return () => TestBed.createComponent(component);
+};
+
+export const tinymceVersionHook = (version: Version) => {
+  before(async () => {
+    await VersionLoader.pLoadVersion(version);
+  });
+  after(() => {
+    deleteTinymce();
+  });
 };
 
 export interface EditorFixture<T> {
@@ -67,12 +76,10 @@ export const editorHook = <T = unknown>(
   { timeout = 5000, version }: EditorHookOptions = {},
 ): CreateEditorFixture<T> => {
   const createFixture = fixtureHook(component, moduleDef);
-  const hasLoaded = new BehaviorSubject<boolean>(false);
+  const hasLoaded$ = new BehaviorSubject<boolean>(false);
 
   if (version) {
-    before(async () => {
-      await VersionLoader.pLoadVersion(version);
-    });
+    tinymceVersionHook(version);
   }
 
   return async (props = {}) => {
@@ -100,20 +107,11 @@ export const editorHook = <T = unknown>(
               new Promise((resolve) => ed.editor.once('SkinLoaded', resolve)),
           ),
           switchMap(() => fixture.whenRenderingDone()),
-          tap(() => hasLoaded.next(true)),
+          tap(() => hasLoaded$.next(true)),
         ),
-        hasLoaded.pipe(filter(Boolean)),
-        timer(timeout).pipe(
-          switchMap(() =>
-            throwError(
-              () =>
-                new Error(
-                  `Timed out waiting for editor to load (${timeout}ms)`,
-                ),
-            ),
-          ),
-        ),
+        hasLoaded$.pipe(filter(Boolean)),
       ).pipe(
+        throwTimeout(timeout, `Timed out waiting for editor to load (${timeout}ms)`),
         map((): EditorFixture<T> => ({ fixture, editor: editorComponent })),
       ),
     );
@@ -124,7 +122,7 @@ export const editorHookStandalone = (options?: EditorHookOptions) =>
   editorHook(
     EditorComponent,
     {
-      imports: [ EditorComponent ],
+      imports: [ EditorComponent, FormsModule, ReactiveFormsModule ],
     },
     options,
   );
