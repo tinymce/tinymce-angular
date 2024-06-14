@@ -6,7 +6,7 @@ import { Assertions } from '@ephox/agar';
 import { describe, it } from '@ephox/bedrock-client';
 
 import { EditorComponent } from '../../../main/ts/public_api';
-import { eachVersionContext, editorHookStandalone } from '../alien/TestHooks';
+import { eachVersionContext, editorHook } from '../alien/TestHooks';
 
 describe('FormControlTest', () => {
   eachVersionContext([ '4', '5', '6', '7' ], () => {
@@ -18,7 +18,7 @@ describe('FormControlTest', () => {
     class EditorWithFormControl {
       public control = new FormControl();
     }
-    const createFixture = editorHookStandalone(EditorWithFormControl);
+    const createFixture = editorHook(EditorWithFormControl);
 
     it('FormControl interaction', async () => {
       const fixture = await createFixture();

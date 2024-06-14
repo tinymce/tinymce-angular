@@ -42,7 +42,9 @@ export type CreateEditorFixture<T> = (
   >
 ) => Promise<EditorFixture<T>>;
 
-export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModuleMetadata): CreateEditorFixture<T> => {
+export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModuleMetadata = {
+  imports: [ component, EditorComponent, FormsModule, ReactiveFormsModule ],
+}): CreateEditorFixture<T> => {
   const createFixture = fixtureHook(component, moduleDef);
   const editorFixture = Singleton.value<EditorFixture<T>>();
   beforeEach(() => editorFixture.clear());
@@ -93,11 +95,6 @@ export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModul
     );
   };
 };
-
-export const editorHookStandalone = <T>(component: Type<T>) =>
-  editorHook(component, {
-    imports: [ component, EditorComponent, FormsModule, ReactiveFormsModule ],
-  });
 
 export const eachVersionContext = (versions: Version[], fn: (version: Version) => void) =>
   versions.forEach((version) =>

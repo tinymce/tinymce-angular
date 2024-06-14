@@ -8,7 +8,7 @@ import { describe, it } from '@ephox/bedrock-client';
 import { SugarElement } from '@ephox/sugar';
 
 import { EditorComponent } from '../../../main/ts/editor/editor.component';
-import { EditorFixture, eachVersionContext, editorHookStandalone } from '../alien/TestHooks';
+import { EditorFixture, eachVersionContext, editorHook } from '../alien/TestHooks';
 
 describe('NgModelTest', () => {
   const assertNgModelState = (prop: 'valid' | 'pristine' | 'touched', expected: boolean, ngModel: NgModel) => {
@@ -30,7 +30,7 @@ describe('NgModelTest', () => {
     class EditorWithNgModel {
       public content = '';
     }
-    const createFixture = editorHookStandalone(EditorWithNgModel);
+    const createFixture = editorHook(EditorWithNgModel);
 
     it('should be pristine, untouched, and valid initially', async () => {
       const fixture = await createFixture();
