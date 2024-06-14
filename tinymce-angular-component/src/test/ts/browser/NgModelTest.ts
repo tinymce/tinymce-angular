@@ -35,7 +35,7 @@ describe('NgModelTest', () => {
       class EditorWithNgModel {
         public content = '';
       }
-      const createFixture = editorHook(EditorWithNgModel, { imports: [ EditorWithNgModel ] }, { version });
+      const createFixture = editorHook(EditorWithNgModel, { imports: [ EditorWithNgModel ] });
 
       it('should be pristine, untouched, and valid initially', async () => {
         const fixture = await createFixture();

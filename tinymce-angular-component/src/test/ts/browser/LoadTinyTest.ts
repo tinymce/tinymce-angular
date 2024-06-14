@@ -6,7 +6,7 @@ import { Global } from '@ephox/katamari';
 
 import { EditorComponent, TINYMCE_SCRIPT_SRC } from '../../../main/ts/public_api';
 import { Version } from '../../../main/ts/editor/editor.component';
-import { editorHook, editorHookStandalone } from '../alien/TestHooks';
+import { editorHook, editorHookStandalone, tinymceVersionHook } from '../alien/TestHooks';
 import { Editor } from 'tinymce';
 import { deleteTinymce } from '../alien/TestHelpers';
 
@@ -19,9 +19,12 @@ describe('LoadTinyTest', () => {
   for (const version of [ '4', '5', '6', '7' ] as Version[]) {
     context(`With local version ${version}`, () => {
       const createFixture = editorHook(EditorComponent, {
-        providers: [{
-          provide: TINYMCE_SCRIPT_SRC, useValue: `/project/node_modules/tinymce-${version}/tinymce.min.js`
-        }]
+        providers: [
+          {
+            provide: TINYMCE_SCRIPT_SRC,
+            useValue: `/project/node_modules/tinymce-${version}/tinymce.min.js`,
+          },
+        ],
       });
 
       before(deleteTinymce);
@@ -33,7 +36,8 @@ describe('LoadTinyTest', () => {
     });
 
     context(`With version ${version} loaded from miniature`, () => {
-      const createFixture = editorHookStandalone({ version });
+      const createFixture = editorHookStandalone();
+      tinymceVersionHook(version);
 
       it('Should be able to load with miniature', async () => {
         const { editor } = await createFixture();
