@@ -1,41 +1,18 @@
-import { after, afterEach, before, beforeEach } from '@ephox/bedrock-client';
-import {
-  ComponentFixture,
-  TestBed,
-  TestModuleMetadata,
-} from '@angular/core/testing';
+import { after, before, beforeEach } from '@ephox/bedrock-client';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { Type } from '@angular/core';
-import {
-  EditorComponent,
-  Version,
-} from '../../../main/ts/editor/editor.component';
-import {
-  BehaviorSubject,
-  filter,
-  firstValueFrom,
-  map,
-  merge,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { EditorComponent, Version } from '../../../main/ts/editor/editor.component';
+import { firstValueFrom, map, switchMap, tap } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { Optional } from '@ephox/katamari';
+import { Optional, Singleton } from '@ephox/katamari';
 import { VersionLoader } from '@tinymce/miniature';
 import { deleteTinymce, throwTimeout } from './TestHelpers';
 import { FormsModule, ReactiveFormsModule, NgModel } from '@angular/forms';
 import { Editor } from 'tinymce';
 
-export type CreateFixture<T> = () => ComponentFixture<T>;
-
-export const fixtureHook = <T = unknown>(
-  component: Type<T>,
-  moduleDef: TestModuleMetadata,
-): CreateFixture<T> => {
-  beforeEach(async () => {
+export const fixtureHook = <T = unknown>(component: Type<T>, moduleDef: TestModuleMetadata) => {
+  before(async () => {
     await TestBed.configureTestingModule(moduleDef).compileComponents();
-  });
-  afterEach(() => {
-    TestBed.resetTestingModule();
   });
 
   return () => TestBed.createComponent(component);
@@ -60,41 +37,26 @@ export type CreateEditorFixture<T> = (
   props?: Partial<
   Omit<
   EditorComponent,
-  | `${'on' | 'ng' | 'register' | 'set' | 'write'}${string}`
-  | 'createElement'
-  | 'initialise'
+    `${'on' | 'ng' | 'register' | 'set' | 'write'}${string}` | 'createElement' | 'initialise' | 'editor'
   >
-  >,
+  >
 ) => Promise<EditorFixture<T>>;
 
-interface EditorHookOptions {
-  timeout?: number;
-  version?: Version;
-}
-
-export const editorHook = <T = unknown>(
-  component: Type<T>,
-  moduleDef: TestModuleMetadata,
-  { timeout = 10000, version }: EditorHookOptions = {},
-): CreateEditorFixture<T> => {
+export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModuleMetadata): CreateEditorFixture<T> => {
   const createFixture = fixtureHook(component, moduleDef);
-  const loadedEditor$ = new BehaviorSubject<Editor | null>(null);
-  beforeEach(() => {
-    loadedEditor$.next(null);
-  });
-
-  if (version) {
-    tinymceVersionHook(version);
-  }
+  const editorFixture = Singleton.value<EditorFixture<T>>();
+  beforeEach(() => editorFixture.clear());
 
   return async (props = {}) => {
+    if (editorFixture.isSet()) {
+      return editorFixture.get().getOrDie();
+    }
+
     const fixture = createFixture();
     const editorComponent =
       fixture.componentInstance instanceof EditorComponent
         ? fixture.componentInstance
-        : Optional.from(
-          fixture.debugElement.query(By.directive(EditorComponent)),
-        )
+        : Optional.from(fixture.debugElement.query(By.directive(EditorComponent)))
           .map((v): EditorComponent => v.componentInstance)
           .getOrDie('EditorComponent instance not found');
 
@@ -105,40 +67,34 @@ export const editorHook = <T = unknown>(
     fixture.detectChanges();
 
     return firstValueFrom(
-      merge(
-        editorComponent.onInit.pipe(
-          switchMap(
-            ({ editor }) =>
-              new Promise<Editor>((resolve) => editor.once('SkinLoaded', () => resolve(editor))),
-          ),
-          // switchMap(() => fixture.whenRenderingDone()),
-          tap((editor) => loadedEditor$.next(editor)),
-        ),
-        loadedEditor$.pipe(filter(Boolean)),
-      ).pipe(
-        throwTimeout(
-          timeout,
-          `Timed out waiting for editor to load (${timeout}ms)`,
+      editorComponent.onInit.pipe(
+        throwTimeout(10000, `Timed out waiting for editor to load`),
+        switchMap(
+          ({ editor }) =>
+            new Promise<Editor>((resolve) => {
+              if (editor.initialized) {
+                resolve(editor);
+              }
+              editor.once('SkinLoaded', () => resolve(editor));
+            })
         ),
         map(
           (editor): EditorFixture<T> =>
             Object.assign(fixture, {
               editorComponent,
               editor,
-              ngModel: Optional.from(fixture.debugElement.query(By.directive(EditorComponent)))
-                .map((debugEl) => debugEl.injector.get<NgModel>(NgModel, undefined))
-            }),
+              ngModel: Optional.from(fixture.debugElement.query(By.directive(EditorComponent))).bind((debugEl) =>
+                Optional.from(debugEl.injector.get<NgModel>(NgModel, undefined, { optional: true }))
+              ),
+            })
         ),
-      ),
+        tap(editorFixture.set)
+      )
     );
   };
 };
 
-export const editorHookStandalone = (options?: EditorHookOptions) =>
-  editorHook(
-    EditorComponent,
-    {
-      imports: [ EditorComponent, FormsModule, ReactiveFormsModule ],
-    },
-    options,
-  );
+export const editorHookStandalone = () =>
+  editorHook(EditorComponent, {
+    imports: [ EditorComponent, FormsModule, ReactiveFormsModule ],
+  });
