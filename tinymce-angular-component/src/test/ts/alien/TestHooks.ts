@@ -1,4 +1,4 @@
-import { after, before, beforeEach } from '@ephox/bedrock-client';
+import { after, before, beforeEach, context } from '@ephox/bedrock-client';
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { Type } from '@angular/core';
 import { EditorComponent, Version } from '../../../main/ts/editor/editor.component';
@@ -94,7 +94,15 @@ export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModul
   };
 };
 
-export const editorHookStandalone = () =>
-  editorHook(EditorComponent, {
-    imports: [ EditorComponent, FormsModule, ReactiveFormsModule ],
+export const editorHookStandalone = <T>(component: Type<T>) =>
+  editorHook(component, {
+    imports: [ component, EditorComponent, FormsModule, ReactiveFormsModule ],
   });
+
+export const eachVersionContext = (versions: Version[], fn: (version: Version) => void) =>
+  versions.forEach((version) =>
+    context(`With version ${version}`, () => {
+      tinymceVersionHook(version);
+      fn(version);
+    })
+  );

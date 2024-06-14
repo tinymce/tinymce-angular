@@ -36,7 +36,7 @@ describe('LoadTinyTest', () => {
     });
 
     context(`With version ${version} loaded from miniature`, () => {
-      const createFixture = editorHookStandalone();
+      const createFixture = editorHookStandalone(EditorComponent);
       tinymceVersionHook(version);
 
       it('Should be able to load with miniature', async () => {
@@ -48,7 +48,7 @@ describe('LoadTinyTest', () => {
 
   for (const version of [ '5', '6', '7' ] as Version[]) {
     context(`With cloud version ${version}`, () => {
-      const createFixture = editorHookStandalone();
+      const createFixture = editorHookStandalone(EditorComponent);
 
       before(deleteTinymce);
 
