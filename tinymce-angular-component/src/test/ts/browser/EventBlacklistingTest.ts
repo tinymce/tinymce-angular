@@ -1,77 +1,43 @@
 import '../alien/InitTestEnvironment';
 
-import { NgZone } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { Chain, Pipeline, Log, Waiter } from '@ephox/agar';
-import { UnitTest } from '@ephox/bedrock-client';
-import { VersionLoader } from '@tinymce/miniature';
+import { describe, it } from '@ephox/bedrock-client';
 
 import { EditorComponent } from '../../../main/ts/public_api';
-import { TestStore } from '../alien/TestStore';
-import { Version } from '../../../main/ts/editor/editor.component';
+import { eachVersionContext, editorHook } from '../alien/TestHooks';
+import { map, merge, timer, first, buffer, Observable, tap, firstValueFrom } from 'rxjs';
+import { NgZone } from '@angular/core';
+import { Assertions } from '@ephox/agar';
+import { Fun } from '@ephox/katamari';
+import { throwTimeout } from '../alien/TestHelpers';
 
-UnitTest.asynctest('EventBlacklistingTest', (success, failure) => {
+describe('EventBlacklistingTest', () => {
+  const shouldRunInAngularZone = <T>(source: Observable<T>) =>
+    source.pipe(
+      tap(() => Assertions.assertEq('Subscribers to events should run within NgZone', true, NgZone.isInAngularZone()))
+    );
 
-  const store = TestStore();
+  eachVersionContext([ '4', '5', '6', '7' ], () => {
+    const createFixture = editorHook(EditorComponent);
 
-  const cSetupEnv = () => Chain.async((_, next, die) => {
-    TestBed.configureTestingModule({
-      imports: [ EditorComponent ]
-    }).compileComponents().then(next, die);
-  });
-
-  const cTeardownEnv = Chain.op(() => {
-    TestBed.resetTestingModule();
-  });
-
-  const cSetupEditorComponent = Chain.async<void, any>((_, next) => {
-    const fixture = TestBed.createComponent(EditorComponent);
-    fixture.componentInstance.allowedEvents = 'onKeyUp,onClick,onInit';
-    fixture.componentInstance.ignoreEvents = 'onClick';
-    fixture.detectChanges();
-    fixture.componentInstance.onInit.subscribe(() => {
-      fixture.componentInstance.editor?.on('SkinLoaded', () => {
-        setTimeout(() => {
-          next(fixture);
-        }, 0);
+    it('Events should be bound when allowed', async () => {
+      const fixture = await createFixture({
+        allowedEvents: 'onKeyUp,onClick,onInit',
+        ignoreEvents: 'onClick',
       });
+
+      const pEventsCompleted = firstValueFrom(
+        merge(
+          fixture.editorComponent.onKeyUp.pipe(map(Fun.constant('onKeyUp')), shouldRunInAngularZone),
+          fixture.editorComponent.onKeyDown.pipe(map(Fun.constant('onKeyDown')), shouldRunInAngularZone),
+          fixture.editorComponent.onClick.pipe(map(Fun.constant('onClick')), shouldRunInAngularZone)
+        ).pipe(throwTimeout(10000, 'Timed out waiting for some event to fire'), buffer(timer(100)), first())
+      );
+      fixture.editor.fire('keydown');
+      fixture.editor.fire('keyclick');
+      fixture.editor.fire('keyup');
+      const eventsCompleted = await pEventsCompleted;
+      Assertions.assertEq('Only one event should have fired', 1, eventsCompleted.length);
+      Assertions.assertEq('Only keyup should fire', 'onKeyUp', eventsCompleted[0]);
     });
   });
-
-  const sTestVersion = (version: Version) => VersionLoader.sWithVersion(
-    version,
-    Log.chainsAsStep('', 'Events should be bound when allowed',
-      [
-        store.cClear,
-        cSetupEnv(),
-        cSetupEditorComponent,
-        Chain.op((fixture) => {
-          fixture.componentInstance.onKeyUp.subscribe(() => {
-            const inZone = NgZone.isInAngularZone();
-            store.adder('keyup.zone=' + inZone)();
-          });
-          fixture.componentInstance.onKeyDown.subscribe(store.adder('keydown'));
-          fixture.componentInstance.onClick.subscribe(store.adder('click'));
-        }),
-        Chain.op((fixture) => {
-          fixture.componentInstance.editor.fire('keydown');
-          fixture.componentInstance.editor.fire('keyclick');
-          fixture.componentInstance.editor.fire('keyup');
-        }),
-        Waiter.cTryUntil(
-          'Waiting for events to fire',
-          store.cAssertEq('Only keyup should fire', [ 'keyup.zone=true' ]),
-          1000
-        ),
-        // cTest,
-        cTeardownEnv
-      ])
-  );
-
-  Pipeline.async({}, [
-    sTestVersion('4'),
-    sTestVersion('5'),
-    sTestVersion('6'),
-    sTestVersion('7')
-  ], success, failure);
 });
