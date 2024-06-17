@@ -102,7 +102,6 @@ describe('PropTest', () => {
           }));
           fixture.detectChanges();
           const [ ed1, ed2, ed3, ed4 ] = await waitForEditorsToLoad(fixture);
-          // await fixture.whenStable();
           expect(ed1.id).to.equal('my-id-0');
           expect(ed1.getContent()).to.equal('<p>text0</p>');
           expect(ed2.id).to.equal('my-id-1');
