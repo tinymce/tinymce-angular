@@ -45,9 +45,18 @@
     },
     {
       "files": [
-        "**/*Test.ts"
+        "**/*Test.ts",
+        "**/test/**/*.ts"
+      ],
+      "plugins": [
+        "chai-friendly"
+      ],
+      "extends": [
+        "plugin:chai-friendly/recommended"
       ],
       "rules": {
+        "no-unused-expressions": "off",
+        "no-console": "off",
         "max-classes-per-file": "off",
         "@typescript-eslint/no-non-null-assertion": "off"
       }
