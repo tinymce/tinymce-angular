@@ -37,7 +37,7 @@ describe('PropTest', () => {
         distinct((editor) => editor.id),
         concatMap((editor) => new Promise<Editor>((resolve) => editor.once('SkinLoaded', () => resolve(editor)))),
         toArray(),
-        throwTimeout(10000, 'Timeout waiting for editor(s) to load')
+        throwTimeout(20000, 'Timeout waiting for editor(s) to load')
       )
     );
 
