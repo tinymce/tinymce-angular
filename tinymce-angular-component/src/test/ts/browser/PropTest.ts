@@ -12,6 +12,7 @@ import { By } from '@angular/platform-browser';
 import { Editor } from 'tinymce';
 import { expect } from 'chai';
 import { Fun } from '@ephox/katamari';
+import { Waiter } from '@ephox/agar';
 
 describe('PropTest', () => {
   const containsIDWarning = (logs: unknown[][]) =>
@@ -101,14 +102,16 @@ describe('PropTest', () => {
             initialValue: `text${i}`,
           }));
           fixture.detectChanges();
-          const [ ed1, ed2, ed3, ed4 ] = await waitForEditorsToLoad(fixture);
-          expect(ed1.id).to.equal('my-id-0');
-          expect(ed1.getContent()).to.equal('<p>text0</p>');
-          expect(ed2.id).to.equal('my-id-1');
-          expect(ed2.getContent()).to.equal('<p>text1</p>');
-          expect(ed3.id).to.equal('my-id-2');
-          expect(ed3.getContent()).to.equal('<p>text2</p>');
-          expect(ed4).to.be.undefined;
+          const [ ed1, ed2, ed3, ed4 ] = findAllComponents(fixture, EditorComponent);
+          await Waiter.pTryUntil('All editors to have been initialised', () => {
+            expect(ed1.id).to.equal('my-id-0');
+            expect(ed1.editor?.getContent()).to.equal('<p>text0</p>');
+            expect(ed2.id).to.equal('my-id-1');
+            expect(ed2.editor?.getContent()).to.equal('<p>text1</p>');
+            expect(ed3.id).to.equal('my-id-2');
+            expect(ed3.editor?.getContent()).to.equal('<p>text2</p>');
+            expect(ed4?.editor).to.be.undefined;
+          }, 1000, 10000);
         });
         expect(containsIDWarning(warnings), 'Should not contain an ID warning').to.be.false;
       });
