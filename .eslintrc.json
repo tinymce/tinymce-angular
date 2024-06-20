@@ -45,7 +45,8 @@
     },
     {
       "files": [
-        "**/*Test.ts"
+        "**/*Test.ts",
+        "**/test/ts/**/*.ts"
       ],
       "rules": {
         "max-classes-per-file": "off",
