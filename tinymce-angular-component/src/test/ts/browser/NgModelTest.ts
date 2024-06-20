@@ -3,22 +3,16 @@ import '../alien/InitTestEnvironment';
 
 import { Component } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
-import { Assertions, Waiter, Keyboard, Keys } from '@ephox/agar';
+import { Assertions, Waiter } from '@ephox/agar';
 import { describe, it } from '@ephox/bedrock-client';
-import { SugarElement } from '@ephox/sugar';
 
 import { EditorComponent } from '../../../main/ts/editor/editor.component';
-import { EditorFixture, eachVersionContext, editorHook } from '../alien/TestHooks';
+import { eachVersionContext, editorHook } from '../alien/TestHooks';
+import { fakeTypeInEditor } from '../alien/TestHelpers';
 
 describe('NgModelTest', () => {
   const assertNgModelState = (prop: 'valid' | 'pristine' | 'touched', expected: boolean, ngModel: NgModel) => {
     Assertions.assertEq('assert ngModel ' + prop + ' state', expected, ngModel[prop]);
-  };
-
-  const fakeType = (fixture: EditorFixture<unknown>, str: string) => {
-    fixture.editor.getBody().innerHTML = '<p>' + str + '</p>';
-    Keyboard.keystroke(Keys.space(), {}, SugarElement.fromDom(fixture.editor.getBody()));
-    fixture.detectChanges();
   };
 
   eachVersionContext([ '4', '5', '6', '7' ], () => {
@@ -58,7 +52,7 @@ describe('NgModelTest', () => {
     it('should have correct control flags after interaction', async () => {
       const fixture = await createFixture();
       const ngModel = fixture.ngModel.getOrDie('NgModel not found');
-      fakeType(fixture, 'X');
+      fakeTypeInEditor(fixture, 'X');
       // Should be dirty after user input but remain untouched
       assertNgModelState('pristine', false, ngModel);
       assertNgModelState('touched', false, ngModel);
@@ -71,7 +65,7 @@ describe('NgModelTest', () => {
 
     it('Test outputFormat="text"', async () => {
       const fixture = await createFixture({ outputFormat: 'text' });
-      fakeType(fixture, 'X');
+      fakeTypeInEditor(fixture, 'X');
       Assertions.assertEq(
         'Value bound to content via ngModel should be plain text',
         'X',
@@ -81,7 +75,7 @@ describe('NgModelTest', () => {
 
     it('Test outputFormat="html"', async () => {
       const fixture = await createFixture({ outputFormat: 'html' });
-      fakeType(fixture, 'X');
+      fakeTypeInEditor(fixture, 'X');
       Assertions.assertEq(
         'Value bound to content via ngModel should be html',
         '<p>X</p>',

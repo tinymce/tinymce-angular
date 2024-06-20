@@ -2,6 +2,11 @@ import { Fun, Global, Arr, Strings } from '@ephox/katamari';
 import { Observable, throwError, timeout } from 'rxjs';
 import { ScriptLoader } from '../../../main/ts/utils/ScriptLoader';
 import { Attribute, Remove, SelectorFilter, SugarElement } from '@ephox/sugar';
+import { ComponentFixture } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { EditorComponent } from '../../../main/ts/editor/editor.component';
+import { Editor } from 'tinymce';
+import { Keyboard, Keys } from '@ephox/agar';
 
 export const apiKey = Fun.constant(
   'qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc',
@@ -33,3 +38,9 @@ export const deleteTinymce = () => {
   Arr.each(elements, Remove.remove);
 };
 
+export const fakeTypeInEditor = (fixture: ComponentFixture<unknown>, str: string) => {
+  const editor: Editor = fixture.debugElement.query(By.directive(EditorComponent)).componentInstance.editor!;
+  editor.getBody().innerHTML = '<p>' + str + '</p>';
+  Keyboard.keystroke(Keys.space(), {}, SugarElement.fromDom(editor.getBody()));
+  fixture.detectChanges();
+};
