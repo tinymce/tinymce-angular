@@ -1,119 +1,67 @@
 import '../alien/InitTestEnvironment';
 
-import { Component } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
-import { Chain, Log, Pipeline, Assertions } from '@ephox/agar';
-import { UnitTest } from '@ephox/bedrock-client';
-import { Arr, Strings, Global } from '@ephox/katamari';
-import { SelectorFilter, Attribute, SugarElement, Remove } from '@ephox/sugar';
+import { Assertions } from '@ephox/agar';
+import { describe, it, context, before } from '@ephox/bedrock-client';
+import { Global } from '@ephox/katamari';
 
-import { EditorModule, EditorComponent, TINYMCE_SCRIPT_SRC } from '../../../main/ts/public_api';
-import { ScriptLoader } from '../../../main/ts/utils/ScriptLoader';
+import { EditorComponent, TINYMCE_SCRIPT_SRC } from '../../../main/ts/public_api';
 import { Version } from '../../../main/ts/editor/editor.component';
+import { editorHook, tinymceVersionHook } from '../alien/TestHooks';
+import { Editor } from 'tinymce';
+import { deleteTinymce } from '../alien/TestHelpers';
 
-UnitTest.asynctest('LoadTinyTest', (success, failure) => {
-  const cSetupEditor = (attributes: string[], providers: any[]) => Chain.async<void, void>((_, next) => {
-    @Component({
-      template: `<editor ${attributes.join(' ')}></editor>`
-    })
-    class EditorLoad { }
+describe('LoadTinyTest', () => {
+  const assertTinymceVersion = (version: Version, editor: Editor) => {
+    Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, editor.editorManager.majorVersion);
+    Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, Global.tinymce.majorVersion);
+  };
 
-    TestBed.configureTestingModule({
-      imports: [ EditorModule, FormsModule ],
-      declarations: [ EditorLoad ],
-      providers
-    }).compileComponents();
+  for (const version of [ '4', '5', '6', '7' ] as Version[]) {
+    context(`With local version ${version}`, () => {
+      const createFixture = editorHook(EditorComponent, {
+        providers: [
+          {
+            provide: TINYMCE_SCRIPT_SRC,
+            useValue: `/project/node_modules/tinymce-${version}/tinymce.min.js`,
+          },
+        ],
+      });
 
-    const fixture = TestBed.createComponent(EditorLoad);
-    fixture.detectChanges();
+      before(deleteTinymce);
 
-    const editorDebugElement = fixture.debugElement.query(By.directive(EditorComponent));
-    const editorComponent = editorDebugElement.componentInstance;
-
-    editorComponent.onInit.subscribe(() => {
-      editorComponent.editor.on('SkinLoaded', () => {
-        setTimeout(() => {
-          next();
-        }, 0);
+      it('Should be able to load local version of TinyMCE specified via depdendency injection', async () => {
+        const { editor } = await createFixture();
+        assertTinymceVersion(version, editor);
       });
     });
-  });
 
-  const cDeleteTinymce = Chain.op(() => {
-    ScriptLoader.reinitialize();
+    context(`With version ${version} loaded from miniature`, () => {
+      const createFixture = editorHook(EditorComponent);
+      tinymceVersionHook(version);
 
-    delete Global.tinymce;
-    delete Global.tinyMCE;
+      it('Should be able to load with miniature', async () => {
+        const { editor } = await createFixture();
+        assertTinymceVersion(version, editor);
+      });
+    });
+  }
 
-    const hasTinyUri = (attrName: string) => (elm: SugarElement<Element>) => Attribute.getOpt(elm, attrName).exists((src) => Strings.contains(src, 'tinymce'));
+  for (const version of [ '5', '6', '7' ] as Version[]) {
+    context(`With cloud version ${version}`, () => {
+      const createFixture = editorHook(EditorComponent);
 
-    const elements = Arr.flatten([
-      Arr.filter(SelectorFilter.all('script'), hasTinyUri('src')),
-      Arr.filter(SelectorFilter.all('link'), hasTinyUri('href')),
-    ]);
+      before(deleteTinymce);
 
-    Arr.each(elements, Remove.remove);
-  });
-
-  const cTeardown = Chain.op(() => {
-    TestBed.resetTestingModule();
-  });
-
-  const cAssertTinymceVersion = (version: Version) => Chain.op(() => {
-    Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, Global.tinymce.majorVersion);
-  });
-
-  Pipeline.async({}, [
-    Log.chainsAsStep('Should be able to load local version of TinyMCE specified via depdendency injection', '', [
-      cDeleteTinymce,
-
-      cSetupEditor([], [{ provide: TINYMCE_SCRIPT_SRC, useValue: '/project/node_modules/tinymce-7/tinymce.min.js' }]),
-      cAssertTinymceVersion('7'),
-      cTeardown,
-      cDeleteTinymce,
-
-      cSetupEditor([], [{ provide: TINYMCE_SCRIPT_SRC, useValue: '/project/node_modules/tinymce-6/tinymce.min.js' }]),
-      cAssertTinymceVersion('6'),
-      cTeardown,
-      cDeleteTinymce,
-
-      cSetupEditor([], [{ provide: TINYMCE_SCRIPT_SRC, useValue: '/project/node_modules/tinymce-5/tinymce.min.js' }]),
-      cAssertTinymceVersion('5'),
-      cTeardown,
-      cDeleteTinymce,
-
-      cSetupEditor([], [{ provide: TINYMCE_SCRIPT_SRC, useValue: '/project/node_modules/tinymce-4/tinymce.min.js' }]),
-      cAssertTinymceVersion('4'),
-      cTeardown,
-      cDeleteTinymce,
-    ]),
-    Log.chainsAsStep('Should be able to load TinyMCE 7 from Cloud', '', [
-      cSetupEditor([ 'apiKey="a-fake-api-key"', 'cloudChannel="7"' ], []),
-      cAssertTinymceVersion('7'),
-      Chain.op(() => {
+      it(`Should be able to load TinyMCE ${version} from Cloud`, async () => {
+        const apiKey = 'fake-api-key';
+        const { editor } = await createFixture({ cloudChannel: version, apiKey });
+        assertTinymceVersion(version, editor);
         Assertions.assertEq(
           'TinyMCE should have been loaded from Cloud',
-          'https://cdn.tiny.cloud/1/a-fake-api-key/tinymce/7',
+          `https://cdn.tiny.cloud/1/${apiKey}/tinymce/${version}`,
           Global.tinymce.baseURI.source
         );
-      }),
-      cTeardown,
-      cDeleteTinymce
-    ]),
-    Log.chainsAsStep('Should be able to load TinyMCE 6 from Cloud', '', [
-      cSetupEditor([ 'apiKey="a-fake-api-key"', 'cloudChannel="6"' ], []),
-      cAssertTinymceVersion('6'),
-      Chain.op(() => {
-        Assertions.assertEq(
-          'TinyMCE should have been loaded from Cloud',
-          'https://cdn.tiny.cloud/1/a-fake-api-key/tinymce/6',
-          Global.tinymce.baseURI.source
-        );
-      }),
-      cTeardown,
-      cDeleteTinymce
-    ]),
-  ], success, failure);
+      });
+    });
+  }
 });

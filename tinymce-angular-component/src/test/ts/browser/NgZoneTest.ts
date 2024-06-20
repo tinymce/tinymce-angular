@@ -1,63 +1,42 @@
 import '../alien/InitTestEnvironment';
 
-import { NgZone, Type } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Assertions, Chain, Pipeline, Log } from '@ephox/agar';
-import { UnitTest } from '@ephox/bedrock-client';
-import { VersionLoader } from '@tinymce/miniature';
+import { NgZone } from '@angular/core';
+import { Assertions } from '@ephox/agar';
+import { describe, it } from '@ephox/bedrock-client';
 
-import { EditorComponent } from '../../../main/ts/public_api';
-import { Version } from '../../../main/ts/editor/editor.component';
+import { EditorComponent } from '../../../main/ts/editor/editor.component';
+import { eachVersionContext, fixtureHook } from '../alien/TestHooks';
+import { first } from 'rxjs';
+import { throwTimeout } from '../alien/TestHelpers';
 
-UnitTest.asynctest('NgZoneTest', (success, failure) => {
-  const createComponent = <T>(componentType: Type<T>) => {
-    TestBed.configureTestingModule({
-      imports: [ componentType ]
-    }).compileComponents();
-    return TestBed.createComponent<T>(componentType);
-  };
+describe('NgZoneTest', () => {
+  eachVersionContext([ '4', '5', '6', '7' ], () => {
+    const createFixture = fixtureHook(EditorComponent, { imports: [ EditorComponent ] });
 
-  const cTeardown = Chain.op(() => {
-    TestBed.resetTestingModule();
-  });
-
-  const sTestVersion = (version: Version) => VersionLoader.sWithVersion(
-    version,
-    Log.chainsAsStep('', 'Subscribers to events should rune within NgZone', [
-      Chain.async<void, ComponentFixture<EditorComponent>>((_, next) => {
-        const fixture = createComponent(EditorComponent);
-        fixture.detectChanges();
-        next(fixture);
-      }),
-
-      Chain.async<ComponentFixture<EditorComponent>, ComponentFixture<EditorComponent>>((fixture, next) => {
-        fixture.componentInstance.onInit.subscribe(() => {
+    it('Subscribers to events should run within NgZone', async () => {
+      const fixture = createFixture();
+      const editor = fixture.componentInstance;
+      fixture.detectChanges();
+      await new Promise<void>((resolve) => {
+        editor.onInit.pipe(first(), throwTimeout(10000, 'Timed out waiting for init event')).subscribe(() => {
           Assertions.assertEq('Subscribers to onInit should run within NgZone', true, NgZone.isInAngularZone());
-          fixture.componentInstance.editor?.on('SkinLoaded', () => {
-            setTimeout(() => {
-              next(fixture);
-            }, 0);
-          });
+          resolve();
         });
-      }),
+      });
+    });
 
-      // Lets just test one EventEmitter, if one works all should work
-      Chain.async<ComponentFixture<EditorComponent>, ComponentFixture<EditorComponent>>((fixture, done) => {
-        fixture.componentInstance.onKeyUp.subscribe(() => {
+    // Lets just test one EventEmitter, if one works all should work
+    it('Subscribers to onKeyUp should run within NgZone', async () => {
+      const fixture = createFixture();
+      const editor = fixture.componentInstance;
+      fixture.detectChanges();
+      await new Promise<void>((resolve) => {
+        editor.onKeyUp.pipe(first(), throwTimeout(10000, 'Timed out waiting for key up event')).subscribe(() => {
           Assertions.assertEq('Subscribers to onKeyUp should run within NgZone', true, NgZone.isInAngularZone());
-          done(fixture);
+          resolve();
         });
-        fixture.componentInstance.editor?.fire('keyup');
-      }),
-
-      cTeardown
-    ])
-  );
-
-  Pipeline.async({}, [
-    sTestVersion('4'),
-    sTestVersion('5'),
-    sTestVersion('6'),
-    sTestVersion('7')
-  ], success, failure);
+        editor.editor?.fire('keyup');
+      });
+    });
+  });
 });
