@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Added rxjs ^7.4.0 as a peer dependency. Since last major release now uses rxjs v7 imports. #INT-3306 
+- `id` prop no longer logs a console warning on any use. #INT-3299
 
 ## 8.0.0 - 2024-04-29
 
