@@ -75,6 +75,6 @@
   "dependencies": {
     "tinymce": "^5.10.7"
   },
-  "version": "8.0.1-rc",
+  "version": "8.0.1",
   "name": "@tinymce/tinymce-angular"
 }
