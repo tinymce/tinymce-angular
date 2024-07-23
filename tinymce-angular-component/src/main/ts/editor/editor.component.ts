@@ -70,7 +70,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     if (this._editor && this._editor.initialized) {
       if (typeof this._editor.mode?.set === 'function') {
         this._editor.mode.set(val ? 'readonly' : 'design');
-      } else {
+      } else if ('setMode' in this._editor && typeof this._editor.setMode === 'function') {
         this._editor.setMode(val ? 'readonly' : 'design');
       }
     }
