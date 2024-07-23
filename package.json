@@ -62,6 +62,7 @@
     "rimraf": "^5.0.5",
     "rxjs": "^7.8.1",
     "storybook": "^8.0.4",
+    "tinymce": "^7",
     "tinymce-4": "npm:tinymce@^4",
     "tinymce-5": "npm:tinymce@^5",
     "tinymce-6": "npm:tinymce@^6",
@@ -72,9 +73,6 @@
     "webpack": "^5.91.0",
     "zone.js": "~0.14.4"
   },
-  "dependencies": {
-    "tinymce": "^5.10.7"
-  },
-  "version": "8.0.2-rc",
+  "version": "9.0.0-rc",
   "name": "@tinymce/tinymce-angular"
 }
