@@ -9,7 +9,7 @@ import { EditorComponent } from '../../../main/ts/public_api';
 import { eachVersionContext, editorHook, fixtureHook } from '../alien/TestHooks';
 import { By } from '@angular/platform-browser';
 import { first, firstValueFrom, switchMap } from 'rxjs';
-import { Editor } from 'tinymce';
+import type { Editor } from 'tinymce';
 import { fakeTypeInEditor } from '../alien/TestHelpers';
 
 type FormControlProps = Partial<Record<'touched' | 'pristine' | 'dirty' | 'valid', boolean>>;

@@ -5,7 +5,7 @@ import { Attribute, Remove, SelectorFilter, SugarElement } from '@ephox/sugar';
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { EditorComponent } from '../../../main/ts/editor/editor.component';
-import { Editor } from 'tinymce';
+import type { Editor } from 'tinymce';
 import { Keyboard, Keys } from '@ephox/agar';
 
 export const apiKey = Fun.constant('qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc');

@@ -7,7 +7,7 @@ import { Global } from '@ephox/katamari';
 import { EditorComponent, TINYMCE_SCRIPT_SRC } from '../../../main/ts/public_api';
 import { Version } from '../../../main/ts/editor/editor.component';
 import { editorHook, tinymceVersionHook } from '../alien/TestHooks';
-import { Editor } from 'tinymce';
+import type { Editor } from 'tinymce';
 import { deleteTinymce } from '../alien/TestHelpers';
 
 describe('LoadTinyTest', () => {

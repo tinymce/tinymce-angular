@@ -21,7 +21,7 @@ import { getTinymce } from '../TinyMCE';
 import { listenTinyMCEEvent, bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined } from '../utils/Utils';
 import { EventObj, Events } from './Events';
 import { ScriptLoader } from '../utils/ScriptLoader';
-import { Editor as TinyMCEEditor, TinyMCE } from 'tinymce';
+import type { Editor as TinyMCEEditor, TinyMCE } from 'tinymce';
 
 type EditorOptions = Parameters<TinyMCE['init']>[0];
 
