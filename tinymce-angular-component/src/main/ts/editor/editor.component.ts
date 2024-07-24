@@ -21,7 +21,7 @@ import { getTinymce } from '../TinyMCE';
 import { listenTinyMCEEvent, bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined } from '../utils/Utils';
 import { EventObj, Events } from './Events';
 import { ScriptLoader } from '../utils/ScriptLoader';
-import { Editor as TinyMCEEditor, TinyMCE } from 'tinymce';
+import type { Editor as TinyMCEEditor, TinyMCE } from 'tinymce';
 
 type EditorOptions = Parameters<TinyMCE['init']>[0];
 
@@ -70,7 +70,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     if (this._editor && this._editor.initialized) {
       if (typeof this._editor.mode?.set === 'function') {
         this._editor.mode.set(val ? 'readonly' : 'design');
-      } else {
+      } else if ('setMode' in this._editor && typeof this._editor.setMode === 'function') {
         this._editor.setMode(val ? 'readonly' : 'design');
       }
     }

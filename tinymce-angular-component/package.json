@@ -10,9 +10,12 @@
     "@angular/core": ">=16.0.0",
     "@angular/common": ">=16.0.0",
     "@angular/forms": ">=16.0.0",
-    "rxjs": "^7.4.0"
-  },
-  "dependencies": {
+    "rxjs": "^7.4.0",
     "tinymce": "^7.0.0 || ^6.0.0 || ^5.5.0"
+  },
+  "peerDependenciesMeta": {
+    "tinymce": {
+      "optional": true
+    }
   }
 }

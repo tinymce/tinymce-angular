@@ -9,7 +9,7 @@ import { captureLogs, throwTimeout } from '../alien/TestHelpers';
 import { concatMap, distinct, firstValueFrom, mergeMap, of, toArray } from 'rxjs';
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Editor } from 'tinymce';
+import type { Editor } from 'tinymce';
 import { expect } from 'chai';
 import { Fun } from '@ephox/katamari';
 import { Waiter } from '@ephox/agar';

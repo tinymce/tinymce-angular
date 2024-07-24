@@ -8,7 +8,7 @@ import { Optional, Singleton } from '@ephox/katamari';
 import { VersionLoader } from '@tinymce/miniature';
 import { deleteTinymce, throwTimeout } from './TestHelpers';
 import { FormsModule, ReactiveFormsModule, NgModel } from '@angular/forms';
-import { Editor } from 'tinymce';
+import type { Editor } from 'tinymce';
 
 export const fixtureHook = <T = unknown>(component: Type<T>, moduleDef: TestModuleMetadata) => {
   before(async () => {
