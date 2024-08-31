@@ -70,7 +70,7 @@
     "to-string-loader": "^1.1.5",
     "tslib": "^2.6.2",
     "typescript": "~5.5.4",
-    "webpack": "^5.93.0",
+    "webpack": "^5.94.0",
     "zone.js": "~0.14.8"
   },
   "version": "9.0.0-rc",
