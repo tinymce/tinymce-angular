@@ -4,6 +4,7 @@
 mixedBeehiveFlow(
   testPrefix: 'Tiny-Angular',
   testDirs: [ "tinymce-angular-component/src/test/ts/browser" ],
+  testContainer: [ selenium: [ image: "selenium/standalone-chrome:127.0" ] ],
   platforms: [
     [ browser: 'chrome', headless: true ],
     [ browser: 'firefox', provider: 'aws', buckets: 1 ],
