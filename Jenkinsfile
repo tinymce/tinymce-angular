@@ -4,7 +4,6 @@
 mixedBeehiveFlow(
   testPrefix: 'Tiny-Angular',
   testDirs: [ "tinymce-angular-component/src/test/ts/browser" ],
-  testContainer: [ selenium: [ image: "selenium/standalone-chrome:127.0" ] ],
   platforms: [
     [ browser: 'chrome', headless: true ],
     [ browser: 'firefox', provider: 'aws', buckets: 1 ],
@@ -14,7 +13,8 @@ mixedBeehiveFlow(
     tag: '20',
     resourceRequestMemory: '4Gi',
     resourceLimitCpu: '4',
-    resourceLimitMemory: '4Gi'
+    resourceLimitMemory: '4Gi',
+    selenium: [ image: "selenium/standalone-chrome:127.0" ]
   ],
   publishContainer: [
     resourceRequestMemory: '4Gi',
