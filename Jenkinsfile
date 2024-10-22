@@ -13,7 +13,8 @@ mixedBeehiveFlow(
     tag: '20',
     resourceRequestMemory: '4Gi',
     resourceLimitCpu: '4',
-    resourceLimitMemory: '4Gi'
+    resourceLimitMemory: '4Gi',
+    selenium: [ image: "selenium/standalone-chrome:127.0" ]
   ],
   publishContainer: [
     resourceRequestMemory: '4Gi',
