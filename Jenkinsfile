@@ -14,7 +14,7 @@ mixedBeehiveFlow(
     resourceRequestMemory: '4Gi',
     resourceLimitCpu: '4',
     resourceLimitMemory: '4Gi',
-    selenium: [ image: "selenium/standalone-chrome:127.0" ]
+    selenium: [ image: tinyAws.getPullThroughCacheImage("selenium/standalone-chrome", "127.0") ]
   ],
   publishContainer: [
     resourceRequestMemory: '4Gi',
