@@ -12,6 +12,7 @@ import { HasEventTargetAddRemove } from 'rxjs/internal/observable/fromEvent';
 
 import { EditorComponent } from '../editor/editor.component';
 import { validEvents, Events } from '../editor/Events';
+import { Editor } from 'tinymce';
 
 // Caretaker note: `fromEvent` supports passing JQuery-style event targets, the editor has `on` and `off` methods which
 // will be invoked upon subscription and teardown.
@@ -47,10 +48,10 @@ const getValidEvents = (ctx: EditorComponent): (keyof Events)[] => {
 };
 
 const parseStringProperty = (property: string | string[] | undefined, defaultValue: (keyof Events)[]): string[] => {
-  if ( typeof property === 'string') {
+  if (typeof property === 'string') {
     return property.split(',').map((value) => value.trim());
   }
-  if ( Array.isArray(property)) {
+  if (Array.isArray(property)) {
     return property;
   }
   return defaultValue;
@@ -91,6 +92,14 @@ const isObserved = (o: Subject<unknown>): boolean =>
   // checking if a subject has observers.
   o.observed || o.observers?.length > 0;
 
+const setMode = (editor: Editor, mode: 'readonly' | 'design') => {
+  if (typeof editor.mode?.set === 'function') {
+    editor.mode.set(mode);
+  } else if ('setMode' in editor && typeof editor.setMode === 'function') {
+    editor.setMode(mode);
+  }
+};
+
 export {
   listenTinyMCEEvent,
   bindHandlers,
@@ -99,5 +108,6 @@ export {
   normalizePluginArray,
   mergePlugins,
   noop,
-  isNullOrUndefined
+  isNullOrUndefined,
+  setMode
 };
