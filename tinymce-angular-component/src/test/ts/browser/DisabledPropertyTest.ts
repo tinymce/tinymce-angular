@@ -52,7 +52,7 @@ describe('DisabledPropertyTest', () => {
     });
   });
 
-  eachVersionContext([ '7.6.0' ], () => {
+  eachVersionContext([ '7' ], () => {
     const createFixture = editorHook(EditorComponent);
 
     it(`Component 'disabled' property is mapped to editor 'disabled' property`, async () => {
