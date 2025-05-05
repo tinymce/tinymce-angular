@@ -15,6 +15,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContainerComponent, ContentProjectionComponent } from './contentprojection/ContentProjection.component';
 import { BindingComponent } from './data-binding/DataBinding.component';
+import { ReadonlyComponent } from './readonly/Readonly.component';
 
 const meta: Meta = {
   component: EditorComponent,
@@ -134,6 +135,20 @@ export const DisablingStory: StoryObj<EditorComponent> = {
   }),
   parameters: {
     notes: 'Example of disabling/enabling the editor component'
+  }
+};
+
+export const ReadonlyStory: StoryObj<EditorComponent> = {
+  name: 'Readonly',
+  render: () => ({
+    moduleMetadata: {
+      imports: [ ReactiveFormsModule, FormsModule ],
+      declarations: [ ReadonlyComponent ],
+    },
+    template: `<readonly/>`
+  }),
+  parameters: {
+    notes: 'Example of toggling readonly state in the editor component'
   }
 };
 

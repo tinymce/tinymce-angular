@@ -66,6 +66,18 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input() public allowedEvents?: string | string[];
   @Input() public ignoreEvents?: string | string[];
   @Input()
+  public set readonly(val) {
+    this._readonly = val;
+    if (this._editor && this._editor.initialized) {
+      setMode(this._editor, val ? 'readonly' : 'design');
+    }
+  }
+
+  public get readonly() {
+    return this._readonly;
+  }
+
+  @Input()
   public set disabled(val) {
     this._disabled = val;
     if (this._editor && this._editor.initialized) {
@@ -90,6 +102,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   private _elementRef: ElementRef;
   private _element?: HTMLElement;
   private _disabled?: boolean;
+  private _readonly?: boolean;
   private _editor?: TinyMCEEditor;
 
   private onTouchedCallback = noop;
@@ -177,7 +190,10 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       selector: undefined,
       target: this._element,
       inline: this.inline,
-      ...( DisabledUtils.isDisabledOptionSupported() ? { disabled: this.disabled } : { readonly: this.disabled } ),
+      ...( DisabledUtils.isDisabledOptionSupported()
+        ? { disabled: this.disabled, readonly: this.readonly }
+        : { readonly: this.disabled || this.readonly }
+      ),
       license_key: this.licenseKey,
       plugins: mergePlugins((this.init && this.init.plugins) as string, this.plugins),
       toolbar: this.toolbar || (this.init && this.init.toolbar),
