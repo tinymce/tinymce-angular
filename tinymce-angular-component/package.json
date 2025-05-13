@@ -6,9 +6,6 @@
   "author": "Ephox Corporation DBA Tiny Technologies, Inc.",
   "license": "MIT",
   "private": false,
-  "dependencies": {
-    "@tinymce/miniature": "^6.0.0"
-  },
   "peerDependencies": {
     "@angular/core": ">=16.0.0",
     "@angular/common": ">=16.0.0",
