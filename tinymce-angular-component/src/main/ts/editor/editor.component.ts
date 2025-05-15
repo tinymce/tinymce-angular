@@ -18,7 +18,8 @@ import {
 import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { getTinymce } from '../TinyMCE';
-import { listenTinyMCEEvent, bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined } from '../utils/Utils';
+import { listenTinyMCEEvent, bindHandlers, isTextarea, mergePlugins, uuid, noop, isNullOrUndefined, setMode } from '../utils/Utils';
+import * as DisabledUtils from '../utils/DisabledUtils';
 import { EventObj, Events } from './Events';
 import { ScriptLoader } from '../utils/ScriptLoader';
 import type { Editor as TinyMCEEditor, TinyMCE } from 'tinymce';
@@ -65,13 +66,25 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input() public allowedEvents?: string | string[];
   @Input() public ignoreEvents?: string | string[];
   @Input()
+  public set readonly(val) {
+    this._readonly = val;
+    if (this._editor && this._editor.initialized) {
+      setMode(this._editor, val ? 'readonly' : 'design');
+    }
+  }
+
+  public get readonly() {
+    return this._readonly;
+  }
+
+  @Input()
   public set disabled(val) {
     this._disabled = val;
     if (this._editor && this._editor.initialized) {
-      if (typeof this._editor.mode?.set === 'function') {
-        this._editor.mode.set(val ? 'readonly' : 'design');
-      } else if ('setMode' in this._editor && typeof this._editor.setMode === 'function') {
-        this._editor.setMode(val ? 'readonly' : 'design');
+      if (DisabledUtils.isDisabledOptionSupported()) {
+        this._editor.options.set('disabled', val ?? false);
+      } else {
+        setMode(this._editor, val ? 'readonly' : 'design');
       }
     }
   }
@@ -89,6 +102,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   private _elementRef: ElementRef;
   private _element?: HTMLElement;
   private _disabled?: boolean;
+  private _readonly?: boolean;
   private _editor?: TinyMCEEditor;
 
   private onTouchedCallback = noop;
@@ -176,7 +190,10 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       selector: undefined,
       target: this._element,
       inline: this.inline,
-      readonly: this.disabled,
+      ...( DisabledUtils.isDisabledOptionSupported()
+        ? { disabled: this.disabled, readonly: this.readonly }
+        : { readonly: this.disabled || this.readonly }
+      ),
       license_key: this.licenseKey,
       plugins: mergePlugins((this.init && this.init.plugins) as string, this.plugins),
       toolbar: this.toolbar || (this.init && this.init.toolbar),

@@ -6,12 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Added 'readonly' property. #TINY-11907
+
 ### Fixed
 - Updated dependencies. #INT-3324
 
 ### Changed
 - Moved tinymce dependency to be a optional peer dependency. #INT-3324
 - Updated tinymce dev dependency to version ^7 from 5.10.7 so now all internal tinymce types point to version 7. #INT-3324
+- The 'disabled' property is now mapped to editor's 'disabled' option if Tiny >= 7.6.0 is used. #TINY-11907
 
 ## 8.0.1 - 2024-07-12
 

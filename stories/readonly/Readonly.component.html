@@ -1,0 +1,7 @@
+<button (click)="toggleReadonly()">{{ isReadonly ? 'Escape readonly' : 'Enter readonly' }}</button>
+<editor
+  [apiKey]="apiKey"
+  [readonly]="isReadonly"
+  [initialValue]="initialValue"
+  [init]="{ height: 300 }"
+/>
