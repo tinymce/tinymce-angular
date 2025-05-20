@@ -2,9 +2,12 @@ import { Assertions } from '@ephox/agar';
 import '../alien/InitTestEnvironment';
 
 import { EditorComponent } from '../../../main/ts/public_api';
-import { describe, it } from '@ephox/bedrock-client';
+import { beforeEach, describe, it } from '@ephox/bedrock-client';
 import { eachVersionContext, editorHook } from '../alien/TestHooks';
 import { Editor } from 'tinymce';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
 
 describe('DisabledPropertyTest', () => {
   const getMode = (editor: Editor) => {
@@ -102,6 +105,37 @@ describe('DisabledPropertyTest', () => {
       fixture.componentRef.setInput('readonly', false);
       fixture.detectChanges();
       assertDesignMode(editor);
+    });
+  });
+
+  eachVersionContext([ '7' ], () => {
+    @Component({
+      imports: [ FormsModule, EditorComponent ],
+      template: `<editor [(ngModel)]="text" [disabled]="true" />`,
+      standalone: true,
+      selector: 'test-host-component'
+    })
+    class TestHostComponent {
+      public text = '<h1>Hello World</h1>';
+      @ViewChild(EditorComponent) public editorRef!: EditorComponent;
+    }
+
+    let fixture: ComponentFixture<TestHostComponent>;
+    let testHost: TestHostComponent;
+
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [ TestHostComponent ]
+      }).compileComponents();
+
+      fixture = TestBed.createComponent(TestHostComponent);
+      testHost = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('INT-3328: disabled property should work with [ngModel] when TinyMCE has been loaded before editor component has been created', () => {
+      const tinyEditor = testHost.editorRef.editor;
+      assertDisabledOption(tinyEditor!, true);
     });
   });
 });
