@@ -68,7 +68,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input()
   public set readonly(val) {
     this._readonly = val;
-    if (this._editor && this._editor.initialized) {
+    if (this._editor) {
       setMode(this._editor, val ? 'readonly' : 'design');
     }
   }
@@ -80,7 +80,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   @Input()
   public set disabled(val) {
     this._disabled = val;
-    if (this._editor && this._editor.initialized) {
+    if (this._editor) {
       if (DisabledUtils.isDisabledOptionSupported()) {
         this._editor.options.set('disabled', val ?? false);
       } else {
