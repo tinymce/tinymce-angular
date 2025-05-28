@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Updated dependencies. #INT-3324
+- Fixed a bug where `[disabled]` property was ignored while using `[ngModel]`. #INT-3328
 
 ### Changed
 - Moved tinymce dependency to be a optional peer dependency. #INT-3324

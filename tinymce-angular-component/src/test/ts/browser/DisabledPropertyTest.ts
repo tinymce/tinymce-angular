@@ -2,9 +2,14 @@ import { Assertions } from '@ephox/agar';
 import '../alien/InitTestEnvironment';
 
 import { EditorComponent } from '../../../main/ts/public_api';
-import { describe, it } from '@ephox/bedrock-client';
+import { after, before, context, describe, it } from '@ephox/bedrock-client';
 import { eachVersionContext, editorHook } from '../alien/TestHooks';
 import { Editor } from 'tinymce';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { VersionLoader } from '@tinymce/miniature';
+import { deleteTinymce } from '../alien/TestHelpers';
 
 describe('DisabledPropertyTest', () => {
   const getMode = (editor: Editor) => {
@@ -102,6 +107,57 @@ describe('DisabledPropertyTest', () => {
       fixture.componentRef.setInput('readonly', false);
       fixture.detectChanges();
       assertDesignMode(editor);
+    });
+  });
+
+  context('With version 7', () => {
+    @Component({
+      imports: [ FormsModule, EditorComponent ],
+      template: `<editor [(ngModel)]="text" [disabled]="true" />`,
+      standalone: true,
+      selector: 'test-host-component'
+    })
+    class TestHostComponent {
+      public text = '<h1>Hello World</h1>';
+      @ViewChild(EditorComponent) public editorRef!: EditorComponent;
+    }
+
+    const waitForEditorInitialized = (editor: Editor) => new Promise<void>((resolve) => {
+      if (editor.initialized) {
+        resolve();
+      }
+      editor.once('init', () => resolve());
+    });
+
+    let fixture: ComponentFixture<TestHostComponent>;
+    let testHost: TestHostComponent;
+    let tinyEditor: Editor;
+
+    before(async () => {
+      await VersionLoader.pLoadVersion('7');
+
+      await TestBed.configureTestingModule({
+        imports: [ TestHostComponent ]
+      }).compileComponents();
+
+      fixture = TestBed.createComponent(TestHostComponent);
+      testHost = fixture.componentInstance;
+      fixture.detectChanges();
+      tinyEditor = testHost.editorRef.editor!;
+    });
+
+    after(() => {
+      deleteTinymce();
+    });
+
+    it('INT-3328: disabled property should work with [ngModel] when TinyMCE has been loaded before editor component has been created', async () => {
+      assertDisabledOption(tinyEditor!, true);
+      /*
+        I have to wait until the editor is fully initialized before using deleteTinymce() in after block.
+        There's for example theme.js script that starts to load after editor instance has been created.
+        If I remove tinymce from window too soon the theme.js will fail alongside with this test case.
+      */
+      await waitForEditorInitialized(tinyEditor!);
     });
   });
 });
