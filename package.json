@@ -42,7 +42,6 @@
     "@storybook/test": "^8.2.5",
     "@tinymce/beehive-flow": "^0.19.0",
     "@tinymce/eslint-plugin": "^2.3.1",
-    "@tinymce/miniature": "^6.0.0",
     "@types/chai": "^4.3.16",
     "@types/node": "^20.14.12",
     "autoprefixer": "^10.4.19",
@@ -75,5 +74,8 @@
     "zone.js": "~0.14.8"
   },
   "version": "9.0.0",
-  "name": "@tinymce/tinymce-angular"
+  "name": "@tinymce/tinymce-angular",
+  "dependencies": {
+    "@tinymce/miniature": "^6.0.0"
+  }
 }
