@@ -81,7 +81,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   public set disabled(val) {
     this._disabled = val;
     if (this._editor) {
-      if (DisabledUtils.isDisabledOptionSupported()) {
+      if (DisabledUtils.isDisabledOptionSupported(this._editor)) {
         this._editor.options.set('disabled', val ?? false);
       } else {
         setMode(this._editor, val ? 'readonly' : 'design');
@@ -190,10 +190,8 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       selector: undefined,
       target: this._element,
       inline: this.inline,
-      ...( DisabledUtils.isDisabledOptionSupported()
-        ? { disabled: this.disabled, readonly: this.readonly }
-        : { readonly: this.disabled || this.readonly }
-      ),
+      disabled: this.disabled,
+      readonly: this.readonly,
       license_key: this.licenseKey,
       plugins: mergePlugins((this.init && this.init.plugins) as string, this.plugins),
       toolbar: this.toolbar || (this.init && this.init.toolbar),
@@ -208,6 +206,14 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
         if (this.init && typeof this.init.setup === 'function') {
           this.init.setup(editor);
+        }
+
+        if (this.disabled === true) {
+          if (DisabledUtils.isDisabledOptionSupported(editor)) {
+            this._editor.options.set('disabled', this.disabled);
+          } else {
+            this._editor.mode.set('readonly');
+          }
         }
       }
     };

@@ -23,15 +23,15 @@ describe('DisabledPropertyTest', () => {
   const assertDisabledOption = (editor: Editor, expected: boolean) =>
     Assertions.assertEq(`TinyMCE should have disabled option set to ${expected}`, expected, editor.options.get('disabled'));
 
-  eachVersionContext([ '7.5.0' ], () => {
+  eachVersionContext([ '5', '6', '7.5.0', ], () => {
     const createFixture = editorHook(EditorComponent);
 
-    it(`Component 'disabled' property is mapped to editor 'readonly' property`, async () => {
+    it(`Component 'disabled' property is mapped to editor 'readonly' mode`, async () => {
       const { editor } = await createFixture({ disabled: true });
       assertReadonlyMode(editor);
     });
 
-    it(`Toggling component's 'disabled' property is mapped to editor 'readonly' property`, async () => {
+    it(`Toggling component's 'disabled' property is mapped to editor 'readonly' mode`, async () => {
       const fixture = await createFixture();
       const { editor } = fixture;
 
@@ -42,6 +42,26 @@ describe('DisabledPropertyTest', () => {
       assertReadonlyMode(editor);
 
       fixture.componentRef.setInput('disabled', false);
+      fixture.detectChanges();
+      assertDesignMode(editor);
+    });
+
+    it(`Setting the 'readonly' property causing readonly mode`, async () => {
+      const { editor } = await createFixture({ readonly: true });
+      assertReadonlyMode(editor);
+    });
+
+    it(`Toggling component's 'readonly' property is mapped to editor 'readonly' mode`, async () => {
+      const fixture = await createFixture();
+      const { editor } = fixture;
+
+      assertDesignMode(editor);
+
+      fixture.componentRef.setInput('readonly', true);
+      fixture.detectChanges();
+      assertReadonlyMode(editor);
+
+      fixture.componentRef.setInput('readonly', false);
       fixture.detectChanges();
       assertDesignMode(editor);
     });
@@ -67,7 +87,7 @@ describe('DisabledPropertyTest', () => {
       assertDesignMode(editor);
     });
 
-    it(`Toggling component's 'disabled' property is mapped to editor 'disabled' property`, async () => {
+    it(`Toggling component's 'disabled' property is mapped to editor 'disabled' option`, async () => {
       const fixture = await createFixture();
       const { editor } = fixture;
 
@@ -83,30 +103,6 @@ describe('DisabledPropertyTest', () => {
       fixture.detectChanges();
       assertDesignMode(editor);
       assertDisabledOption(editor, false);
-    });
-  });
-
-  eachVersionContext([ '4', '5', '6', '7' ], () => {
-    const createFixture = editorHook(EditorComponent);
-
-    it(`Setting the 'readonly' property causing readonly mode`, async () => {
-      const { editor } = await createFixture({ readonly: true });
-      assertReadonlyMode(editor);
-    });
-
-    it(`Toggling component's 'readonly' property is mapped to editor 'readonly' mode`, async () => {
-      const fixture = await createFixture();
-      const { editor } = fixture;
-
-      assertDesignMode(editor);
-
-      fixture.componentRef.setInput('readonly', true);
-      fixture.detectChanges();
-      assertReadonlyMode(editor);
-
-      fixture.componentRef.setInput('readonly', false);
-      fixture.detectChanges();
-      assertDesignMode(editor);
     });
   });
 
