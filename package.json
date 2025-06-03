@@ -74,6 +74,6 @@
     "webpack": "^5.95.0",
     "zone.js": "~0.14.8"
   },
-  "version": "9.0.0",
+  "version": "9.0.1-rc",
   "name": "@tinymce/tinymce-angular"
 }
