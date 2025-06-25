@@ -16,7 +16,7 @@ describe('EventBlacklistingTest', () => {
       tap(() => Assertions.assertEq('Subscribers to events should run within NgZone', true, NgZone.isInAngularZone()))
     );
 
-  eachVersionContext([ '4', '5', '6', '7' ], () => {
+  eachVersionContext([ '4', '5', '6', '7', '8' ], () => {
     const createFixture = editorHook(EditorComponent);
 
     it('Events should be bound when allowed', async () => {

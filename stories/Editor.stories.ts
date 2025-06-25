@@ -32,7 +32,6 @@ export const IframeStory: StoryObj<EditorComponent> = {
       height: 300,
       plugins: 'help',
     },
-    cloudChannel: '6-dev',
   }
 };
 
@@ -44,7 +43,7 @@ export const InlineStory: StoryObj<EditorComponent> = {
         <editor apiKey="${apiKey}" inline initialValue='${sampleContent}'></editor>
       </div>
     `
-  }),
+  })
 };
 
 export const EventBindingStory: StoryObj<EditorComponent> = {
@@ -55,8 +54,7 @@ export const EventBindingStory: StoryObj<EditorComponent> = {
       declarations: [ EventBindingComponent ],
     },
     template: `<event-binding/>`
-  }),
-
+  })
 };
 
 export const EventForwardingStory: StoryObj<EditorComponent> = {
