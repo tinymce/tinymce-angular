@@ -23,7 +23,7 @@ describe('DisabledPropertyTest', () => {
   const assertDisabledOption = (editor: Editor, expected: boolean) =>
     Assertions.assertEq(`TinyMCE should have disabled option set to ${expected}`, expected, editor.options.get('disabled'));
 
-  eachVersionContext([ '5', '6', '7.5.0', ], () => {
+  eachVersionContext([ '5', '6', '7.5.0' ], () => {
     const createFixture = editorHook(EditorComponent);
 
     it(`Component 'disabled' property is mapped to editor 'readonly' mode`, async () => {
@@ -77,7 +77,7 @@ describe('DisabledPropertyTest', () => {
     });
   });
 
-  eachVersionContext([ '7' ], () => {
+  eachVersionContext([ '7', '8' ], () => {
     const createFixture = editorHook(EditorComponent);
 
     it(`Component 'disabled' property is mapped to editor 'disabled' property`, async () => {

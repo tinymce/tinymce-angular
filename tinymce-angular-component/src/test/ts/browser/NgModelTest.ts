@@ -15,7 +15,7 @@ describe('NgModelTest', () => {
     Assertions.assertEq('assert ngModel ' + prop + ' state', expected, ngModel[prop]);
   };
 
-  eachVersionContext([ '4', '5', '6', '7' ], () => {
+  eachVersionContext([ '4', '5', '6', '7', '8' ], () => {
     @Component({
       standalone: true,
       imports: [ EditorComponent, FormsModule ],
