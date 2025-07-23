@@ -88,7 +88,7 @@ describe('DisabledPropertyTest', () => {
     });
 
     it(`Toggling component's 'disabled' property is mapped to editor 'disabled' option`, async () => {
-      const fixture = await createFixture();
+      const fixture = await createFixture({});
       const { editor } = fixture;
 
       assertDesignMode(editor);
