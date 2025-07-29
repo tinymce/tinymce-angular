@@ -16,7 +16,7 @@ describe('LoadTinyTest', () => {
     Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, Global.tinymce.majorVersion);
   };
 
-  for (const version of [ '4', '5', '6', '7' ] as Version[]) {
+  for (const version of [ '4', '5', '6', '7', '8' ] as Version[]) {
     context(`With local version ${version}`, () => {
       const createFixture = editorHook(EditorComponent, {
         providers: [
@@ -29,7 +29,7 @@ describe('LoadTinyTest', () => {
 
       before(deleteTinymce);
 
-      it('Should be able to load local version of TinyMCE specified via depdendency injection', async () => {
+      it('Should be able to load local version of TinyMCE specified via dependency injection', async () => {
         const { editor } = await createFixture();
         assertTinymceVersion(version, editor);
       });
@@ -46,7 +46,7 @@ describe('LoadTinyTest', () => {
     });
   }
 
-  for (const version of [ '5', '6', '7' ] as Version[]) {
+  for (const version of [ '5', '6', '7', '8' ] as Version[]) {
     context(`With cloud version ${version}`, () => {
       const createFixture = editorHook(EditorComponent);
 

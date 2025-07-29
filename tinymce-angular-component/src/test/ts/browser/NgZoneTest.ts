@@ -10,7 +10,7 @@ import { first } from 'rxjs';
 import { throwTimeout } from '../alien/TestHelpers';
 
 describe('NgZoneTest', () => {
-  eachVersionContext([ '4', '5', '6', '7' ], () => {
+  eachVersionContext([ '4', '5', '6', '7', '8' ], () => {
     const createFixture = fixtureHook(EditorComponent, { imports: [ EditorComponent ] });
 
     it('Subscribers to events should run within NgZone', async () => {

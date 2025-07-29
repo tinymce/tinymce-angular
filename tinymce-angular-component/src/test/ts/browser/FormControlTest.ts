@@ -21,7 +21,7 @@ describe('FormControlTest', () => {
     }
   };
 
-  eachVersionContext([ '4', '5', '6', '7' ], () => {
+  eachVersionContext([ '4', '5', '6', '7', '8' ], () => {
     [ ChangeDetectionStrategy.Default, ChangeDetectionStrategy.OnPush ].forEach((changeDetection) => {
       context(`[formControl] with change detection: ${changeDetection}`, () => {
         @Component({
@@ -59,7 +59,7 @@ describe('FormControlTest', () => {
           imports: [ EditorComponent, ReactiveFormsModule ],
           template: `
             <form [formGroup]="form">
-              <editor formControlName="editor" />
+              <editor formControlName="editor" licenseKey="gpl" />
               <button #resetBtn type="reset">Reset form</button>
               <button #submitBtn [disabled]="form.invalid" type="submit">Submit form</button>
             </form>
