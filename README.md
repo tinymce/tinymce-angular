@@ -4,9 +4,9 @@
 
 This package is a thin wrapper around [TinyMCE](https://github.com/tinymce/tinymce) to make it easier to use in an Angular application.
 
-* If you need detailed documentation on TinyMCE, see: [TinyMCE Documentation](https://www.tiny.cloud/docs/tinymce/latest/).
-* For the TinyMCE Angular Quick Start, see: [TinyMCE Documentation - Angular Integration](https://www.tiny.cloud/docs/tinymce/latest/angular-cloud/).
-* For the TinyMCE Angular Technical Reference, see: [TinyMCE Documentation - TinyMCE Angular Technical Reference](https://www.tiny.cloud/docs/tinymce/latest/angular-ref/).
+* If you need detailed documentation on TinyMCE, see: [TinyMCE Documentation](https://www.tiny.cloud/docs/tinymce/8/).
+* For the TinyMCE Angular Quick Start, see: [TinyMCE Documentation - Angular Integration](https://www.tiny.cloud/docs/tinymce/8/angular-cloud/).
+* For the TinyMCE Angular Technical Reference, see: [TinyMCE Documentation - TinyMCE Angular Technical Reference](https://www.tiny.cloud/docs/tinymce/8/angular-ref/).
 * For our quick demos, check out the TinyMCE Angular [Storybook](https://tinymce.github.io/tinymce-angular/).
 
 ### Support
