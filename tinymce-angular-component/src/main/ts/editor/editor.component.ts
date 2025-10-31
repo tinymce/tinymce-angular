@@ -53,7 +53,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   @Input() public cloudChannel: Version = '8';
   @Input() public apiKey = 'no-api-key';
-  @Input() public licenseKey?: string;
+  @Input() public licenseKey = 'gpl';
   @Input() public init?: EditorOptions;
   @Input() public id = '';
   @Input() public initialValue?: string;

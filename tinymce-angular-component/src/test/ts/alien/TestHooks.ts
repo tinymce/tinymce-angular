@@ -62,7 +62,7 @@ export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModul
           .map((v): EditorComponent => v.componentInstance)
           .getOrDie('EditorComponent instance not found');
 
-    for (const [ key, value ] of Object.entries({ ...props, licenseKey: 'gpl' })) {
+    for (const [ key, value ] of Object.entries({ ...props })) {
       (editorComponent as any)[key] = value;
     }
 
