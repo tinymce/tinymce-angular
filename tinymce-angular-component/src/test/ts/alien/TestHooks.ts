@@ -35,10 +35,10 @@ export interface EditorFixture<T> extends ComponentFixture<T> {
 
 export type CreateEditorFixture<T> = (
   props?: Partial<
-  Omit<
-  EditorComponent,
-    `${'on' | 'ng' | 'register' | 'set' | 'write'}${string}` | 'createElement' | 'initialise' | 'editor'
-  >
+    Omit<
+      EditorComponent,
+      `${'on' | 'ng' | 'register' | 'set' | 'write'}${string}` | 'createElement' | 'initialise' | 'editor'
+    >
   >
 ) => Promise<EditorFixture<T>>;
 

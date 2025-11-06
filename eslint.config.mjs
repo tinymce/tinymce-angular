@@ -30,7 +30,8 @@ export default defineConfig([
       '@tinymce/prefer-fun': 'off',
       '@tinymce/prefer-fun': 'off',
       'no-underscore-dangle': 'off',
-      '@typescript-eslint/member-ordering': 'off'
+      '@typescript-eslint/member-ordering': 'off',
+      '@typescript-eslint/parameter-properties': 'off'
     }
   },
   {

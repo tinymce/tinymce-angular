@@ -59,7 +59,8 @@ describe('PropTest', () => {
           const [ ed ] = await waitForEditorsToLoad(fixture);
           expect(ed.id).to.equal('my-id');
         });
-        expect(containsIDWarning(warnings), 'Should not contain an ID warning').to.be.false;
+
+        expect(containsIDWarning(warnings) === false, 'Should not contain an ID warning');
       });
     });
 
@@ -89,9 +90,9 @@ describe('PropTest', () => {
           const [ ed1, ed2 ] = await waitForEditorsToLoad(fixture);
           expect(ed1.id).to.equal('my-id-0');
           expect(ed1.getContent()).to.equal('<p>text1</p>');
-          expect(ed2).to.be.undefined;
+          expect(ed2).to.equal(undefined);
         });
-        expect(containsIDWarning(warnings), 'Should contain an ID warning').to.be.true;
+        expect(containsIDWarning(warnings) === true, 'Should contain an ID warning');
       });
 
       it('INT-3299: creating more than one editor with different IDs does not log a warning', async () => {
@@ -110,10 +111,10 @@ describe('PropTest', () => {
             expect(ed2.editor?.getContent()).to.equal('<p>text1</p>');
             expect(ed3.id).to.equal('my-id-2');
             expect(ed3.editor?.getContent()).to.equal('<p>text2</p>');
-            expect(ed4?.editor).to.be.undefined;
+            expect(ed4?.editor).to.equal(undefined);
           }, 1000, 10000);
         });
-        expect(containsIDWarning(warnings), 'Should not contain an ID warning').to.be.false;
+        expect(containsIDWarning(warnings), 'Should not contain an ID warning').to.equal(false);
       });
     });
   });

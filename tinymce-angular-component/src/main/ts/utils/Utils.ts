@@ -82,7 +82,6 @@ const normalizePluginArray = (plugins?: string | string[]): string[] => {
 const mergePlugins = (initPlugins: string | string[], inputPlugins?: string | string[]) =>
   normalizePluginArray(initPlugins).concat(normalizePluginArray(inputPlugins));
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop: (...args: any[]) => void = () => { };
 
 const isNullOrUndefined = (value: any): value is null | undefined => value === null || value === undefined;
