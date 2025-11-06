@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/parameter-properties */
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import {
   AfterViewInit,
