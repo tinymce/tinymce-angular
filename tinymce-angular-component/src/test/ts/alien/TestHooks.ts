@@ -77,7 +77,7 @@ export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModul
               if (editor.initialized) {
                 resolve(editor);
               }
-              editor.once('SkinLoaded', () => resolve(editor));
+              editor.once( 'init', () => resolve(editor));
             })
         ),
         map(
