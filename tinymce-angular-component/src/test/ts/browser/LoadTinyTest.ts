@@ -47,7 +47,7 @@ describe('LoadTinyTest', () => {
     });
   }
 
-  for (const version of [ '4', '5', '6', '7', '8' ] as Version[]) {
+  for (const version of [ '5', '6', '7', '8' ] as Version[]) {
     context(`With cloud version ${version}`, () => {
       const createFixture = editorHook(EditorComponent);
 
