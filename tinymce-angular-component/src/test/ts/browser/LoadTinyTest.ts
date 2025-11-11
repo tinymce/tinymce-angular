@@ -8,9 +8,10 @@ import { EditorComponent, TINYMCE_SCRIPT_SRC } from '../../../main/ts/public_api
 import { Version } from '../../../main/ts/editor/editor.component';
 import { editorHook, tinymceVersionHook } from '../alien/TestHooks';
 import type { Editor } from 'tinymce';
-import { deleteTinymce } from '../alien/TestHelpers';
+import { apiKey, deleteTinymce } from '../alien/TestHelpers';
 
 describe('LoadTinyTest', () => {
+  const key = apiKey();
   const assertTinymceVersion = (version: Version, editor: Editor) => {
     Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, editor.editorManager.majorVersion);
     Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, Global.tinymce.majorVersion);
@@ -53,12 +54,11 @@ describe('LoadTinyTest', () => {
       before(deleteTinymce);
 
       it(`Should be able to load TinyMCE ${version} from Cloud`, async () => {
-        const apiKey = 'fake-api-key';
-        const { editor } = await createFixture({ cloudChannel: version, apiKey });
+        const { editor } = await createFixture({ cloudChannel: version, apiKey: key });
         assertTinymceVersion(version, editor);
         Assertions.assertEq(
           'TinyMCE should have been loaded from Cloud',
-          `https://cdn.tiny.cloud/1/${apiKey}/tinymce/${version}`,
+          `https://cdn.tiny.cloud/1/${key}/tinymce/${version}`,
           Global.tinymce.baseURI.source
         );
       });

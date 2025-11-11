@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-parameter-properties */
+/* eslint-disable @typescript-eslint/parameter-properties */
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import {
   AfterViewInit,
@@ -114,7 +114,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     elementRef: ElementRef,
     ngZone: NgZone,
     private cdRef: ChangeDetectorRef,
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: object,
     @Optional() @Inject(TINYMCE_SCRIPT_SRC) private tinymceScriptSrc?: string
   ) {
     super();

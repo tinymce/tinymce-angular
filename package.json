@@ -41,7 +41,7 @@
     "@storybook/blocks": "^8.2.5",
     "@storybook/test": "^8.2.5",
     "@tinymce/beehive-flow": "^0.19.0",
-    "@tinymce/eslint-plugin": "^2.3.1",
+    "@tinymce/eslint-plugin": "^3.0.0",
     "@tinymce/miniature": "^6.0.0",
     "@types/chai": "^4.3.16",
     "@types/node": "^20.14.12",

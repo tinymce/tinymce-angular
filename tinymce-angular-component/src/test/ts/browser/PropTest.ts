@@ -10,9 +10,9 @@ import { concatMap, distinct, firstValueFrom, mergeMap, of, toArray } from 'rxjs
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import type { Editor } from 'tinymce';
-import { expect } from 'chai';
 import { Fun } from '@ephox/katamari';
-import { Waiter } from '@ephox/agar';
+import { Waiter, Assertions } from '@ephox/agar';
+import { TinyAssertions } from '@ephox/mcagar';
 
 describe('PropTest', () => {
   const containsIDWarning = (logs: unknown[][]) =>
@@ -57,9 +57,10 @@ describe('PropTest', () => {
           const fixture = createFixture();
           fixture.detectChanges();
           const [ ed ] = await waitForEditorsToLoad(fixture);
-          expect(ed.id).to.equal('my-id');
+          Assertions.assertEq('Editor\'s id must match', ed.id, 'my-id');
         });
-        expect(containsIDWarning(warnings), 'Should not contain an ID warning').to.be.false;
+
+        Assertions.assertEq('Should not contain an ID warning', containsIDWarning(warnings), false);
       });
     });
 
@@ -87,11 +88,11 @@ describe('PropTest', () => {
           ];
           fixture.detectChanges();
           const [ ed1, ed2 ] = await waitForEditorsToLoad(fixture);
-          expect(ed1.id).to.equal('my-id-0');
-          expect(ed1.getContent()).to.equal('<p>text1</p>');
-          expect(ed2).to.be.undefined;
+          Assertions.assertEq('Editor\'s id must match', 'my-id-0', ed1.id);
+          TinyAssertions.assertContent(ed1, '<p>text1</p>');
+          Assertions.assertEq('Editor 2 must be undefined', undefined, ed2);
         });
-        expect(containsIDWarning(warnings), 'Should contain an ID warning').to.be.true;
+        Assertions.assertEq( 'Should contain an ID warning', true, containsIDWarning(warnings));
       });
 
       it('INT-3299: creating more than one editor with different IDs does not log a warning', async () => {
@@ -104,16 +105,16 @@ describe('PropTest', () => {
           fixture.detectChanges();
           const [ ed1, ed2, ed3, ed4 ] = findAllComponents(fixture, EditorComponent);
           await Waiter.pTryUntil('All editors to have been initialised', () => {
-            expect(ed1.id).to.equal('my-id-0');
-            expect(ed1.editor?.getContent()).to.equal('<p>text0</p>');
-            expect(ed2.id).to.equal('my-id-1');
-            expect(ed2.editor?.getContent()).to.equal('<p>text1</p>');
-            expect(ed3.id).to.equal('my-id-2');
-            expect(ed3.editor?.getContent()).to.equal('<p>text2</p>');
-            expect(ed4?.editor).to.be.undefined;
+            Assertions.assertEq('Editor 1\'s id must match', ed1.id, 'my-id-0');
+            Assertions.assertEq('Content of editor 1', ed1.editor?.getContent(), '<p>text0</p>');
+            Assertions.assertEq('Editor 2\'s id must match', ed2.id, 'my-id-1');
+            Assertions.assertEq('Content of editor 2', ed2.editor?.getContent(), '<p>text1</p>');
+            Assertions.assertEq('Editor 3\'s id must match', ed3.id, 'my-id-2');
+            Assertions.assertEq('Content of editor 3', ed3.editor?.getContent(), '<p>text2</p>');
+            Assertions.assertEq('Editor 4 should not exist', ed4?.editor, undefined);
           }, 1000, 10000);
         });
-        expect(containsIDWarning(warnings), 'Should not contain an ID warning').to.be.false;
+        Assertions.assertEq( 'Should not contain an ID warning', containsIDWarning(warnings), false);
       });
     });
   });

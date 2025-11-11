@@ -5,7 +5,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   name: 'safe'
 })
 export class SafePipe implements PipeTransform {
-  // eslint-disable-next-line @typescript-eslint/no-parameter-properties
+
+  // eslint-disable-next-line @typescript-eslint/parameter-properties
   public constructor(protected sanitizer: DomSanitizer) {}
 
   public transform(value: string, type: string): SafeHtml {
