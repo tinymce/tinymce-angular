@@ -5,6 +5,7 @@ import { apiKey } from 'stories/Settings';
 @Component({
   selector: 'form-control',
   templateUrl: './FormControl.component.html',
+  standalone: false,
 })
 export class FormControlComponent {
   public apiKey = apiKey;

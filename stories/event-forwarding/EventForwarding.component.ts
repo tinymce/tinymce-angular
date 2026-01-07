@@ -5,6 +5,7 @@ import { apiKey } from '../Settings';
 @Component({
   selector: 'event-forwarding',
   templateUrl: './EventForwarding.component.html',
+  standalone: false
 })
 export class EventForwardingComponent {
   public apiKey = apiKey;

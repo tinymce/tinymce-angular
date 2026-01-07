@@ -4,7 +4,8 @@ import { apiKey, modelEvents, sampleContent } from '../Settings';
 
 @Component({
   selector: 'binding',
-  templateUrl: './DataBinding.component.html'
+  templateUrl: './DataBinding.component.html',
+  standalone: false
 })
 export class BindingComponent {
   public isEditingContent = true;
