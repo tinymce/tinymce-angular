@@ -77,7 +77,17 @@ export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModul
               if (editor.initialized) {
                 resolve(editor);
               }
-              editor.once( 'SkinLoaded', () => resolve(editor));
+              editor.once('SkinLoaded', () => {
+                // This is a workaround to avoid a race condition occurring in tinymce 8 where licenseKeyManager is still validating the license key
+              // after global tinymce is removed in a clean up. Specifically, it happens when unloading/loading different versions of TinyMCE
+                if (editor.licenseKeyManager) {
+                  editor.licenseKeyManager.validate({}).then(() => {
+                    resolve(editor);
+                  }).catch((reason) => console.warn(reason));
+                } else {
+                  resolve(editor);
+                }
+              });
             })
         ),
         map(
