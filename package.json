@@ -28,7 +28,6 @@
     "@angular/language-service": "^20",
     "@angular/material": "^20",
     "@angular/platform-browser": "^20",
-    "@angular/platform-browser-dynamic": "^20",
     "@babel/core": "^7.24.9",
     "@ephox/agar": "^8.0.1",
     "@ephox/bedrock-client": "^14.1.1",
