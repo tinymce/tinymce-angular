@@ -13,7 +13,7 @@ This package is a thin wrapper around [TinyMCE](https://github.com/tinymce/tinym
 
 |Angular version|`tinymce-angular` version|
 |---            |---                      |
-|>=16.x <=20.x  |8+                       |
+|>=16.x <=21.x  |8+                       |
 |14+            |7.x                      |
 |13+            |6.x                      |
 |9+             |4.x                      |
