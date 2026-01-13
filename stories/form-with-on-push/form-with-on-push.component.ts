@@ -12,6 +12,7 @@ import { apiKey } from 'stories/Settings';
   selector: 'form-with-on-push',
   templateUrl: './form-with-on-push.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class FormWithOnPushComponent {
   @Input() public apiKey = apiKey;

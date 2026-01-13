@@ -33,7 +33,8 @@ import { apiKey } from '../Settings';
       <button [innerText]="show ? 'Hide' : 'Show'" (click)="handleToggle()"></button>
       <ng-container *ngTemplateOutlet="show ? editorTemplate : placeHolder"></ng-container>
     <div>
-  `
+  `,
+  standalone: false
 })
 export class ContainerComponent {
   @Input() public editorTemplate!: TemplateRef<any>;
@@ -52,7 +53,8 @@ export class ContainerComponent {
     </ng-template>
 
     <container [editorTemplate]="editorTemplate"></container>
-  `
+  `,
+  standalone: false
 })
 export class ContentProjectionComponent {
   public apiKey = apiKey;

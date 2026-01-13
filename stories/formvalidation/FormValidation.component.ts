@@ -16,7 +16,8 @@ import { apiKey } from '../Settings';
     .preview {
       border: 1px solid rgb(190, 190, 190);
     }
-  ` ]
+  ` ],
+  standalone: false
 })
 export class BlogComponent {
   public submitted = false;
