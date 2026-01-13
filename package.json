@@ -76,7 +76,5 @@
   },
   "version": "9.1.2-rc",
   "name": "@tinymce/tinymce-angular",
-  "dependencies": {
-    "@angular/router": "^20"
-  }
+  "dependencies": {}
 }
