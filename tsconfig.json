@@ -4,15 +4,15 @@
     "baseUrl": ".",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "noUnusedLocals": true,
     "strict": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
-    "module": "es2015",
+    "module": "nodenext",
     "typeRoots": [
-      "node_modules/@types"
+     "node_modules/@types"
     ],
     "lib": [
       "es2017",
