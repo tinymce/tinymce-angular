@@ -71,7 +71,8 @@
     "to-string-loader": "^1.1.5",
     "tslib": "^2.6.2",
     "typescript": "^5.9.3",
-    "webpack": "^5.95.0"
+    "webpack": "^5.95.0",
+    "zone.js": "~0.16.0"
   },
   "version": "9.1.2-rc",
   "name": "@tinymce/tinymce-angular",
