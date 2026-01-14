@@ -12,10 +12,10 @@ import { ViewQueryComponent } from './viewquery/Viewquery.component';
 import { MaterialTabs } from './materialtabs/MaterialTabs.component';
 import { SafePipe } from './pipes/Safe.pipe';
 import { MatTabsModule } from '@angular/material/tabs';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContainerComponent, ContentProjectionComponent } from './contentprojection/ContentProjection.component';
 import { BindingComponent } from './data-binding/DataBinding.component';
 import { ReadonlyComponent } from './readonly/Readonly.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 const meta: Meta = {
   component: EditorComponent,
@@ -168,7 +168,7 @@ export const MaterialTabsStory: StoryObj<EditorComponent> = {
   name: 'Material Tabs',
   render: () => ({
     moduleMetadata: {
-      imports: [ ReactiveFormsModule, FormsModule, BrowserAnimationsModule, MatTabsModule ],
+      imports: [ ReactiveFormsModule, FormsModule, BrowserModule, MatTabsModule ],
       declarations: [ MaterialTabs ],
     },
     template: `<material-tabs/>`
@@ -180,6 +180,7 @@ export const ContentProjectionStory: StoryObj<EditorComponent> = {
   render: () => ({
     moduleMetadata: {
       declarations: [ ContentProjectionComponent, ContainerComponent ],
+      imports: [ FormsModule ],
     },
     template: `<content-projection/>`
   }),
