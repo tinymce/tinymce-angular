@@ -4,7 +4,16 @@ import 'zone.js/plugins/fake-async-test';
 
 import { TestBed } from '@angular/core/testing';
 import { BrowserTestingModule, platformBrowserTesting } from '@angular/platform-browser/testing';
+import { NgModule, provideZoneChangeDetection } from '@angular/core';
 
-TestBed.initTestEnvironment(BrowserTestingModule, platformBrowserTesting(), {
-  teardown: { destroyAfterEach: true },
-});
+@NgModule({
+  providers: [ provideZoneChangeDetection() ],
+})
+class AppTestingModule {}
+
+TestBed.initTestEnvironment(
+  [ BrowserTestingModule, AppTestingModule ], platformBrowserTesting(),
+  {
+    teardown: { destroyAfterEach: true },
+  }
+);
