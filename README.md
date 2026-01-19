@@ -21,7 +21,7 @@ This package is a thin wrapper around [TinyMCE](https://github.com/tinymce/tinym
 |< 5            | Not supported           |
 
 ### Not yet Zoneless ( >=Angular v21 )
-* This wrapper still requires `zone.js` to ensure backward compatibility to older Angular versions. Therefore, if your application uses Angular v21, it needs to include `provideZoneDetection()` in its providers.
+* This wrapper still requires `zone.js` to ensure backward compatibility to older Angular versions. Therefore, if your application uses Angular v21 or higher, it needs to include `provideZoneDetection()` in its providers.
 
 ```jsx
 import { NgModule, provideZoneChangeDetection } from '@angular/core';
