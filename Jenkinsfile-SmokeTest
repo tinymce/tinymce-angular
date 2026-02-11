@@ -1,0 +1,92 @@
+#!groovy
+@Library('waluigi@release/7') _
+
+properties([
+  disableConcurrentBuilds(),
+  buildDiscarder(logRotator(
+    artifactDaysToKeepStr: '',
+    artifactNumToKeepStr: '1',
+    daysToKeepStr: '',
+    numToKeepStr: '50'
+  )),
+  parameters([
+    string(defaultValue: 'Tinymce-Angular-SmokeTest', description: 'The test directory to run', name: 'TEST_DIR', trim: false),
+  ])
+])
+
+
+def runSmokeTests(Map args = new LinkedHashMap()) {
+  // String stagingJwtCredentials = 'informant-staging-jwt'
+  // String prodJwtCredentials = 'informant-production-jwt'
+
+  String testDir = args.test_dir ?: 'smoke'
+  String additionalArgs = "--chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --customRoutes src/test/json/routes.json"
+
+  def platforms = args.platforms ?: [
+    [ browser: "chrome", provider: "lambdatest" ],
+    // [ browser: "firefox", provider: "lambdatest" ],
+    // [ browser: "safari", provider: "lambdatest" ],
+    // [ browser: "edge", provider: "lambdatest" ]
+  ]
+
+  def processes = [:]
+
+  for (int i = 0; i < platforms.size(); i++) {
+    def platform = platforms.get(i)
+    def buckets = platform.buckets ?: 1
+
+    for (int bucket = 1; bucket <= buckets; bucket++) {
+      // clousure var - don't inline or jenkins complains
+      def currBucket = bucket
+      def suffix = currBucket == 1 ? '' : "-${currBucket}"
+
+      if (platform.provider) {
+        // Run using remote provider
+        def name = "${platform.browser}-${platform.provider}${suffix}"
+        def testName = "TinyMCE-Angular-SmokeTest_${name}"
+        processes[name] = {
+          tinyPods.node {
+            stage("${name}") {
+              // withCredentials([
+              //   string(credentialsId: stagingJwtCredentials, variable: 'INFORMANT_STAGING_JWT_CREDS'),
+              //   string(credentialsId: prodJwtCredentials, variable: 'INFORMANT_PRODUCTION_JWT_CREDS')
+              // ]) {
+                yarnInstall()
+                // Update Angular related packages
+                sh('yarn add @angular/animations@next@angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular/platform-browser-dynamic@next @angular/router@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next')
+                
+                // echo "Writing credentials"
+                // writeFile(file: "src/test/json/jwt-staging.json", text: '{"token": "' + env.INFORMANT_STAGING_JWT_CREDS + '"}', encoding: "UTF-8")
+                // writeFile(file: "src/test/json/jwt-production.json", text: '{"token": "' + env.INFORMANT_PRODUCTION_JWT_CREDS + '"}', encoding: "UTF-8")
+                  bedrockTests(
+                    name: name,
+                    browser: platform.browser,
+                    testDirs: [ "tinymce-angular-component/src/test/ts/browser" ],
+                    bucket: currBucket,
+                    buckets: buckets,
+                    custom: customArgs
+                  )
+                }
+              }
+            }
+          }
+       }
+    }
+  }
+
+
+timestamps {
+  tinyPods.node(tag: '20') {
+    stage("deps") {
+      yarnInstall(true)
+    }
+
+    stage("build") {
+      exec("yarn build")
+    }
+
+    stage("tests") {
+      runSmokeTests()
+    }
+  }
+}
