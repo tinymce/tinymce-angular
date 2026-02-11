@@ -53,7 +53,7 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
               // ]) {
                 yarnInstall()
                 // Update Angular related packages
-                // sh('yarn add @angular/animations@next@angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular/platform-browser-dynamic@next @angular/router@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next')
+                // sh('yarn add @angular/animations@next @angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular/platform-browser-dynamic@next @angular/router@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next')
                 
                 // echo "Writing credentials"
                 // writeFile(file: "src/test/json/jwt-staging.json", text: '{"token": "' + env.INFORMANT_STAGING_JWT_CREDS + '"}', encoding: "UTF-8")
@@ -80,7 +80,7 @@ timestamps {
     stage("deps") {
       yarnInstall(true)
 
-      sh 'yarn add @angular/animations@next@angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular/platform-browser-dynamic@next @angular/router@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next'
+      sh 'yarn add @angular/animations@next @angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular/platform-browser-dynamic@next @angular/router@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next'
     }
 
     stage("build") {
