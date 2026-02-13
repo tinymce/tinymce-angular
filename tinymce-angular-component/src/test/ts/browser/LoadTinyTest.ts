@@ -8,7 +8,7 @@ import { EditorComponent, TINYMCE_SCRIPT_SRC } from '../../../main/ts/public_api
 import { Version } from '../../../main/ts/editor/editor.component';
 import { editorHook, tinymceVersionHook } from '../alien/TestHooks';
 import type { Editor } from 'tinymce';
-import { apiKey, deleteTinymce } from '../alien/TestHelpers';
+import { apiKey, deleteTinymce, supportedTinymceVersions } from '../alien/TestHelpers';
 
 describe('LoadTinyTest', () => {
   const key = apiKey();
@@ -17,7 +17,7 @@ describe('LoadTinyTest', () => {
     Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, Global.tinymce.majorVersion);
   };
 
-  for (const version of [ '4', '5', '6', '7', '8' ] as Version[]) {
+  for (const version of supportedTinymceVersions()) {
     context(`With local version ${version}`, () => {
       const createFixture = editorHook(EditorComponent, {
         providers: [
@@ -47,7 +47,7 @@ describe('LoadTinyTest', () => {
     });
   }
 
-  for (const version of [ '5', '6', '7', '8' ] as Version[]) {
+  for (const version of supportedTinymceVersions()) {
     context(`With cloud version ${version}`, () => {
       const createFixture = editorHook(EditorComponent);
 

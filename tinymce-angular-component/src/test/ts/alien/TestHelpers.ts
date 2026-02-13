@@ -4,11 +4,13 @@ import { ScriptLoader } from '../../../main/ts/utils/ScriptLoader';
 import { Attribute, Remove, SelectorFilter, SugarElement } from '@ephox/sugar';
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { EditorComponent } from '../../../main/ts/editor/editor.component';
+import { EditorComponent, Version } from '../../../main/ts/editor/editor.component';
 import type { Editor } from 'tinymce';
 import { Keyboard, Keys } from '@ephox/agar';
 
 export const apiKey = Fun.constant('qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc');
+
+export const supportedTinymceVersions = Fun.constant<Version[]>([ '5', '6', '7', '8' ]);
 
 export const throwTimeout =
   (timeoutMs: number, message: string = `Timeout ${timeoutMs}ms`) =>
