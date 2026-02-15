@@ -3,7 +3,7 @@ import '../alien/InitTestEnvironment';
 import { Assertions } from '@ephox/agar';
 import { describe, it, context, before } from '@ephox/bedrock-client';
 import { Global } from '@ephox/katamari';
-import { Traverse, SugarElement, Attribute } from '@ephox/sugar';
+import { SugarElement, Attribute } from '@ephox/sugar';
 
 import { EditorComponent, TINYMCE_SCRIPT_SRC } from '../../../main/ts/public_api';
 import { Version } from '../../../main/ts/editor/editor.component';
@@ -25,7 +25,7 @@ describe('VerifyIntegrationTest', () => {
   };
   
   for (const version of supportedTinymceVersions()) {
-    context(`With local version ${version}`, () => {
+    context(`With local Tinymce version ${version}`, () => {
       const createFixture = editorHook(EditorComponent, {
         providers: [
           {
@@ -40,11 +40,11 @@ describe('VerifyIntegrationTest', () => {
       it('Should be able to load with the specified Angular version', async () => {
         const { editor } = await createFixture();
         const integrationInfo = await window.fetch('/custom/integration/info').then((resp) => resp.json()) as IntegrationInfo;
-        const rootEl = editor.getContainer().parentNode as Element;
+        const container = editor.getContainer();
 
         Assertions.assertEq(`Angular version should be ${integrationInfo.version}`, 
           true,
-          Attribute.get(SugarElement.fromDom(rootEl), 'ng-version') === integrationInfo.version
+          Attribute.get(SugarElement.fromDom(container), 'data-framework-version') === integrationInfo.version
         );
 
         assertTinymceVersion(version, editor);
