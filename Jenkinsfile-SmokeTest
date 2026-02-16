@@ -79,7 +79,10 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
           }
        }
     }
+
   }
+
+  parallel processes
 }
 
 
