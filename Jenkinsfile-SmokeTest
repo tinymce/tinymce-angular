@@ -62,7 +62,7 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
 									} else if (testStatus != 0) {
 										error("Unexpected error running tests for ${name} so passing failure as exist code")
 									}
-              }`
+              }
 
                 //   bedrockTests(
                 //     name: name,
