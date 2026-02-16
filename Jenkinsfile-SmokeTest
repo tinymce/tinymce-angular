@@ -49,8 +49,6 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
             stage("${name}") {
               bedrockRemoteTools.tinyWorkSishTunnel()
               bedrockRemoteTools.withRemoteCreds(platform.provider) {
-                yarnInstall()
-
                 def testStatus = exec(script: 'bash smoke-test.sh', returnStatus: true)
 
 									junit allowEmptyResults: true, testResults: 'scratch/TEST-*.xml'
@@ -76,18 +74,13 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
        }
     }
   }
+}
 
 
 timestamps {
   tinyPods.node(tag: '20') {
     stage("deps") {
-      yarnInstall(true)
-
-      sh 'yarn add @angular/animations@next @angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular/platform-browser-dynamic@next @angular/router@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next'
-    }
-
-    stage("build") {
-      exec("yarn build")
+      yarnInstall()
     }
 
     stage("tests") {
