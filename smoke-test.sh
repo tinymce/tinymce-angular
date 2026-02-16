@@ -23,4 +23,4 @@ printf '
   }]
 ' "$NEXT_VERSION" > $ROUTE_FILE_PATH
 
-yarn bedrock-auto -b chrome -f tinymce-angular-component/src/test/ts/smoke-test/VerifyIntegrationTest.ts --customRoutes $ROUTE_FILE_PATH
+yarn bedrock-auto -b $1 -f tinymce-angular-component/src/test/ts/smoke-test/VerifyIntegrationTest.ts --chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --remote lambdatest --customRoutes $ROUTE_FILE_PATH

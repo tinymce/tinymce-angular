@@ -18,9 +18,10 @@ properties([
 def runSmokeTests(Map args = new LinkedHashMap()) {
   // String stagingJwtCredentials = 'informant-staging-jwt'
   // String prodJwtCredentials = 'informant-production-jwt'
+  String routeFilePath = 'version.json'
 
   String testDir = args.test_dir ?: 'smoke'
-  String additionalArgs = "--chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --customRoutes src/test/json/routes.json"
+  String additionalArgs = "--chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3"
 
   def platforms = args.platforms ?: [
     // [ browser: "chrome", provider: "aws", buckets: 2 ],
@@ -32,11 +33,6 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
   ]
 
   def processes = [:]
-
-  println platforms
-  println processes
-
-  println "Beginning running tests"
 
   for (int i = 0; i < platforms.size(); i++) {
   
@@ -57,7 +53,8 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
             stage("${name}") {
               bedrockRemoteTools.tinyWorkSishTunnel()
               bedrockRemoteTools.withRemoteCreds(platform.provider) {
-                def testStatus = exec(script: 'bash smoke-test.sh', returnStatus: true)
+                
+                def testStatus = exec(script: 'bash smoke-test.sh ', returnStatus: true)
 
 									junit allowEmptyResults: true, testResults: 'scratch/TEST-*.xml'
 									if (testStatus == 4) {
@@ -65,8 +62,8 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
 									} else if (testStatus != 0) {
 										error("Unexpected error running tests for ${name} so passing failure as exist code")
 									}
-              }
-            
+              }`
+
                 //   bedrockTests(
                 //     name: name,
                 //     browser: platform.browser,
