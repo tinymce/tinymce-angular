@@ -47,26 +47,29 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
         processes[name] = {
           tinyPods.node {
             stage("${name}") {
-              // withCredentials([
-              //   string(credentialsId: stagingJwtCredentials, variable: 'INFORMANT_STAGING_JWT_CREDS'),
-              //   string(credentialsId: prodJwtCredentials, variable: 'INFORMANT_PRODUCTION_JWT_CREDS')
-              // ]) {
+              bedrockRemoteTools.tinyWorkSishTunnel()
+              bedrockRemoteTools.withRemoteCreds(platform.provider) {
                 yarnInstall()
-                // Update Angular related packages
-                // sh('yarn add @angular/animations@next @angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular/platform-browser-dynamic@next @angular/router@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next')
-                
-                // echo "Writing credentials"
-                // writeFile(file: "src/test/json/jwt-staging.json", text: '{"token": "' + env.INFORMANT_STAGING_JWT_CREDS + '"}', encoding: "UTF-8")
-                // writeFile(file: "src/test/json/jwt-production.json", text: '{"token": "' + env.INFORMANT_PRODUCTION_JWT_CREDS + '"}', encoding: "UTF-8")
-                  bedrockTests(
-                    name: name,
-                    browser: platform.browser,
-                    testDirs: [ "tinymce-angular-component/src/test/ts/browser" ],
-                    bucket: currBucket,
-                    buckets: buckets,
-                    custom: customArgs
-                  )
-                }
+
+                def testStatus = exec(script: 'bash smoke-test.sh', returnStatus: true)
+
+									junit allowEmptyResults: true, testResults: 'scratch/TEST-*.xml'
+									if (testStatus == 4) {
+										unstable("Tests failed for ${name}")
+									} else if (testStatus != 0) {
+										error("Unexpected error running tests for ${name} so passing failure as exist code")
+									}
+              }
+            
+                //   bedrockTests(
+                //     name: name,
+                //     browser: platform.browser,
+                //     testDirs: [ "tinymce-angular-component/src/test/ts/browser" ],
+                //     bucket: currBucket,
+                //     buckets: buckets,
+                //     custom: customArgs
+                //   )
+                // }
               }
             }
           }

@@ -3,6 +3,10 @@
 export NEXT_VERSION=$(npm view @angular/core@next version)
 export ROUTE_FILE_PATH=version.json
 
+yarn add @angular/animations@next @angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next
+
+yarn build
+
 # Build the custom route file with the next Angular version to be used in the test
 printf '
   [{
