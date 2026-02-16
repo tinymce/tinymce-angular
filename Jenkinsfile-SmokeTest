@@ -54,7 +54,7 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
               bedrockRemoteTools.tinyWorkSishTunnel()
               bedrockRemoteTools.withRemoteCreds(platform.provider) {
                 
-                def testStatus = exec(script: 'bash smoke-test.sh ', returnStatus: true)
+                def testStatus = exec(script: "bash smoke-test.sh ${platform.browser}", returnStatus: true)
 
 									junit allowEmptyResults: true, testResults: 'scratch/TEST-*.xml'
 									if (testStatus == 4) {
