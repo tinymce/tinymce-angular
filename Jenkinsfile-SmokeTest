@@ -22,7 +22,7 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
   String testDir = args.test_dir ?: 'smoke'
   String additionalArgs = "--chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --customRoutes src/test/json/routes.json"
 
-  def platforms = args.platforms ?: [
+  def platforms = [
     [ browser: "chrome", provider: "lambdatest" ],
     // [ browser: "firefox", provider: "lambdatest" ],
     // [ browser: "safari", provider: "lambdatest" ],
@@ -31,7 +31,13 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
 
   def processes = [:]
 
+  println platforms
+  println processes
+
+  println "Beginning running tests"
+  
   for (int i = 0; i < platforms.size(); i++) {
+  
     def platform = platforms.get(i)
     def buckets = platform.buckets ?: 1
 
