@@ -11,21 +11,19 @@ properties([
   )),
   parameters([
     string(defaultValue: 'Tinymce-Angular-SmokeTest', description: 'The test directory to run', name: 'TEST_DIR', trim: false),
+    string(defaultValue: 'next', description: 'The test directory to run', name: 'TARGET_TAG', trim: false),
   ])
 ])
-
 
 def runSmokeTests(Map args = new LinkedHashMap()) {
   // String stagingJwtCredentials = 'informant-staging-jwt'
   // String prodJwtCredentials = 'informant-production-jwt'
   String customRouteFilePath = 'version.json'
 
-  String testDir = args.test_dir ?: 'smoke'
-  String additionalArgs = "--chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3"
+  // String testDir = args.test_dir ?: 'smoke'
+  // String additionalArgs = "--chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3"
 
   def platforms = args.platforms ?: [
-    // [ browser: "chrome", provider: "aws", buckets: 2 ],
-    // [ browser: "firefox", provider: "aws", buckets: 2 ],
     [ browser: "chrome", provider: "lambdatest" ],
     [ browser: "firefox", provider: "lambdatest" ],
     [ browser: "safari", provider: "lambdatest" ],
@@ -35,7 +33,6 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
   def processes = [:]
 
   for (int i = 0; i < platforms.size(); i++) {
-  
     def platform = platforms.get(i)
     def buckets = platform.buckets ?: 1
 
@@ -47,7 +44,7 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
       if (platform.provider) {
         // Run using remote provider
         def name = "${platform.browser}-${platform.provider}${suffix}"
-        def testName = "TinyMCE-Angular-SmokeTest_${name}"
+        // def testName = "TinyMCE-Angular-SmokeTest_${name}"
         processes[name] = {
           tinyPods.node {
             stage("${name}") {
@@ -73,39 +70,26 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
                 """
                 writeJSON file: "${WORKSPACE}/${customRouteFilePath}", json: routeFileContent
 
-                sh "cat ${WORKSPACE}/${customRouteFilePath}"
                 sh 'yarn build'
 
-                sh "yarn bedrock-auto -b ${platform.browser} -f tinymce-angular-component/src/test/ts/smoke-test/VerifyIntegrationTest.ts --chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --remote lambdatest --customRoutes ${WORKSPACE}/${customRouteFilePath}"
+                def testStatus = exec(script: "yarn bedrock-auto -b ${platform.browser} -f tinymce-angular-component/src/test/ts/smoke-test/VerifyIntegrationTest.ts --chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --remote lambdatest --customRoutes ${WORKSPACE}/${customRouteFilePath}", returnStatus: true)
 
-									junit allowEmptyResults: true, testResults: 'scratch/TEST-*.xml'
-									if (testStatus == 4) {
-										unstable("Tests failed for ${name}")
-									} else if (testStatus != 0) {
-										error("Unexpected error running tests for ${name} so passing failure as exist code")
-									}
-              }
-
-                //   bedrockTests(
-                //     name: name,
-                //     browser: platform.browser,
-                //     testDirs: [ "tinymce-angular-component/src/test/ts/browser" ],
-                //     bucket: currBucket,
-                //     buckets: buckets,
-                //     custom: customArgs
-                //   )
-                // }
+                junit allowEmptyResults: true, testResults: 'scratch/TEST-*.xml'
+                if (testStatus == 4) {
+                  unstable("Tests failed for ${name}")
+                } else if (testStatus != 0) {
+                  error("Unexpected error running tests for ${name} so passing failure as exist code")
+                }
               }
             }
           }
-       }
+        }
+      }
     }
-
   }
 
   parallel processes
 }
-
 
 timestamps {
   tinyPods.node(tag: '20') {
@@ -114,11 +98,7 @@ timestamps {
     }
 
     stage("tests") {
-      runSmokeTests(
-        platforms: [
-          [ browser: "firefox", provider: "lambdatest" ]
-        ]
-      )
+      runSmokeTests()
     }
   }
 }
