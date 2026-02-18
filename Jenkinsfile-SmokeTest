@@ -58,21 +58,21 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
                 sh 'yarn add @angular/animations@next @angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next'
 
                 def routeFileContent = """
-                [{
-                  "request": {
-                    "method": "get",
-                    "path": "/custom/integration/info"
-                  },
-                  "response": {
-                    "status": 200,
-                    "json": {
-                      "version": "$nextVersion"
+                  [{
+                    "request": {
+                      "method": "get",
+                      "path": "/custom/integration/info"
+                    },
+                    "response": {
+                      "status": 200,
+                      "json": {
+                        "version": "${nextVersion}"
+                      }
                     }
-                  }
-                }]
+                  }]
                 """
 
-                sh "echo ${routeFileContent} > ${WORKSPACE}/${customRouteFilePath}"
+                sh "echo \"${routeFileContent}\" > ${WORKSPACE}/${customRouteFilePath}"
 
                 sh "cat ${WORKSPACE}/${customRouteFilePath}"
                 sh 'yarn build'
