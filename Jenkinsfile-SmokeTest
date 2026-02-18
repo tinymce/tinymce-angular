@@ -15,9 +15,10 @@ properties([
   ])
 ])
 
-String customRouteFilePath = 'version.json'
+String customRouteFilePath = "${WORKSPACE}/version.json"
 
 def runSmokeTests(Map args = new LinkedHashMap()) {
+
   def platforms = args.platforms ?: [
     [ browser: "chrome", provider: "lambdatest" ],
     [ browser: "firefox", provider: "lambdatest" ],
@@ -45,7 +46,7 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
             stage("${name}") {
               bedrockRemoteTools.tinyWorkSishTunnel()
               bedrockRemoteTools.withRemoteCreds(platform.provider) {
-                def testStatus = exec(script: "yarn bedrock-auto -b ${platform.browser} -f tinymce-angular-component/src/test/ts/smoke-test/VerifyIntegrationTest.ts --chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --remote lambdatest --customRoutes ${WORKSPACE}/${customRouteFilePath}", returnStatus: true)
+                def testStatus = exec(script: "yarn bedrock-auto -b ${platform.browser} -f tinymce-angular-component/src/test/ts/smoke-test/VerifyIntegrationTest.ts --chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --remote lambdatest --customRoutes ${args.routeFile}", returnStatus: true)
 
                 junit allowEmptyResults: true, testResults: 'scratch/TEST-*.xml'
                 if (testStatus == 4) {
@@ -86,7 +87,7 @@ timestamps {
           }
         }]
       """
-      writeJSON file: "${WORKSPACE}/${customRouteFilePath}", json: routeFileContent
+      writeJSON file: "${customRouteFilePath}", json: routeFileContent
     }
 
     stage("build") {
@@ -94,7 +95,7 @@ timestamps {
     }
 
     stage("tests") {
-      runSmokeTests()
+      runSmokeTests(routeFile: customRouteFilePath)
     }
   }
 }
