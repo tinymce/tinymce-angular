@@ -67,15 +67,15 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
             stage("${name}") {
               bedrockRemoteTools.tinyWorkSishTunnel()
               bedrockRemoteTools.withRemoteCreds(platform.provider) {
-                def nextVersion = sh('npm view @angular/core@next version', returnStdout: true).toString().trim()
+                def nextVersion = sh(script: 'npm view @angular/core@next version', returnStdout: true).toString().trim()
                 
-                sh ('yarn add @angular/animations@next @angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next')
-                sh ('echo ${routFileContent} > ' + customRouteFilePath)
+                sh 'yarn add @angular/animations@next @angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next'
+                sh 'echo ${routFileContent} > ${customRouteFilePath}'
 
-                sh ('cat ${customRouteFilePath}')
-                sh ('yarn build')
+                sh 'cat ${customRouteFilePath}'
+                sh 'yarn build'
 
-                sh ('yarn bedrock-auto -b $1 -f tinymce-angular-component/src/test/ts/smoke-test/VerifyIntegrationTest.ts --chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --remote lambdatest --customRoutes $ROUTE_FILE_PATH')
+                sh 'yarn bedrock-auto -b ${platform.browser} -f tinymce-angular-component/src/test/ts/smoke-test/VerifyIntegrationTest.ts --chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --remote lambdatest --customRoutes ${customRouteFilePath}'
 
 									junit allowEmptyResults: true, testResults: 'scratch/TEST-*.xml'
 									if (testStatus == 4) {
