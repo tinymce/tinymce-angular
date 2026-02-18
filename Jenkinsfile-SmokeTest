@@ -44,10 +44,28 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
             stage("${name}") {
               bedrockRemoteTools.tinyWorkSishTunnel()
               bedrockRemoteTools.withRemoteCreds(platform.provider) {
-                yarnInstall()
+                // Create custom route file to contain the next version of Angular to test against
+                def customRouteFilePath = "${WORKSPACE}/version.json"
+                def nextVersion = sh(script: 'npm view @angular/core@next version', returnStdout: true).trim()
+                def routeFileContent = readJSON text: """
+                  [{
+                    "request": {
+                      "method": "get",
+                      "path": "/custom/integration/info"
+                    },
+                    "response": {
+                      "status": 200,
+                      "json": {
+                        "version": "${nextVersion}"
+                      }
+                    }
+                  }]
+                """
+                writeJSON file: "${customRouteFilePath}", json: routeFileContent
 
-                def testStatus = exec(script: "yarn bedrock-auto -b ${platform.browser} -f tinymce-angular-component/src/test/ts/**/*Test.ts --chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --remote lambdatest --customRoutes ${args.routeFile}", returnStatus: true)
+                sh 'yarn add @angular/animations@next @angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next'
 
+                def testStatus = exec(script: "yarn bedrock-auto -b ${platform.browser} -f tinymce-angular-component/src/test/ts/**/*Test.ts --chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --remote lambdatest --customRoutes ${customRouteFilePath}", returnStatus: true)
 
                 junit allowEmptyResults: true, testResults: 'scratch/TEST-*.xml'
                 if (testStatus == 4) {
@@ -68,31 +86,8 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
 
 timestamps {
   tinyPods.node(tag: '20') {
-    def customRouteFilePath = "${WORKSPACE}/version.json"
-
     stage("deps") {
-
       yarnInstall()
-
-      def nextVersion = sh(script: 'npm view @angular/core@next version', returnStdout: true).trim()
-
-      sh 'yarn add @angular/animations@next @angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next'
-
-      def routeFileContent = readJSON text: """
-        [{
-          "request": {
-            "method": "get",
-            "path": "/custom/integration/info"
-          },
-          "response": {
-            "status": 200,
-            "json": {
-              "version": "${nextVersion}"
-            }
-          }
-        }]
-      """
-      writeJSON file: "${customRouteFilePath}", json: routeFileContent
     }
 
     stage("build") {
@@ -100,7 +95,7 @@ timestamps {
     }
 
     stage("tests") {
-      runSmokeTests(routeFile: customRouteFilePath)
+      runSmokeTests()
     }
   }
 }
