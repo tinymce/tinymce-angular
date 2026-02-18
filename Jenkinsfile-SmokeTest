@@ -65,8 +65,9 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
 
 timestamps {
   tinyPods.node(tag: '20') {
+    def customRouteFilePath = "${WORKSPACE}/version.json"
+
     stage("deps") {
-      String customRouteFilePath = "${WORKSPACE}/version.json"
 
       yarnInstall()
 
