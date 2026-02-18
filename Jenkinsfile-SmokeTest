@@ -45,8 +45,6 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
             stage("${name}") {
               bedrockRemoteTools.tinyWorkSishTunnel()
               bedrockRemoteTools.withRemoteCreds(platform.provider) {
-                sh 'yarn build'
-
                 def testStatus = exec(script: "yarn bedrock-auto -b ${platform.browser} -f tinymce-angular-component/src/test/ts/smoke-test/VerifyIntegrationTest.ts --chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --remote lambdatest --customRoutes ${WORKSPACE}/${customRouteFilePath}", returnStatus: true)
 
                 junit allowEmptyResults: true, testResults: 'scratch/TEST-*.xml'
@@ -89,6 +87,10 @@ timestamps {
         }]
       """
       writeJSON file: "${WORKSPACE}/${customRouteFilePath}", json: routeFileContent
+    }
+
+    stage("build") {
+      sh 'yarn build'
     }
 
     stage("tests") {
