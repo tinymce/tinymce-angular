@@ -15,8 +15,6 @@ properties([
   ])
 ])
 
-String customRouteFilePath = "${WORKSPACE}/version.json"
-
 def runSmokeTests(Map args = new LinkedHashMap()) {
 
   def platforms = args.platforms ?: [
@@ -68,7 +66,10 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
 timestamps {
   tinyPods.node(tag: '20') {
     stage("deps") {
+      String customRouteFilePath = "${WORKSPACE}/version.json"
+
       yarnInstall()
+
       def nextVersion = sh(script: 'npm view @angular/core@next version', returnStdout: true).trim()
 
       sh 'yarn add @angular/animations@next @angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next'
