@@ -15,12 +15,9 @@ properties([
   ])
 ])
 
+String customRouteFilePath = 'version.json'
+
 def runSmokeTests(Map args = new LinkedHashMap()) {
-  String customRouteFilePath = 'version.json'
-
-  // String testDir = args.test_dir ?: 'smoke'
-  // String additionalArgs = "--chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3"
-
   def platforms = args.platforms ?: [
     [ browser: "chrome", provider: "lambdatest" ],
     [ browser: "firefox", provider: "lambdatest" ],
@@ -92,7 +89,6 @@ timestamps {
         }]
       """
       writeJSON file: "${WORKSPACE}/${customRouteFilePath}", json: routeFileContent
-
     }
 
     stage("tests") {
