@@ -71,12 +71,13 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
                   }
                 }]
                 '''
-                sh 'echo ${routeFileContent} > ${customRouteFilePath}'
 
-                sh 'cat ${customRouteFilePath}'
+                sh 'echo ${routeFileContent} > ${WORKSPACE}/${customRouteFilePath}'
+
+                sh 'cat ${WORKSPACE}/${customRouteFilePath}'
                 sh 'yarn build'
 
-                sh 'yarn bedrock-auto -b ${platform.browser} -f tinymce-angular-component/src/test/ts/smoke-test/VerifyIntegrationTest.ts --chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --remote lambdatest --customRoutes ${customRouteFilePath}'
+                sh 'yarn bedrock-auto -b ${platform.browser} -f tinymce-angular-component/src/test/ts/smoke-test/VerifyIntegrationTest.ts --chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --remote lambdatest --customRoutes ${WORKSPACE}/${customRouteFilePath}'
 
 									junit allowEmptyResults: true, testResults: 'scratch/TEST-*.xml'
 									if (testStatus == 4) {
