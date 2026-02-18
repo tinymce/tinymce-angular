@@ -18,7 +18,21 @@ properties([
 def runSmokeTests(Map args = new LinkedHashMap()) {
   // String stagingJwtCredentials = 'informant-staging-jwt'
   // String prodJwtCredentials = 'informant-production-jwt'
-  String routeFilePath = 'version.json'
+  String customRouteFilePath = 'version.json'
+  String routFileContent = '''
+                [{
+                  "request": {
+                    "method": "get",
+                    "path": "/custom/integration/info"
+                  },
+                  "response": {
+                    "status": 200,
+                    "json": {
+                      "version": "$nextVersion"
+                    }
+                  }
+                }]
+                '''
 
   String testDir = args.test_dir ?: 'smoke'
   String additionalArgs = "--chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3"
@@ -53,8 +67,15 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
             stage("${name}") {
               bedrockRemoteTools.tinyWorkSishTunnel()
               bedrockRemoteTools.withRemoteCreds(platform.provider) {
+                def nextVersion = sh('npm view @angular/core@next version', returnStdout: true).toString().trim()
                 
-                def testStatus = exec(script: "bash smoke-test.sh ${platform.browser}", returnStatus: true)
+                sh ('yarn add @angular/animations@next @angular/common@next @angular/compiler@next @angular/core@next @angular/forms@next @angular/platform-browser@next @angular-devkit/build-angular@next @angular/cli@next @angular/compiler-cli@next')
+                sh ('echo ${routFileContent} > ' + customRouteFilePath)
+
+                sh ('cat ${customRouteFilePath}')
+                sh ('yarn build')
+
+                sh ('yarn bedrock-auto -b $1 -f tinymce-angular-component/src/test/ts/smoke-test/VerifyIntegrationTest.ts --chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --remote lambdatest --customRoutes $ROUTE_FILE_PATH')
 
 									junit allowEmptyResults: true, testResults: 'scratch/TEST-*.xml'
 									if (testStatus == 4) {
