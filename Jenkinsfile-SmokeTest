@@ -59,14 +59,14 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
 
                 def routeFileContent = """
                   [{
-                    "request": {
-                      "method": "get",
-                      "path": "/custom/integration/info"
+                    \"request\": {
+                      \"method\": \"get\",
+                      \"path\": \"/custom/integration/info\"
                     },
-                    "response": {
-                      "status": 200,
-                      "json": {
-                        "version": "${nextVersion}"
+                    \"response\": {
+                      \"status\": 200,
+                      \"json\": {
+                        \"version\": \"${nextVersion}\"
                       }
                     }
                   }]
