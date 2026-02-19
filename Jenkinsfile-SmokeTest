@@ -83,7 +83,7 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
                 bedrockTests(
                   name: name,
                   browser: platform.browser,
-                  testDirs: [ "src/test/ts/" ],
+                  testDirs: [ "tinymce-angular-component/src/test/ts" ],
                   bucket: currBucket,
                   buckets: buckets,
                   custom: customArgs
@@ -103,7 +103,7 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
               bedrockTests(
                 name: name,
                 browser: platform.browser,
-                testDirs: [ "src/test/ts" ],
+                testDirs: [ "tinymce-angular-component/src/test/ts" ],
                 bucket: currBucket,
                 buckets: buckets,
                 custom: additionalArgs + " --useSelenium"
