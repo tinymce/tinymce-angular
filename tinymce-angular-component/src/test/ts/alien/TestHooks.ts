@@ -70,7 +70,7 @@ export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModul
     fixture.detectChanges();
 
     return firstValueFrom(
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
       editorComponent.onInit.pipe(
         throwTimeout(10000, `Timed out waiting for editor to load`),
         switchMap(

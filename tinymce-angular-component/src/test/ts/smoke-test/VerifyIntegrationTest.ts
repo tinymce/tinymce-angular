@@ -23,7 +23,7 @@ describe('VerifyIntegrationTest', () => {
     Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, editor.editorManager.majorVersion);
     Assertions.assertEq(`Loaded version of TinyMCE should be ${version}`, version, Global.tinymce.majorVersion);
   };
-  
+
   for (const version of supportedTinymceVersions()) {
     context(`With local Tinymce version ${version}`, () => {
       const createFixture = editorHook(EditorComponent, {
@@ -42,7 +42,7 @@ describe('VerifyIntegrationTest', () => {
         const integrationInfo = await window.fetch('/custom/integration/info').then((resp) => resp.json()) as IntegrationInfo;
         const container = editor.getContainer();
 
-        Assertions.assertEq(`Angular version should be ${integrationInfo.version}`, 
+        Assertions.assertEq(`Angular version should be ${integrationInfo.version}`,
           true,
           Attribute.get(SugarElement.fromDom(container), 'data-framework-version') === integrationInfo.version
         );
