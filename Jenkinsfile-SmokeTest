@@ -122,7 +122,6 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
 }
 
 timestamps {
-  tinyPods.node() {
     stage("deps") {
       yarnInstall()
     }
@@ -134,5 +133,4 @@ timestamps {
     stage("tests") {
       runSmokeTests(npm_tag: params.NPM_TAG ?: 'latest')
     }
-  }
 }
