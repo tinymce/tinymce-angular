@@ -18,6 +18,9 @@ properties([
 def generateNPMVersionRouteFile(Map args = new LinkedHashMap()) {
   // @angular/core's version is the one baked into the angular app
   def nextVersion = sh(script: "npm view @angular/core@${args.npm_tag} version", returnStdout: true).trim()
+
+  echo "Target framework version: ${nextVersion}"
+
   def routeFileContent = readJSON text: """
     [{
       "request": {
