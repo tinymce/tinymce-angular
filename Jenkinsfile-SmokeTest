@@ -16,7 +16,6 @@ properties([
 
 // Generates a custom route file that contains the next version of Angular to test against
 def generateNPMVersionRouteFile(Map args = new LinkedHashMap()) {
-  def customRouteFilePath = "${WORKSPACE}/version.json"
   // @angular/core's version is the one baked into the angular app
   def nextVersion = sh(script: "npm view @angular/core@${args.npm_tag} version", returnStdout: true).trim()
   def routeFileContent = readJSON text: """
@@ -33,8 +32,7 @@ def generateNPMVersionRouteFile(Map args = new LinkedHashMap()) {
       }
     }]
   """
-  writeJSON file: "${customRouteFilePath}", json: routeFileContent
-  return customRouteFilePath
+  writeJSON file: "${args.filePath}", json: routeFileContent
 }
 
 // Updates the Angular dependencies to the version specified by the npm tag
@@ -61,6 +59,8 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
     [ browser: "safari", provider: "lambdatest" ],
     [ browser: "edge", provider: "lambdatest" ]
   ]
+  String customRouteFilePath = "${WORKSPACE}/version.json"
+  String additionalArgs = "--chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --customRoutes ${customRouteFilePath}"
 
   def processes = [:]
 
@@ -81,8 +81,6 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
             stage("${name}") {
               bedrockRemoteTools.tinyWorkSishTunnel()
               bedrockRemoteTools.withRemoteCreds(platform.provider) {
-                // Create custom route file to contain the next version of Angular to test against
-                String customRouteFilePath = generateNPMVersionRouteFile(npm_tag: args.npm_tag)
                 String customArgs = additionalArgs + " --remote ${platform.provider}"
                 if (platform.provider == "aws") {
                   customArgs = customArgs + " --sishDomain \"sish.osu.tiny.work\""
@@ -91,6 +89,7 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
                   customArgs = customArgs + " --platformName \"${platform.os}\""
                 }
 
+                generateNPMVersionRouteFile(npm_tag: args.npm_tag, filePath: customRouteFilePath)
                 updateDependenciesWithTag(npm_tag: args.npm_tag)
                 bedrockTests(
                   name: name,
@@ -98,7 +97,7 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
                   testDirs: [ "src/test/ts/" ],
                   bucket: currBucket,
                   buckets: buckets,
-                  custom: customArgs + " --customRoutes ${customRouteFilePath}"
+                  custom: customArgs
                 )
               }
             }
@@ -110,16 +109,15 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
         processes[name] = {
           tinyPods.nodeBrowser(browser: platform.browser) {
             stage("${name}") {
-              yarnInstall()
-              def customRouteFilePath = generateNPMVersionRouteFile(npm_tag: args.npm_tag)
-
+              generateNPMVersionRouteFile(npm_tag: args.npm_tag, filePath: customRouteFilePath)
+              updateDependenciesWithTag(npm_tag: args.npm_tag)
               bedrockTests(
                 name: name,
                 browser: platform.browser,
                 testDirs: [ "src/test/ts/browser/" ],
                 bucket: currBucket,
                 buckets: buckets,
-                custom: additionalArgs + " --useSelenium --customRoutes ${customRouteFilePath}"
+                custom: additionalArgs + " --useSelenium"
               )
             }
           }
