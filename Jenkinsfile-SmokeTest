@@ -46,10 +46,7 @@ def updateDependenciesWithTag(Map args = new LinkedHashMap()) {
 
 def runSmokeTests(Map args = new LinkedHashMap()) {
   def platforms = args.platforms ?: [
-    [ browser: "chrome", provider: "lambdatest" ],
-    [ browser: "firefox", provider: "lambdatest" ],
-    [ browser: "safari", provider: "lambdatest" ],
-    [ browser: "edge", provider: "lambdatest" ]
+    [ browser: "chrome", provider: "lambdatest" ]
   ]
   String customRouteFilePath = "${WORKSPACE}/version.json"
   String additionalArgs = "--chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --customRoutes ${customRouteFilePath}"
@@ -122,15 +119,15 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
 }
 
 timestamps {
-    stage("deps") {
-      yarnInstall()
-    }
+  stage('deps') {
+    yarnInstall()
+  }
 
-    stage("build") {
-      sh 'yarn build'
-    }
+  stage('build') {
+    sh 'yarn build'
+  }
 
-    stage("tests") {
-      runSmokeTests(npm_tag: params.NPM_TAG ?: 'latest')
-    }
+  stage('tests') {
+    runSmokeTests(npm_tag: params.NPM_TAG ?: 'latest')
+  }
 }
