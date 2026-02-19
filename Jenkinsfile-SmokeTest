@@ -66,38 +66,17 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
       if (platform.provider) {
         def name = "${platform.browser}-${platform.provider}${suffix}"
         processes[name] = {
-          tinyPods.node {
-            stage("${name}") {
-              bedrockRemoteTools.tinyWorkSishTunnel()
-              bedrockRemoteTools.withRemoteCreds(platform.provider) {
-                String customArgs = additionalArgs + " --remote ${platform.provider}"
-                if (platform.provider == "aws") {
-                  customArgs = customArgs + " --sishDomain \"sish.osu.tiny.work\""
-                }
-                if (platform.os) {
-                  customArgs = customArgs + " --platformName \"${platform.os}\""
-                }
-
-                generateNPMVersionRouteFile(npm_tag: args.npm_tag, filePath: customRouteFilePath)
-                updateDependenciesWithTag(npm_tag: args.npm_tag)
-                bedrockTests(
-                  name: name,
-                  browser: platform.browser,
-                  testDirs: [ "tinymce-angular-component/src/test/ts" ],
-                  bucket: currBucket,
-                  buckets: buckets,
-                  custom: customArgs
-                )
+          stage("${name}") {
+            bedrockRemoteTools.tinyWorkSishTunnel()
+            bedrockRemoteTools.withRemoteCreds(platform.provider) {
+              String customArgs = additionalArgs + " --remote ${platform.provider}"
+              if (platform.provider == "aws") {
+                customArgs = customArgs + " --sishDomain \"sish.osu.tiny.work\""
               }
-            }
-          }
-        }
-      } else {
-        // Headless code in case is needed
-        def name = "headless-${platform.browser}${suffix}"
-        processes[name] = {
-          tinyPods.nodeBrowser(browser: platform.browser) {
-            stage("${name}") {
+              if (platform.os) {
+                customArgs = customArgs + " --platformName \"${platform.os}\""
+              }
+
               generateNPMVersionRouteFile(npm_tag: args.npm_tag, filePath: customRouteFilePath)
               updateDependenciesWithTag(npm_tag: args.npm_tag)
               bedrockTests(
@@ -106,9 +85,26 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
                 testDirs: [ "tinymce-angular-component/src/test/ts" ],
                 bucket: currBucket,
                 buckets: buckets,
-                custom: additionalArgs + " --useSelenium"
+                custom: customArgs
               )
             }
+          }
+        }
+      } else {
+        // Headless code in case is needed
+        def name = "headless-${platform.browser}${suffix}"
+        processes[name] = {
+          stage("${name}") {
+            generateNPMVersionRouteFile(npm_tag: args.npm_tag, filePath: customRouteFilePath)
+            updateDependenciesWithTag(npm_tag: args.npm_tag)
+            bedrockTests(
+              name: name,
+              browser: platform.browser,
+              testDirs: [ "tinymce-angular-component/src/test/ts" ],
+              bucket: currBucket,
+              buckets: buckets,
+              custom: additionalArgs + " --useSelenium"
+            )
           }
         }
       }
@@ -119,15 +115,17 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
 }
 
 timestamps {
-  stage('deps') {
-    yarnInstall()
-  }
+  tinyPods.node() {
+    stage('deps') {
+      yarnInstall()
+    }
 
-  stage('build') {
-    sh 'yarn build'
-  }
+    stage('build') {
+      sh 'yarn build'
+    }
 
-  stage('tests') {
-    runSmokeTests(npm_tag: params.NPM_TAG ?: 'latest')
+    stage('tests') {
+      runSmokeTests(npm_tag: params.NPM_TAG ?: 'latest')
+    }
   }
 }
