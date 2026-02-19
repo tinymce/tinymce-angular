@@ -142,7 +142,7 @@ timestamps {
     }
 
     stage("tests") {
-      runSmokeTests(npm_tag: params.NPM_TAG)
+      runSmokeTests(npm_tag: params.NPM_TAG ?: 'latest')
     }
   }
 }
