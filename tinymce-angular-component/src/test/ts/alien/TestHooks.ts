@@ -1,6 +1,6 @@
 import { after, before, beforeEach, context } from '@ephox/bedrock-client';
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
-import { Type } from '@angular/core';
+import { Type, VERSION } from '@angular/core';
 import { EditorComponent, Version } from '../../../main/ts/editor/editor.component';
 import { firstValueFrom, map, switchMap, tap } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -9,6 +9,7 @@ import { VersionLoader } from '@tinymce/miniature';
 import { deleteTinymce, throwTimeout } from './TestHelpers';
 import { FormsModule, ReactiveFormsModule, NgModel } from '@angular/forms';
 import type { Editor } from 'tinymce';
+import { Attribute, SugarElement } from '@ephox/sugar';
 
 export const fixtureHook = <T = unknown>(component: Type<T>, moduleDef: TestModuleMetadata) => {
   before(async () => {
@@ -69,15 +70,19 @@ export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModul
     fixture.detectChanges();
 
     return firstValueFrom(
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
       editorComponent.onInit.pipe(
         throwTimeout(10000, `Timed out waiting for editor to load`),
         switchMap(
           ({ editor }) =>
             new Promise<Editor>((resolve) => {
               editor.once('SkinLoaded', () => {
+                // Bake the Angular version as a data attribute on the editor container so it can be verified in the test
+                const container = editor.getContainer();
+                Attribute.set(SugarElement.fromDom( container), 'data-framework-version', VERSION.full);
+
                 // This is a workaround to avoid a race condition occurring in tinymce 8 where licenseKeyManager is still validating the license key
-              // after global tinymce is removed in a clean up. Specifically, it happens when unloading/loading different versions of TinyMCE
+                // after global tinymce is removed in a clean up. Specifically, it happens when unloading/loading different versions of TinyMCE
                 if (editor.licenseKeyManager) {
                   editor.licenseKeyManager.validate({}).then(() => {
                     resolve(editor as Editor);
