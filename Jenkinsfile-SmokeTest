@@ -100,13 +100,6 @@ def notify(Map slackArgs) {
   }
 }
 
-def notifyOnFailure(String message) {
-    notify(
-    channel: '#tiny-integrations-dev',
-    color: 'danger',
-    message: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} failed: ${message} (<${env.BUILD_URL}|Open>)"
-  )
-}
 
 timestamps {
   tinyPods.node() {
@@ -142,8 +135,18 @@ timestamps {
       try {
         runSmokeTests(npmTag: npmTag, routeContent: customRouteContent, routeFilePath: "${WORKSPACE}/version.json")
       } catch (Exception e) {
-        notifyOnFailure("Failed with error: ${e}")
+        echo "Exception was caught: ${e}"
         currentBuild.result = 'FAILURE'
+      } finally {
+        if (currentBuild.result != 'SUCCESS') {
+          def color = ['UNSTABLE': 'warning', 'FAILURE': 'danger']
+          def message = currentBuild.result == 'UNSTABLE' ? 'Tests have failed' : 'Build has failed'
+          notify(
+            channel: '#tiny-integrations-dev',
+            color: color.get(currentBuild.result, '#808080'),
+            message: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} failed: ${message} (<${env.BUILD_URL}|Open>)"
+          )
+        }
       }
     }
   }
