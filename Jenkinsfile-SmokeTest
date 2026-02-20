@@ -16,7 +16,7 @@ properties([
 
 // Generates a custom route file that contains the next version of Angular to test against
 def generateNPMVersionRouteFile(Map args = new LinkedHashMap()) {
-  writeJSON file: "${args.filePath}", json: args.routeFileContent
+  writeJSON file: "${args.filePath}", json: args.content
 }
 
 // Updates the Angular dependencies to the version specified by the npm tag
@@ -74,7 +74,7 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
         def name = "headless-${platform.browser}${suffix}"
         processes[name] = {
           stage("${name}") {
-            generateNPMVersionRouteFile(npmTag: args.npmTag, filePath: args.routeFile)
+            generateNPMVersionRouteFile(content: args.routeContent, filePath: args.routeFilePath)
             updateDependenciesWithTag(npmTag: args.npmTag)
             bedrockTests(
               name: name,
