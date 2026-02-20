@@ -128,7 +128,7 @@ def notify(Map slackArgs) {
 
 def notifyOnFailure(String message) {
     notify(
-    channel: '#tinymce-integrations-dev',
+    channel: '#tiny-integrations-dev',
     color: 'danger',
     message: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} failed: ${message} (<${env.BUILD_URL}|Open>)"
   )
