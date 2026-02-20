@@ -114,6 +114,26 @@ def runSmokeTests(Map args = new LinkedHashMap()) {
   parallel processes
 }
 
+def getMessage(boolean success, String name, String branch, String status, String url) {
+  return success ? "${name} [`${branch}`] is back in the <${url}|green>! :greendot:" :
+    ":warning: ${name} [`${branch}`] build regression to [${status}]: ${url}"
+}
+
+def notify(Map slackArgs) {
+  // In shared libraries, the `call` method is not in the pipeline CPS context. We need to call the `steps` object to safely call jenkins steps
+  steps.retry(3) {
+    return steps.slackSend([ username: 'TinyMCE Angular Smoke Test', failOnError: true ] + slackArgs)
+  }
+}
+
+def notifyOnFailure(String message) {
+    notify(
+    channel: '#tinymce-integration-dev',
+    color: 'danger',
+    message: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} failed: ${message} (<${env.BUILD_URL}|Open>)"
+  )
+}
+
 timestamps {
   tinyPods.node() {
     stage('deps') {
@@ -125,7 +145,13 @@ timestamps {
     }
 
     stage('tests') {
-      runSmokeTests(npm_tag: params.NPM_TAG ?: 'latest')
+      try {
+        error("Please ensure that the NPM_TAG parameter is set to a valid npm tag (e.g. 'latest' or 'next') before running the pipeline.")
+        runSmokeTests(npm_tag: params.NPM_TAG ?: 'latest')
+      } catch (Exception e) {
+        echo "Error running smoke tests: ${e}"
+        notifyOnFailure("TinyMCE Angular - Smoke Tests failed with error: ${e}")
+      }
     }
   }
 }
