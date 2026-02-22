@@ -1,0 +1,131 @@
+#!groovy
+@Library('waluigi@release/7') _
+
+properties([
+  disableConcurrentBuilds(),
+  buildDiscarder(logRotator(
+    artifactDaysToKeepStr: '',
+    artifactNumToKeepStr: '1',
+    daysToKeepStr: '',
+    numToKeepStr: '50'
+  )),
+  parameters([
+    string(defaultValue: 'next', description: 'The NPM publish tag ', name: 'NPM_TAG', trim: false),
+  ])
+])
+
+// Generates a custom route file that contains the next version of Angular to test against
+def generateNPMVersionRouteFile(Map args = new LinkedHashMap()) {
+  // @angular/core's version is the one baked into the angular app
+  def nextVersion = sh(script: "npm view @angular/core@${args.npm_tag} version", returnStdout: true).trim()
+
+  echo "Target framework version: ${nextVersion}"
+
+  def routeFileContent = readJSON text: """
+    [{
+      "request": {
+        "method": "get",
+        "path": "/custom/integration/info"
+      },
+      "response": {
+        "status": 200,
+        "json": {
+          "version": "${nextVersion}"
+        }
+      }
+    }]
+  """
+  writeJSON file: "${args.filePath}", json: routeFileContent
+}
+
+// Updates the Angular dependencies to the version specified by the npm tag
+def updateDependenciesWithTag(Map args = new LinkedHashMap()) {
+  String npm_tag = args.npm_tag
+  sh "yarn add @angular/core@${npm_tag} @angular/animations@${npm_tag} @angular/common@${npm_tag} @angular/compiler@${npm_tag} @angular/core@${npm_tag} @angular/forms@${npm_tag} @angular/platform-browser@${npm_tag} @angular-devkit/build-angular@${npm_tag} @angular/cli@${npm_tag} @angular/compiler-cli@${npm_tag}"
+}
+
+def runSmokeTests(Map args = new LinkedHashMap()) {
+  def platforms = args.platforms ?: [
+    [ browser: "chrome", provider: "lambdatest" ]
+  ]
+  String customRouteFilePath = "${WORKSPACE}/version.json"
+  String additionalArgs = "--chunk 20 --totalTimeout 1800000 --singleTimeout 90000 --retries 3 --customRoutes ${customRouteFilePath}"
+
+  def processes = [:]
+
+  for (int i = 0; i < platforms.size(); i++) {
+    def platform = platforms.get(i)
+    def buckets = platform.buckets ?: 1
+
+    for (int bucket = 1; bucket <= buckets; bucket++) {
+      // clousure var - don't inline or jenkins complains
+      def currBucket = bucket
+      def suffix = currBucket == 1 ? '' : "-${currBucket}"
+
+      // Run using remote provider
+      if (platform.provider) {
+        def name = "${platform.browser}-${platform.provider}${suffix}"
+        processes[name] = {
+          stage("${name}") {
+            bedrockRemoteTools.tinyWorkSishTunnel()
+            bedrockRemoteTools.withRemoteCreds(platform.provider) {
+              String customArgs = additionalArgs + " --remote ${platform.provider}"
+              if (platform.provider == "aws") {
+                customArgs = customArgs + " --sishDomain \"sish.osu.tiny.work\""
+              }
+              if (platform.os) {
+                customArgs = customArgs + " --platformName \"${platform.os}\""
+              }
+
+              generateNPMVersionRouteFile(npm_tag: args.npm_tag, filePath: customRouteFilePath)
+              updateDependenciesWithTag(npm_tag: args.npm_tag)
+              bedrockTests(
+                name: name,
+                browser: platform.browser,
+                testDirs: [ "tinymce-angular-component/src/test/ts" ],
+                bucket: currBucket,
+                buckets: buckets,
+                custom: customArgs
+              )
+            }
+          }
+        }
+      } else {
+        // Headless code in case is needed
+        def name = "headless-${platform.browser}${suffix}"
+        processes[name] = {
+          stage("${name}") {
+            generateNPMVersionRouteFile(npm_tag: args.npm_tag, filePath: customRouteFilePath)
+            updateDependenciesWithTag(npm_tag: args.npm_tag)
+            bedrockTests(
+              name: name,
+              browser: platform.browser,
+              testDirs: [ "tinymce-angular-component/src/test/ts" ],
+              bucket: currBucket,
+              buckets: buckets,
+              custom: additionalArgs + " --useSelenium"
+            )
+          }
+        }
+      }
+    }
+  }
+
+  parallel processes
+}
+
+timestamps {
+  tinyPods.node() {
+    stage('deps') {
+      yarnInstall()
+    }
+
+    stage('build') {
+      sh 'yarn build'
+    }
+
+    stage('tests') {
+      runSmokeTests(npm_tag: params.NPM_TAG ?: 'latest')
+    }
+  }
+}
