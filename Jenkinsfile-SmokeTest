@@ -127,7 +127,7 @@ timestamps {
           "response": {
             "status": 200,
             "json": {
-              "version": "${nextVersion}"
+              "version": "${nextVersion} + smoke_test"
             }
           }
         }]
@@ -141,7 +141,7 @@ timestamps {
       } finally {
         if (currentBuild.result != 'SUCCESS') {
           def color = ['UNSTABLE': 'warning', 'FAILURE': 'danger']
-          def message = currentBuild.result == 'UNSTABLE' ? 'Tests have failed' : 'Build has failed'
+          def message = currentBuild.result == 'UNSTABLE' ? 'Tests have failed' : 'An unexpected error has occurred'
           notify(
             channel: '#tiny-integrations-dev',
             color: color.get(currentBuild.result, '#808080'),
