@@ -139,6 +139,7 @@ timestamps {
         echo "Exception was caught: ${e}"
         currentBuild.result = 'FAILURE'
       } finally {
+        echo "Current build result: ${currentBuild.result}"
         if (currentBuild.result != 'SUCCESS') {
           def color = ['UNSTABLE': 'warning', 'FAILURE': 'danger']
           def message = currentBuild.result == 'UNSTABLE' ? "Tests failed" : 'An unexpected error occurred while running tests'
