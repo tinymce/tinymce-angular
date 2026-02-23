@@ -141,11 +141,12 @@ timestamps {
       } finally {
         if (currentBuild.result != 'SUCCESS') {
           def color = ['UNSTABLE': 'warning', 'FAILURE': 'danger']
-          def message = currentBuild.result == 'UNSTABLE' ? 'Tests have failed' : 'An unexpected error has occurred'
+          def message = currentBuild.result == 'UNSTABLE' ? "Tests failed" : 'An unexpected error occurred while running tests'
+
           notify(
             channel: '#tiny-integrations-dev',
             color: color.get(currentBuild.result, '#808080'),
-            message: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} failed: ${message} (<${env.BUILD_URL}|Open>)"
+            message: "${env.JOB_NAME} against ${nextVersion} failed: ${message} (<${env.BUILD_URL}|Open>)"
           )
         }
       }
