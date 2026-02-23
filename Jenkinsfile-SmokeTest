@@ -127,7 +127,7 @@ timestamps {
           "response": {
             "status": 200,
             "json": {
-              "version": "${nextVersion} + smoke_test"
+              "version": "${nextVersion}"
             }
           }
         }]
