@@ -11928,7 +11928,7 @@ semver-dsl@^1.0.1:
   dependencies:
     semver "^5.3.0"
 
-semver@7.7.3, semver@^7.3.4, semver@^7.3.5, semver@^7.3.7, semver@^7.5.4, semver@^7.6.0, semver@^7.6.2, semver@^7.7.2:
+semver@7.7.3, semver@^7.0.0, semver@^7.1.1, semver@^7.3.4, semver@^7.3.5, semver@^7.3.7, semver@^7.5.3, semver@^7.5.4, semver@^7.6.0, semver@^7.6.2, semver@^7.7.2:
   version "7.7.3"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.7.3.tgz#4b5f4143d007633a8dc671cd0a6ef9147b8bb946"
   integrity sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==
@@ -11942,11 +11942,6 @@ semver@^6.0.0, semver@^6.3.0, semver@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
-
-semver@^7.0.0, semver@^7.1.1, semver@^7.5.3:
-  version "7.6.2"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.6.2.tgz#1e3b34759f896e8f14d6134732ce798aeb0c6e13"
-  integrity sha512-FNAIBWCx9qcRhoHcgcJ0gvU7SN1lYU2ZXuSfl04bSC5OpvDHFyJCjdNHomPXxjQlCBU67YW64PzY7/VIEH7F2w==
 
 send@0.19.0:
   version "0.19.0"
@@ -12420,9 +12415,9 @@ stdin-discarder@^0.2.2:
   integrity sha512-UhDfHmA92YAlNnCfhmq0VeNL5bDbiZGg7sZ2IvPsXubGkiNa9EC+tUTsjBRsYUAz87btI6/1wf4XoVvQ3uRnmQ==
 
 storybook@^9:
-  version "9.1.17"
-  resolved "https://registry.yarnpkg.com/storybook/-/storybook-9.1.17.tgz#1d210ecb7e62260a68644d3e6cc81e04c0dcce85"
-  integrity sha512-kfr6kxQAjA96ADlH6FMALJwJ+eM80UqXy106yVHNgdsAP/CdzkkicglRAhZAvUycXK9AeadF6KZ00CWLtVMN4w==
+  version "9.1.19"
+  resolved "https://registry.yarnpkg.com/storybook/-/storybook-9.1.19.tgz#50b7750534c8c61f934d9c21fe6d904da68c7d54"
+  integrity sha512-P7K/b+Pn1sXJzwYCF6hH5Zjdrg4ZlA5Bz9rdOJEdvm6ev27XESDGI+Ql+dfUfUcGOym3Aud4MssJIDEF2ocsyQ==
   dependencies:
     "@storybook/global" "^5.0.0"
     "@testing-library/jest-dom" "^6.6.3"
@@ -13743,12 +13738,7 @@ ws@8.16.0:
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.16.0.tgz#d1cd774f36fbc07165066a60e40323eab6446fd4"
   integrity sha512-HS0c//TP7Ina87TfiPUz1rQzMhHrl/SG2guqRcTOIUYD2q8uhUdNHZYJUaQ8aTGPzCh+c6oawMKW35nFl1dxyQ==
 
-ws@^8.13.0, ws@^8.8.0:
-  version "8.18.3"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.18.3.tgz#b56b88abffde62791c639170400c93dcb0c95472"
-  integrity sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg==
-
-ws@^8.18.0:
+ws@^8.13.0, ws@^8.18.0, ws@^8.8.0:
   version "8.19.0"
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.19.0.tgz#ddc2bdfa5b9ad860204f5a72a4863a8895fd8c8b"
   integrity sha512-blAT2mjOEIi0ZzruJfIhb3nps74PRWTCz1IjglWEEpQl5XS/UNama6u2/rjFkDDouqr4L67ry+1aGIALViWjDg==
