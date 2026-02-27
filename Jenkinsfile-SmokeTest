@@ -21,7 +21,8 @@ def generateNPMVersionRouteFile(Map args = new LinkedHashMap()) {
 
 // Updates the Angular dependencies to the version specified by the npm tag
 def updateDependenciesWithTag(Map args = new LinkedHashMap()) {
-  sh "yarn add @angular/core@${args.npmTag} @angular/animations@${args.npmTag} @angular/common@${args.npmTag} @angular/compiler@${args.npmTag} @angular/core@${args.npmTag} @angular/forms@${args.npmTag} @angular/platform-browser@${args.npmTag} @angular-devkit/build-angular@${args.npmTag} @angular/cli@${args.npmTag} @angular/compiler-cli@${args.npmTag}"
+  String npmTag = args.npmTag ?: 'latest'
+  sh "yarn add @angular/core@${npmTag} @angular/animations@${npmTag} @angular/common@${npmTag} @angular/compiler@${npmTag} @angular/core@${npmTag} @angular/forms@${npmTag} @angular/platform-browser@${npmTag} @angular-devkit/build-angular@${npmTag} @angular/cli@${npmTag} @angular/compiler-cli@${npmTag}"
 }
 
 def runSmokeTests(Map args = new LinkedHashMap()) {
