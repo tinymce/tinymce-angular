@@ -7,7 +7,6 @@ import {
   forwardRef,
   Inject,
   Input,
-  NgZone,
   OnDestroy,
   PLATFORM_ID,
   InjectionToken,
@@ -34,7 +33,7 @@ const EDITOR_COMPONENT_VALUE_ACCESSOR = {
   multi: true
 };
 
-export type Version = `${'4' | '5' | '6' | '7' | '8'}${'' | '-dev' | '-testing' | `.${number}` | `.${number}.${number}`}`;
+export type Version = `${'5' | '6' | '7' | '8'}${'' | '-dev' | '-testing' | `.${number}` | `.${number}.${number}`}`;
 
 @Component({
   selector: 'editor',
@@ -97,7 +96,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     return this._editor;
   }
 
-  public ngZone: NgZone;
+  // public ngZone: NgZone;
 
   private _elementRef: ElementRef;
   private _element?: HTMLElement;
@@ -112,14 +111,14 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   public constructor(
     elementRef: ElementRef,
-    ngZone: NgZone,
+    // ngZone: NgZone,
     private cdRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: object,
     @Optional() @Inject(TINYMCE_SCRIPT_SRC) private tinymceScriptSrc?: string
   ) {
     super();
     this._elementRef = elementRef;
-    this.ngZone = ngZone;
+    // this.ngZone = ngZone;
   }
 
   public writeValue(value: string | null): void {
@@ -222,9 +221,9 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       this._element.style.visibility = '';
     }
 
-    this.ngZone.runOutsideAngular(() => {
-      getTinymce().init(finalInit);
-    });
+    // this.ngZone.runOutsideAngular(() => {
+    getTinymce().init(finalInit);
+    // });
   };
 
   private getScriptSrc() {
@@ -236,16 +235,15 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
   private initEditor(editor: TinyMCEEditor) {
     listenTinyMCEEvent(editor, 'blur', this.destroy$).subscribe(() => {
       this.cdRef.markForCheck();
-      this.ngZone.run(() => this.onTouchedCallback());
+      this.onTouchedCallback();
     });
 
     listenTinyMCEEvent(editor, this.modelEvents, this.destroy$).subscribe(() => {
       this.cdRef.markForCheck();
-      this.ngZone.run(() => this.emitOnChange(editor));
+      this.emitOnChange(editor);
     });
 
     if (typeof this.initialValue === 'string') {
-      this.ngZone.run(() => {
         editor.setContent(this.initialValue as string);
         if (editor.getContent() !== this.initialValue) {
           this.emitOnChange(editor);
@@ -253,7 +251,6 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
         if (this.onInitNgModel !== undefined) {
           this.onInitNgModel.emit(editor as unknown as EventObj<any>);
         }
-      });
     }
   }
 

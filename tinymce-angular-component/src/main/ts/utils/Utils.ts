@@ -25,16 +25,15 @@ const listenTinyMCEEvent = (
 const bindHandlers = (ctx: EditorComponent, editor: any, destroy$: Subject<void>): void => {
   const allowedEvents = getValidEvents(ctx);
   allowedEvents.forEach((eventName) => {
-    const eventEmitter: EventEmitter<any> = ctx[eventName];
+    const eventEmitter: EventEmitter<any> = ctx[eventName]
 
     listenTinyMCEEvent(editor, eventName.substring(2), destroy$).subscribe((event) => {
-      // Caretaker note: `ngZone.run()` runs change detection since it notifies the forked Angular zone that it's
-      // being re-entered. We don't want to run `ApplicationRef.tick()` if anyone listens to the specific event
-      // within the template. E.g. if the `onSelectionChange` is not listened within the template like:
+      // Caretaker note: We only emit if the event emitter is observed to avoid scheduling unnecessary change
+      // detection runs. E.g. if `onSelectionChange` is not bound in the template like:
       // `<editor (onSelectionChange)="..."></editor>`
-      // then it won't be "observed", and we won't run "dead" change detection.
+      // then it won't be "observed" and we can skip emmitting the event
       if (isObserved(eventEmitter)) {
-        ctx.ngZone.run(() => eventEmitter.emit({ event, editor }));
+        eventEmitter.emit({ event, editor });
       }
     });
   });

@@ -5,7 +5,7 @@ import { context, describe, it } from '@ephox/bedrock-client';
 
 import { EditorComponent } from '../../../main/ts/public_api';
 import { eachVersionContext, fixtureHook } from '../alien/TestHooks';
-import { captureLogs, throwTimeout } from '../alien/TestHelpers';
+import { captureLogs, supportedTinymceVersions, throwTimeout } from '../alien/TestHelpers';
 import { concatMap, distinct, firstValueFrom, mergeMap, of, toArray } from 'rxjs';
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -42,7 +42,7 @@ describe('PropTest', () => {
       )
     );
 
-  eachVersionContext([ '4', '5', '6', '7', '8' ], () => {
+  eachVersionContext(supportedTinymceVersions(), () => {
     context('Single editor with ID', () => {
       @Component({
         standalone: true,

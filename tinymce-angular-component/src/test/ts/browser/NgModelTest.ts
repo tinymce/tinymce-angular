@@ -8,14 +8,14 @@ import { describe, it } from '@ephox/bedrock-client';
 
 import { EditorComponent } from '../../../main/ts/editor/editor.component';
 import { eachVersionContext, editorHook } from '../alien/TestHooks';
-import { fakeTypeInEditor } from '../alien/TestHelpers';
+import { fakeTypeInEditor, supportedTinymceVersions } from '../alien/TestHelpers';
 
 describe('NgModelTest', () => {
   const assertNgModelState = (prop: 'valid' | 'pristine' | 'touched', expected: boolean, ngModel: NgModel) => {
     Assertions.assertEq('assert ngModel ' + prop + ' state', expected, ngModel[prop]);
   };
 
-  eachVersionContext([ '4', '5', '6', '7', '8' ], () => {
+  eachVersionContext(supportedTinymceVersions(), () => {
     @Component({
       standalone: true,
       imports: [ EditorComponent, FormsModule ],

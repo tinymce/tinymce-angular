@@ -4,19 +4,13 @@ import { describe, it } from '@ephox/bedrock-client';
 
 import { EditorComponent } from '../../../main/ts/public_api';
 import { eachVersionContext, editorHook } from '../alien/TestHooks';
-import { map, merge, timer, first, buffer, Observable, tap, firstValueFrom } from 'rxjs';
-import { NgZone } from '@angular/core';
+import { map, merge, timer, first, buffer, firstValueFrom } from 'rxjs';
 import { Assertions } from '@ephox/agar';
 import { Fun } from '@ephox/katamari';
-import { throwTimeout } from '../alien/TestHelpers';
+import { supportedTinymceVersions, throwTimeout } from '../alien/TestHelpers';
 
 describe('EventBlacklistingTest', () => {
-  const shouldRunInAngularZone = <T>(source: Observable<T>) =>
-    source.pipe(
-      tap(() => Assertions.assertEq('Subscribers to events should run within NgZone', true, NgZone.isInAngularZone()))
-    );
-
-  eachVersionContext([ '4', '5', '6', '7', '8' ], () => {
+  eachVersionContext(supportedTinymceVersions(), () => {
     const createFixture = editorHook(EditorComponent);
 
     it('Events should be bound when allowed', async () => {
@@ -27,9 +21,9 @@ describe('EventBlacklistingTest', () => {
 
       const pEventsCompleted = firstValueFrom(
         merge(
-          fixture.editorComponent.onKeyUp.pipe(map(Fun.constant('onKeyUp')), shouldRunInAngularZone),
-          fixture.editorComponent.onKeyDown.pipe(map(Fun.constant('onKeyDown')), shouldRunInAngularZone),
-          fixture.editorComponent.onClick.pipe(map(Fun.constant('onClick')), shouldRunInAngularZone)
+          fixture.editorComponent.onKeyUp.pipe(map(Fun.constant('onKeyUp'))),
+          fixture.editorComponent.onKeyDown.pipe(map(Fun.constant('onKeyDown'))),
+          fixture.editorComponent.onClick.pipe(map(Fun.constant('onClick')))
         ).pipe(throwTimeout(10000, 'Timed out waiting for some event to fire'), buffer(timer(100)), first())
       );
       fixture.editor.fire('keydown');

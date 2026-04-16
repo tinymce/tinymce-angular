@@ -30,7 +30,7 @@ export const IframeStory: StoryObj<EditorComponent> = {
     initialValue: sampleContent,
     init: {
       height: 300,
-      plugins: 'help',
+      plugins: 'help code',
     },
   }
 };
