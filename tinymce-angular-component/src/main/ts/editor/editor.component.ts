@@ -2,17 +2,17 @@
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   forwardRef,
   Inject,
+  InjectionToken,
   Input,
   OnDestroy,
-  PLATFORM_ID,
-  InjectionToken,
   Optional,
-  ChangeDetectorRef,
-  ChangeDetectionStrategy
+  PLATFORM_ID,
 } from '@angular/core';
 import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
@@ -96,8 +96,6 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     return this._editor;
   }
 
-  // public ngZone: NgZone;
-
   private _elementRef: ElementRef;
   private _element?: HTMLElement;
   private _disabled?: boolean;
@@ -111,14 +109,12 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
 
   public constructor(
     elementRef: ElementRef,
-    // ngZone: NgZone,
     private cdRef: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: object,
     @Optional() @Inject(TINYMCE_SCRIPT_SRC) private tinymceScriptSrc?: string
   ) {
     super();
     this._elementRef = elementRef;
-    // this.ngZone = ngZone;
   }
 
   public writeValue(value: string | null): void {
@@ -221,9 +217,7 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
       this._element.style.visibility = '';
     }
 
-    // this.ngZone.runOutsideAngular(() => {
     getTinymce().init(finalInit);
-    // });
   };
 
   private getScriptSrc() {
