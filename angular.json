@@ -21,6 +21,7 @@
             "configDir": ".storybook",
             "browserTarget": "angular:build",
             "compodoc": false,
+            "experimentalZoneless": true,
             "port": 9001
           }
         },
@@ -30,7 +31,8 @@
             "configDir": ".storybook",
             "browserTarget": "angular:build",
             "compodoc": false,
-            "outputDir": "storybook-static"
+            "outputDir": "storybook-static",
+            "experimentalZoneless": true
           }
         }
       }
