@@ -238,13 +238,13 @@ export class EditorComponent extends Events implements AfterViewInit, ControlVal
     });
 
     if (typeof this.initialValue === 'string') {
-        editor.setContent(this.initialValue as string);
-        if (editor.getContent() !== this.initialValue) {
-          this.emitOnChange(editor);
-        }
-        if (this.onInitNgModel !== undefined) {
-          this.onInitNgModel.emit(editor as unknown as EventObj<any>);
-        }
+      editor.setContent(this.initialValue as string);
+      if (editor.getContent() !== this.initialValue) {
+        this.emitOnChange(editor);
+      }
+      if (this.onInitNgModel !== undefined) {
+        this.onInitNgModel.emit(editor as unknown as EventObj<any>);
+      }
     }
   }
 

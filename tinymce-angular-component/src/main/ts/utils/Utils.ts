@@ -25,7 +25,7 @@ const listenTinyMCEEvent = (
 const bindHandlers = (ctx: EditorComponent, editor: any, destroy$: Subject<void>): void => {
   const allowedEvents = getValidEvents(ctx);
   allowedEvents.forEach((eventName) => {
-    const eventEmitter: EventEmitter<any> = ctx[eventName]
+    const eventEmitter: EventEmitter<any> = ctx[eventName];
 
     listenTinyMCEEvent(editor, eventName.substring(2), destroy$).subscribe((event) => {
       // Caretaker note: We only emit if the event emitter is observed to avoid scheduling unnecessary change
