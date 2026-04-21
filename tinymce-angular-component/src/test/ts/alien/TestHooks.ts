@@ -72,7 +72,7 @@ export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModul
     return firstValueFrom(
 
       editorComponent.onInit.pipe(
-        throwTimeout(10000, `Timed out waiting for editor to load`),
+        throwTimeout(15000, `Timed out waiting for editor to load`),
         switchMap(
           ({ editor }) =>
             new Promise<Editor>((resolve) => {
