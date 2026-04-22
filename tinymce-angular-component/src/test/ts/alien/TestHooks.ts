@@ -23,9 +23,8 @@ export const tinymceVersionHook = (version: Version) => {
   before(async () => {
     await VersionLoader.pLoadVersion(version);
   });
-  after(() => {
-    deleteTinymce();
-  });
+
+  after(deleteTinymce);
 };
 
 export interface EditorFixture<T> extends ComponentFixture<T> {
@@ -72,7 +71,7 @@ export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModul
     return firstValueFrom(
 
       editorComponent.onInit.pipe(
-        throwTimeout(15000, `Timed out waiting for editor to load`),
+        throwTimeout(10000, `Timed out waiting for editor to load`),
         switchMap(
           ({ editor }) =>
             new Promise<Editor>((resolve) => {
@@ -85,14 +84,14 @@ export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModul
                 // after global tinymce is removed in a clean up. Specifically, it happens when unloading/loading different versions of TinyMCE
                 if (editor.licenseKeyManager) {
                   editor.licenseKeyManager.validate({}).then(() => {
-                    setTimeout(() => {
+                    // setTimeout(() => {
                       resolve(editor as Editor);
-                    }, 500);
+                    // }, 500);
                   }).catch((reason) => console.warn(reason));
                 } else {
-                  setTimeout(() => {
+                  // setTimeout(() => {
                     resolve(editor as Editor);
-                  }, 500);
+                  // }, 500);
                 }
               });
             })

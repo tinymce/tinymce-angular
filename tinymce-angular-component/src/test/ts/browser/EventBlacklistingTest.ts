@@ -1,16 +1,20 @@
 import '../alien/InitTestEnvironment';
 
-import { describe, it } from '@ephox/bedrock-client';
+import { after, describe, it } from '@ephox/bedrock-client';
 
 import { EditorComponent } from '../../../main/ts/public_api';
 import { eachVersionContext, editorHook } from '../alien/TestHooks';
 import { map, merge, timer, first, buffer, firstValueFrom } from 'rxjs';
 import { Assertions } from '@ephox/agar';
 import { Fun } from '@ephox/katamari';
-import { supportedTinymceVersions, throwTimeout } from '../alien/TestHelpers';
+import { deleteTinymce, supportedTinymceVersions, throwTimeout } from '../alien/TestHelpers';
 
 describe('EventBlacklistingTest', () => {
   eachVersionContext(supportedTinymceVersions(), () => {
+    after(() => {
+      deleteTinymce();
+    });
+
     const createFixture = editorHook(EditorComponent);
 
     it('Events should be bound when allowed', async () => {

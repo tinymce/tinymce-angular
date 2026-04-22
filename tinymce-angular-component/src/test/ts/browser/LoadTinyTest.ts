@@ -1,7 +1,7 @@
 import '../alien/InitTestEnvironment';
 
 import { Assertions } from '@ephox/agar';
-import { describe, it, context, before } from '@ephox/bedrock-client';
+import { describe, it, context, after } from '@ephox/bedrock-client';
 import { Global } from '@ephox/katamari';
 
 import { EditorComponent, TINYMCE_SCRIPT_SRC } from '../../../main/ts/public_api';
@@ -28,7 +28,7 @@ describe('LoadTinyTest', () => {
         ],
       });
 
-      before(deleteTinymce);
+      after(deleteTinymce);
 
       it('Should be able to load local version of TinyMCE specified via dependency injection', async () => {
         const { editor } = await createFixture();
@@ -51,7 +51,7 @@ describe('LoadTinyTest', () => {
     context(`With cloud version ${version}`, () => {
       const createFixture = editorHook(EditorComponent);
 
-      before(deleteTinymce);
+      after(deleteTinymce);
 
       it(`Should be able to load TinyMCE ${version} from Cloud`, async () => {
         const { editor } = await createFixture({ cloudChannel: version, apiKey: key });
