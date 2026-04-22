@@ -84,14 +84,10 @@ export const editorHook = <T = unknown>(component: Type<T>, moduleDef: TestModul
                 // after global tinymce is removed in a clean up. Specifically, it happens when unloading/loading different versions of TinyMCE
                 if (editor.licenseKeyManager) {
                   editor.licenseKeyManager.validate({}).then(() => {
-                    // setTimeout(() => {
-                      resolve(editor as Editor);
-                    // }, 500);
+                    resolve(editor as Editor);
                   }).catch((reason) => console.warn(reason));
                 } else {
-                  // setTimeout(() => {
-                    resolve(editor as Editor);
-                  // }, 500);
+                  resolve(editor as Editor);
                 }
               });
             })
