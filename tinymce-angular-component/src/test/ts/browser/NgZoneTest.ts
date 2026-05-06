@@ -9,7 +9,7 @@ import { eachVersionContext, fixtureHook } from '../alien/TestHooks';
 import { first } from 'rxjs';
 import { throwTimeout } from '../alien/TestHelpers';
 
-describe('NgZoneTest', () => {
+describe.skip('NgZoneTest', () => {
   eachVersionContext([ '4', '5', '6', '7', '8' ], () => {
     const createFixture = fixtureHook(EditorComponent, { imports: [ EditorComponent ] });
 

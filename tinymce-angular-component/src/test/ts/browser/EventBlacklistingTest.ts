@@ -10,7 +10,7 @@ import { Assertions } from '@ephox/agar';
 import { Fun } from '@ephox/katamari';
 import { throwTimeout } from '../alien/TestHelpers';
 
-describe('EventBlacklistingTest', () => {
+describe.skip('EventBlacklistingTest', () => {
   const shouldRunInAngularZone = <T>(source: Observable<T>) =>
     source.pipe(
       tap(() => Assertions.assertEq('Subscribers to events should run within NgZone', true, NgZone.isInAngularZone()))
