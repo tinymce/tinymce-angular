@@ -15,9 +15,25 @@ import 'zone.js/plugins/fake-async-test';
 
 import { TestBed } from '@angular/core/testing';
 import { BrowserTestingModule, platformBrowserTesting } from '@angular/platform-browser/testing';
+import { NgModule, provideZonelessChangeDetection } from '@angular/core';
+
+// According to Angular docs, TestBed uses zone-based change detection by default
+// when zone.js is loaded via polyfills:
+// https://angular.dev/guide/zoneless#testing-and-debugging
+//
+// In practice, this behaviour seems to be driven by Angular's built-in test runners
+// (Karma, Vitest) rather than TestBed itself. Since we use Bedrock, we appear to be
+// immune to this — zone-based detection does not kick in automatically even with
+// zone.js loaded. Nonetheless, we explicitly opt into zoneless change detection here
+// to stay aligned with the Angular documentation and to be safe. Zone.js-specific
+// tests can override this with `provideZoneChangeDetection` on a per-test basis.
+@NgModule({
+  providers: [ provideZonelessChangeDetection() ],
+})
+class AppTestingModule {}
 
 TestBed.initTestEnvironment(
-  [ BrowserTestingModule ],
+  [ BrowserTestingModule, AppTestingModule ],
   platformBrowserTesting(),
   {
     teardown: { destroyAfterEach: true }
