@@ -22,7 +22,7 @@ describe('NgZoneTest', () => {
     it('Subscribers to events should run within NgZone', async () => {
       const fixture = TestBed.createComponent(EditorComponent);
       const editor = fixture.componentInstance;
-      fixture.detectChanges();
+      fixture.detectChanges(); // TODO: consider using fixture.whenStable()
 
       await new Promise<void>((resolve) => {
         editor.onInit.pipe(first(), throwTimeout(10000, 'Timed out waiting for init event')).subscribe(() => {
@@ -36,7 +36,7 @@ describe('NgZoneTest', () => {
     it('Subscribers to onKeyUp should run within NgZone', async () => {
       const fixture = TestBed.createComponent(EditorComponent);
       const editor = fixture.componentInstance;
-      fixture.detectChanges();
+      fixture.detectChanges(); // TODO: consider using fixture.whenStable()
 
       await new Promise<void>((resolve) => {
         editor.onKeyUp.pipe(first(), throwTimeout(10000, 'Timed out waiting for key up event')).subscribe(() => {
