@@ -12,7 +12,7 @@ import type { Editor } from 'tinymce';
 import { Attribute, SugarElement } from '@ephox/sugar';
 
 export const fixtureHook = <T = unknown>(component: Type<T>, moduleDef: TestModuleMetadata) => {
-  before(async () => {
+  beforeEach(async () => {
     await TestBed.configureTestingModule(moduleDef).compileComponents();
   });
 
