@@ -1,6 +1,6 @@
 import '../alien/InitTestEnvironment';
 
-import { NgZone } from '@angular/core';
+import { NgZone, provideZoneChangeDetection } from '@angular/core';
 import { Assertions } from '@ephox/agar';
 import { describe, it } from '@ephox/bedrock-client';
 
@@ -11,7 +11,7 @@ import { throwTimeout } from '../alien/TestHelpers';
 
 describe('NgZoneTest', () => {
   eachVersionContext([ '4', '5', '6', '7', '8' ], () => {
-    const createFixture = fixtureHook(EditorComponent, { imports: [ EditorComponent ] });
+    const createFixture = fixtureHook(EditorComponent, { imports: [ EditorComponent ], providers: [ provideZoneChangeDetection() ] });
 
     it('Subscribers to events should run within NgZone', async () => {
       const fixture = createFixture();
