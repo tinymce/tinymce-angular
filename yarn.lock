@@ -4244,11 +4244,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/chai@^4.3.16":
-  version "4.3.20"
-  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.20.tgz#cb291577ed342ca92600430841a00329ba05cecc"
-  integrity sha512-/pC9HAB5I/xMlc5FP77qjCnI16ChlJfW0tGa0IUcFn38VJrTV6DeZ60NU5KZBtaOZqjdpwTWohz5HU1RrhiYxQ==
-
 "@types/chai@^5.2.2":
   version "5.2.3"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-5.2.3.tgz#8e9cd9e1c3581fa6b341a5aed5588eb285be0b4a"
@@ -5837,7 +5832,7 @@ case-sensitive-paths-webpack-plugin@^2.4.0:
   resolved "https://registry.yarnpkg.com/case-sensitive-paths-webpack-plugin/-/case-sensitive-paths-webpack-plugin-2.4.0.tgz#db64066c6422eed2e08cc14b986ca43796dbc6d4"
   integrity sha512-roIFONhcxog0JSSWbvVAh3OocukmSgpqOH6YpMkCvav/ySIV3JKg4Dc8vYtQjYi/UxpNE36r/9v+VqTQqgkYmw==
 
-chai@^5.1.1, chai@^5.2.0:
+chai@^5.2.0:
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/chai/-/chai-5.3.3.tgz#dd3da955e270916a4bd3f625f4b919996ada7e06"
   integrity sha512-4zNhdJD/iOjSH0A05ea+Ke6MU5mmpQcbQsSOkgdaUMJ9zTlDTD/GYlwohmIE2u0gaxHYiVHEn1Fw9mZ/ktJWgw==
@@ -12341,6 +12336,11 @@ tinyglobby@0.2.15, tinyglobby@^0.2.12, tinyglobby@^0.2.15:
     fdir "^6.5.0"
     picomatch "^4.0.3"
 
+"tinymce-4@npm:tinymce@^4":
+  version "4.9.11"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-4.9.11.tgz#e3dae099722294c5b8d84ba7ef18dd126de6b582"
+  integrity sha512-nkSLsax+VY5DBRjMFnHFqPwTnlLEGHCco82FwJF2JNH6W+5/ClvNC1P4uhD5lXPDNiDykSHR0XJdEh7w/ICHzA==
+
 "tinymce-5@npm:tinymce@^5":
   version "5.10.9"
   resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.10.9.tgz#1dfacb3231c71a688d90ff44a0b3f2e91b3b9edf"
@@ -13457,7 +13457,7 @@ zod@4.1.13:
   resolved "https://registry.yarnpkg.com/zod/-/zod-4.3.5.tgz#aeb269a6f9fc259b1212c348c7c5432aaa474d2a"
   integrity sha512-k7Nwx6vuWx1IJ9Bjuf4Zt1PEllcwe7cls3VNzm4CQ1/hgtFUK2bRNG3rvnpPUhFjmqJKAKtjV576KnUkHocg/g==
 
-zone.js@~0.10.3:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.10.3.tgz#3e5e4da03c607c9dcd92e37dd35687a14a140c16"
-  integrity sha512-LXVLVEq0NNOqK/fLJo3d0kfzd4sxwn2/h67/02pjCjfKDxgx1i9QqpvtHD8CrBnSSwMw5+dy11O7FRX5mkO7Cg==
+zone.js@~0.16.0:
+  version "0.16.2"
+  resolved "https://registry.yarnpkg.com/zone.js/-/zone.js-0.16.2.tgz#5fc22335bc3e4082ba26985c23ff262a0c4c49a4"
+  integrity sha512-Eky7p2Z1Ig3NnbfodSPoARCjKBSTFMnE/ACsP1L/XJEfY4SdOFce19BsUCWVwL6K5ABZFy5J3bjcMWffX+YM3Q==

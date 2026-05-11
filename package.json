@@ -38,9 +38,7 @@
     "@tinymce/beehive-flow": "^0.19.0",
     "@tinymce/eslint-plugin": "^3.0.0",
     "@tinymce/miniature": "^6.0.0",
-    "@types/chai": "^4.3.16",
     "@types/node": "^20.14.12",
-    "chai": "^5.1.1",
     "copyfiles": "^2.4.1",
     "eslint-plugin-chai-friendly": "^1.0.0",
     "gh-pages": "^6.1.0",
@@ -50,6 +48,7 @@
     "rxjs": "^7.8.1",
     "storybook": "^9",
     "tinymce": "^8.0.0",
+    "tinymce-4": "npm:tinymce@^4",
     "tinymce-5": "npm:tinymce@^5",
     "tinymce-6": "npm:tinymce@^6",
     "tinymce-7": "npm:tinymce@^7",
@@ -57,7 +56,7 @@
     "tinymce-8": "npm:tinymce@^8",
     "tslib": "^2.6.2",
     "typescript": "^5.9.3",
-    "zone.js": "~0.10.3"
+    "zone.js": "~0.16.0"
   },
   "version": "9.1.2-rc",
   "name": "@tinymce/tinymce-angular",
