@@ -1,3 +1,5 @@
+import storybook from 'eslint-plugin-storybook';
+
 // eslint.config.js
 import { defineConfig } from 'eslint/config';
 import tinymceEslintPlugin from '@tinymce/eslint-plugin';
@@ -6,11 +8,11 @@ import js from '@eslint/js';
 import pluginChaiFriendly from 'eslint-plugin-chai-friendly';
 
 export default defineConfig([
-	{
+  {
     plugins: {
-        '@tinymce': tinymceEslintPlugin
+      '@tinymce': tinymceEslintPlugin
     },
-    extends: [ '@tinymce/standard' ],
+    extends: ['@tinymce/standard'],
     files: [
       'tinymce-angular-component/src/**/*.ts',
       'stories/**/*.ts'
@@ -22,7 +24,7 @@ export default defineConfig([
       parserOptions: {
         sourceType: 'module',
         project: [
-            './tsconfig.json'
+          './tsconfig.json'
         ]
       },
     },
@@ -42,7 +44,7 @@ export default defineConfig([
       browser: true
     },
     plugins: { js },
-    extends: [ 'js/recommended' ],
+    extends: ['js/recommended'],
     parser: 'espree',
     languageOptions: {
       parserOptions: {
@@ -51,11 +53,11 @@ export default defineConfig([
       },
     },
     rules: {
-      'indent': [ 'error', 2, { 'SwitchCase': 1 } ],
+      'indent': ['error', 2, { 'SwitchCase': 1 }],
       'no-shadow': 'error',
-      'no-unused-vars': [ 'error', { 'argsIgnorePattern': '^_' } ],
-      'object-curly-spacing': [ 'error', 'always', { 'arraysInObjects': false, 'objectsInObjects': false } ],
-      'quotes': [ 'error', 'single' ],
+      'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
+      'object-curly-spacing': ['error', 'always', { 'arraysInObjects': false, 'objectsInObjects': false }],
+      'quotes': ['error', 'single'],
       'semi': 'error'
     }
   },
@@ -73,5 +75,6 @@ export default defineConfig([
       'max-classes-per-file': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off'
     }
-  }
+  },
+  ...storybook.configs['flat/recommended']
 ]);
