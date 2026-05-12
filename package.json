@@ -1,19 +1,21 @@
 {
-  "description": "Official TinyMCE Angular Component",
-  "author": "Ephox Corporation DBA Tiny Technologies, Inc.",
-  "license": "MIT",
-  "scripts": {
-    "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
-    "test": "yarn bedrock-auto -b chrome-headless -f tinymce-angular-component/src/test/ts/browser/*Test.ts",
-    "test-manual": "bedrock -f tinymce-angular-component/src/test/ts/**/*Test.ts",
-    "clean": "yarn rimraf dist",
-    "lint": "eslint tinymce-angular-component/src/**/*.ts stories/**/*.ts",
-    "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && json -I -f dist/tinymce-angular/package.json -e 'this.version=process.env.npm_package_version' && copyfiles README.md dist/tinymce-angular/",
-    "storybook": "ng run angular:storybook",
-    "build-storybook": "ng run angular:build-storybook",
-    "deploy-storybook": "yarn build-storybook && gh-pages -d ./storybook-static -u 'tiny-bot <no-reply@tiny.cloud>'"
-  },
+  "name": "@tinymce/tinymce-angular",
+  "version": "9.1.2-rc",
   "private": true,
+  "description": "Official TinyMCE Angular Component",
+  "license": "MIT",
+  "author": "Ephox Corporation DBA Tiny Technologies, Inc.",
+  "scripts": {
+    "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && json -I -f dist/tinymce-angular/package.json -e 'this.version=process.env.npm_package_version' && copyfiles README.md dist/tinymce-angular/",
+    "build-storybook": "ng run angular:build-storybook",
+    "clean": "yarn rimraf dist",
+    "deploy-storybook": "yarn build-storybook && gh-pages -d ./storybook-static -u 'tiny-bot <no-reply@tiny.cloud>'",
+    "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
+    "lint": "eslint tinymce-angular-component/src/**/*.ts stories/**/*.ts",
+    "storybook": "ng run angular:storybook",
+    "test": "yarn bedrock-auto -b chrome-headless -f tinymce-angular-component/src/test/ts/browser/*Test.ts",
+    "test-manual": "bedrock -f tinymce-angular-component/src/test/ts/**/*Test.ts"
+  },
   "devDependencies": {
     "@angular-devkit/build-angular": "^21.0.5",
     "@angular/animations": "^21.0.8",
@@ -31,6 +33,7 @@
     "@ephox/bedrock-client": "^14.1.1",
     "@ephox/bedrock-server": "^14.1.3",
     "@ephox/sugar": "^9.3.1",
+    "@storybook/addon-docs": "^10.3.6",
     "@storybook/addon-links": "^10.3.6",
     "@storybook/angular": "^10.3.6",
     "@tinymce/beehive-flow": "^0.19.0",
@@ -39,6 +42,7 @@
     "@types/node": "^20.14.12",
     "copyfiles": "^2.4.1",
     "eslint-plugin-chai-friendly": "^1.0.0",
+    "eslint-plugin-storybook": "10.3.6",
     "gh-pages": "^6.1.0",
     "json": "11.0.0",
     "ng-packagr": "^18.1.0",
@@ -54,10 +58,6 @@
     "tinymce-8": "npm:tinymce@^8",
     "tslib": "^2.6.2",
     "typescript": "^5.9.3",
-    "zone.js": "~0.16.0",
-    "eslint-plugin-storybook": "10.3.6",
-    "@storybook/addon-docs": "^10.3.6"
-  },
-  "version": "9.1.2-rc",
-  "name": "@tinymce/tinymce-angular"
+    "zone.js": "~0.16.0"
+  }
 }
