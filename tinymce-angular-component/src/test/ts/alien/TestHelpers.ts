@@ -56,7 +56,7 @@ export const captureLogs = async (
 
 export const fakeTypeInEditor = (fixture: ComponentFixture<unknown>, str: string) => {
   const editor: Editor = fixture.debugElement.query(By.directive(EditorComponent)).componentInstance.editor!;
-  editor.getBody().innerHTML = '<p>' + str + '</p>';
+  editor.getBody().innerHTML = '<p>' + str + 'ss</p>';
   Keyboard.keystroke(Keys.space(), {}, SugarElement.fromDom(editor.getBody()));
   fixture.detectChanges();
 };
