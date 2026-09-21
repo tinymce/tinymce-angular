@@ -2,7 +2,7 @@
   "name": "@tinymce/tinymce-angular",
   "version": "9.1.2-rc",
   "private": true,
-  "description": "Official Angular Component for TinyMCE, a rich text editor",
+  "description": "Official Angular component for TinyMCE, a rich text editor.",
   "license": "MIT",
   "author": "Ephox Corporation DBA Tiny Technologies, Inc.",
   "keywords": [

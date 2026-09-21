@@ -2,7 +2,7 @@
 
 ## About
 
- Official Angular component for TinyMCE, the rich text editor. It makes it easy to integrate TinyMCE into your Angular applications, with full support for both zone-based and zoneless change detection.
+Official React component for TinyMCE, the rich text editor. It makes integrating TinyMCE into Angular applications easy and seamless.
 
 ## Quickstart
 
