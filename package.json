@@ -14,12 +14,10 @@
     "ngx",
     "component",
     "wysiwyg",
-		"rich text",
-		"javascript",
+		"rich-text-editor",
 		"html",
     "contenteditable",
-    "editor",
-    "tiny"
+    "editor"
   ],
   "scripts": {
     "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && json -I -f dist/tinymce-angular/package.json -e 'this.version=process.env.npm_package_version' && copyfiles README.md dist/tinymce-angular/",
