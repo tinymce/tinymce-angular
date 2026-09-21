@@ -2,7 +2,7 @@
 
 ## About
 
-Official Angular component for [TinyMCE](https://www.npmjs.com/package/tinymce) to make it easy to integrate into your Angular applications
+ Official Angular component for TinyMCE, the rich text editor. It makes it easy to integrate TinyMCE into your Angular applications, with full support for both zone-based and zoneless change detection.
 
 ## Quickstart
 
@@ -44,14 +44,15 @@ For more information: [Using TinyMCE with Angular - Cloud CDN](https://www.tiny.
 
 Using TinyMCE from NPM in an Angular project requires a couple of extra steps. See the documentation for more information: [Using TinyMCE with Angular - Self hosted via NPM](https://www.tiny.cloud/docs/tinymce/latest/angular-pm/)
 
-## Detailed documentation
-
-* [TinyMCE Angular Technical Reference](https://www.tiny.cloud/docs/tinymce/latest/angular-ref/).
-* [TinyMCE Documentation](https://www.tiny.cloud/docs/tinymce/latest/).
 
 ## Demos
 
 For our quick demos, check out the TinyMCE Angular [Storybook](https://tinymce.github.io/tinymce-angular/).
+
+## Detailed documentation
+
+* [TinyMCE Angular Technical Reference](https://www.tiny.cloud/docs/tinymce/latest/angular-ref/).
+* [TinyMCE Documentation](https://www.tiny.cloud/docs/tinymce/latest/).
 
 ## Version compatibility
 
@@ -64,10 +65,7 @@ For our quick demos, check out the TinyMCE Angular [Storybook](https://tinymce.g
 |<= 8           |3.x                      |
 |< 5            | Not supported           |
 
-
-## Zoneless Support
-
-No additional configuration is needed — the component works with both zone-based and zoneless applications.
+**Note**: The component works with both zone-based and zoneless applications.
 
 ## Issues
 
