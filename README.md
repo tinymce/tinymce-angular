@@ -8,35 +8,32 @@ Official Angular component for TinyMCE, the rich text editor. It wraps TinyMCE a
 
 ### Cloud CDN
 
-In your Angular project:
-
 1. [Sign up for a Tiny Cloud account](https://www.tiny.cloud/pricing/) to receive a Tiny Cloud API key.
-2. `npm install @tinymce/tinymce-angular`
-3. Include the following code:
+1. Then in your Angular project:
+    1. `npm install @tinymce/tinymce-angular`
+    1. Include the following code:
+        ```js
+        import { Component } from '@angular/core';
+        import { EditorComponent } from '@tinymce/tinymce-angular';
 
-```js
-import { Component } from '@angular/core';
-import { EditorComponent } from '@tinymce/tinymce-angular';
-
-@Component({
-  selector: 'app-root',
-  imports: [EditorComponent],
-  template: `
-  <h1>TinyMCE Angular demo</h1>
-  <editor
-    [init]="init"
-    apiKey="your-api-key"
-  />
-  `
-})
-export class AppComponent {
-  init: EditorComponent['init'] = {
-    plugins: 'lists link image table code help wordcount'
-  };
-}
-```
-
-4. Update the `apiKey` option in the editor element to include your Tiny Cloud API key.
+        @Component({
+          selector: 'app-root',
+          imports: [EditorComponent],
+          template: `
+          <h1>TinyMCE Angular demo</h1>
+          <editor
+            [init]="init"
+            apiKey="your-api-key"
+          />
+          `
+        })
+        export class AppComponent {
+          init: EditorComponent['init'] = {
+            plugins: 'lists link image table code help wordcount'
+          };
+        }
+        ```
+    1. Update the `apiKey` option in the editor element to include your Tiny Cloud API key.
 
 For more information: [Using TinyMCE with Angular - Cloud CDN](https://www.tiny.cloud/docs/tinymce/latest/angular-cloud/)
 
