@@ -2,7 +2,7 @@
 
 ## About
 
-Official React component for TinyMCE, the rich text editor. It makes integrating TinyMCE into Angular applications easy and seamless.
+Official Angular component for TinyMCE, the rich text editor. It wraps TinyMCE as an Angular `<editor>` component. By default it pulls TinyMCE from the Tiny Cloud CDN unless configured to use a different setup, such as self-hosting the [tinymce NPM package](https://www.npmjs.com/package/tinymce).
 
 ## Quickstart
 
