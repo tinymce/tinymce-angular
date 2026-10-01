@@ -20,7 +20,7 @@
     "editor"
   ],
   "scripts": {
-    "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && json -I -f dist/tinymce-angular/package.json -e 'this.version=process.env.npm_package_version' && copyfiles README.md dist/tinymce-angular/",
+    "build": "yarn run clean && ng-packagr -p tinymce-angular-component/ng-package.json && json -I -f dist/tinymce-angular/package.json -e 'this.version=process.env.npm_package_version' && copyfiles README.md LICENSE.txt CHANGELOG.md dist/tinymce-angular/",
     "build-storybook": "ng run angular:build-storybook",
     "clean": "yarn rimraf dist",
     "deploy-storybook": "yarn build-storybook && gh-pages -d ./storybook-static -u 'tiny-bot <no-reply@tiny.cloud>'",
