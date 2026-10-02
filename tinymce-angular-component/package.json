@@ -1,11 +1,25 @@
 {
   "name": "@tinymce/tinymce-angular",
-  "description": "Official TinyMCE Angular Component",
+  "description": "Official Angular component for TinyMCE, the rich text editor.",
   "version": "",
   "repository": "https://github.com/tinymce/tinymce-angular.git",
   "author": "Ephox Corporation DBA Tiny Technologies, Inc.",
   "license": "MIT",
   "private": false,
+  "keywords": [
+    "tinymce",
+    "angular",
+    "zoneless",
+    "angular2",
+    "ng",
+    "ngx",
+    "component",
+    "wysiwyg",
+    "rich-text-editor",
+    "html",
+    "contenteditable",
+    "editor"
+  ],
   "peerDependencies": {
     "@angular/core": ">=16.0.0",
     "@angular/common": ">=16.0.0",
